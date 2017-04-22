@@ -75,6 +75,9 @@ func fixPrintf(curfn *cc.Decl, x *cc.Expr) bool {
 	if tryPrintf(curfn, x, "print", 0, "fmt.Printf") {
 		return true
 	}
+	if tryPrintf(curfn, x, "printf", 0, "fmt.Printf") {
+		return true
+	}
 	if tryPrintf(curfn, x, "fprint", 1, "fmt.Fprintf") {
 		if x.List[0].String() == "2" {
 			x.List[0] = &cc.Expr{Op: cc.Name, Text: "os.Stderr"}
