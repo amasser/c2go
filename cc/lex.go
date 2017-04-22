@@ -178,18 +178,6 @@ func (lx *lexer) pushInclude(includeLine string) {
 	}
 }
 
-var stdMap = map[string]string{
-	"u.h":      hdr_u_h,
-	"libc.h":   hdr_libc_h,
-	"stdarg.h": "",
-	"signal.h": "",
-	"sys/stat.h": hdr_sys_stat_h,
-}
-
-var extraMap = map[string]string{
-	"go.h": hdr_extra_go_h,
-}
-
 var includes []string
 
 func AddInclude(dir string) {
@@ -204,7 +192,6 @@ func (lx *lexer) findInclude(name string, std bool) (string, []byte, error) {
 			}
 			return "internal/" + name, []byte(redir), nil
 		}
-		name = "/Users/rsc/g/go/include/" + name
 	}
 	if !filepath.IsAbs(name) {
 		name1 := filepath.Join(filepath.Dir(lx.file), name)

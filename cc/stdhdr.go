@@ -1,6 +1,7 @@
 package cc
 
-var hdr_u_h = `
+var stdMap = map[string]string{
+	"u.h": `
 typedef signed char schar;
 typedef unsigned char uchar;
 typedef unsigned short ushort;
@@ -33,9 +34,9 @@ typedef uvlong u64int;
 void *nil;
 
 typedef struct va_list *va_list;
-`
+`,
 
-var hdr_libc_h = `
+	"libc.h": `
 #include <fmt.h>
 
 extern char *argv0;
@@ -149,10 +150,33 @@ extern	int	isalnum(int);
 extern	int	getfields(char*, char**, int, int, char*);
 extern	char*	cleanname(char*);
 extern	int	noted(int);
+`,
 
-`
+	"math.h": `
+double acos(double x);
+`,
 
-var hdr_extra_go_h = `
+	"stdarg.h": "",
+
+	"stdio.h": `
+int printf(char *format, ...);
+int scanf(char *format, ...);
+`,
+
+	"signal.h": "",
+
+	"sys/stat.h": `
+struct stat {
+	int st_mode;
+};
+
+int lstat(char*, struct stat*);
+int S_ISREG(int);
+`,
+}
+
+var extraMap = map[string]string{
+	"go.h": `
 extern Node *N;
 extern Sym *S;
 extern Type *T;
@@ -165,13 +189,5 @@ enum
 	BITS = 5,
 	NVAR = BITS*4*8,
 };
-`
-
-var hdr_sys_stat_h = `
-struct stat {
-	int st_mode;
-};
-
-int lstat(char*, struct stat*);
-int S_ISREG(int);
-`
+`,
+}
