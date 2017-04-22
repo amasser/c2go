@@ -56,6 +56,42 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 			if x.Kind == cc.Func && len(x.Decls) == 1 && x.Decls[0].Name == "" && x.Decls[0].Type.Is(cc.Void) {
 				x.Decls = nil
 			}
+
+		case *cc.Decl:
+			// Remove parameters and return type from main.
+			if x.Type != nil && x.Type.Kind == cc.Func && x.Name == "main" {
+				x.Type.Decls = nil
+				x.Type.Base = cc.VoidType
+
+				// Remove a final return statement.
+				var body []*cc.Stmt
+				if x.Body != nil {
+					body = x.Body.Block
+				}
+				if len(body) > 0 {
+					last := body[len(body)-1]
+					if last.Op == cc.Return {
+						x.Body.Block = x.Body.Block[:len(x.Body.Block)-1]
+					}
+				}
+
+				// Replace argc and argv with os.Args.
+				cc.Preorder(x, func(x cc.Syntax) {
+					switch x := x.(type) {
+					case *cc.Expr:
+						if x.Op == cc.Name {
+							switch x.Text {
+							case "argc":
+								x.Text = "len(os.Args)"
+								x.XDecl = nil
+							case "argv":
+								x.Text = "os.Args"
+								x.XDecl = nil
+							}
+						}
+					}
+				})
+			}
 		}
 	})
 
