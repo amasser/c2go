@@ -49,7 +49,7 @@ func writeGoFiles(cfg *Config, prog *cc.Prog) {
 			case "cmd/new5l", "cmd/new6l", "cmd/new8l", "cmd/new9l":
 				p.Print(`import "cmd/internal/obj"`, "\n")
 				p.Print(`import "cmd/internal/ld"`, "\n")
-			
+
 			case "cmd/internal/gc", "cmd/internal/ld", "cmd/internal/obj/arm", "cmd/internal/obj/ppc64", "cmd/internal/obj/x86", "cmd/internal/obj/amd64":
 				p.Print(`import "cmd/internal/obj"`, "\n")
 			}
@@ -136,7 +136,6 @@ func fixCopyright(gofile, cfile string, buf []byte) []byte {
 		}
 	}
 	if i < 0 {
-		//log.Printf("%s: cannot find copyright notice", gofile)
 		return copyCopyright(gofile, cfile, buf)
 	}
 
@@ -182,7 +181,6 @@ func copyCopyright(gofile, cfile string, buf []byte) []byte {
 		}
 	}
 	if i < 0 {
-		log.Printf("%s: cannot find copyright notice in C file %s", gofile, cfile)
 		return buf
 	}
 
