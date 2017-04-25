@@ -133,7 +133,7 @@ var c2goKind = map[cc.TypeKind]cc.TypeKind{
 	cc.Int:       Int,
 	cc.Uint:      Uint,
 	cc.Long:      Int, // long is used too indiscriminately to assign 32-bit meaning to it
-	cc.Ulong:     Uint32,
+	cc.Ulong:     Uint,
 	cc.Longlong:  Int64,
 	cc.Ulonglong: Uint64,
 	cc.Float:     Float32,
