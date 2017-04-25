@@ -579,12 +579,6 @@ var tokId = map[string]int32{
 	"void":     tokVoid,
 	"volatile": tokVolatile,
 	"while":    tokWhile,
-
-	"ARGBEGIN": tokARGBEGIN,
-	"ARGEND":   tokARGEND,
-	"AUTOLIB":  tokAUTOLIB,
-	"USED":     tokUSED,
-	"SET":      tokSET,
 }
 
 // Comment assignment.

@@ -190,9 +190,6 @@ func rewriteStmt(stmt *cc.Stmt) {
 	// TODO: Double-check stmt.Labels
 
 	switch stmt.Op {
-	case cc.ARGBEGIN:
-		panic(fmt.Sprintf("unexpected ARGBEGIN"))
-
 	case cc.Do:
 		// Rewrite do { ... } while(x)
 		// to for(;;) { ... if(!x) break }

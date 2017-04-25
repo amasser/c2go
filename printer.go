@@ -628,9 +628,6 @@ func (p *Printer) printStmt(x *cc.Stmt) {
 	defer p.Print(x.Comments.Suffix, x.Comments.After)
 
 	switch x.Op {
-	case cc.ARGBEGIN:
-		p.Print("ARGBEGIN{", Indent, Newline, x.Body, Unindent, Newline, "}ARGEND")
-
 	case cc.Block:
 		p.Print("{", Indent)
 		for _, b := range x.Block {

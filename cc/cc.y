@@ -72,12 +72,6 @@ type idecor struct {
 	typ *Type
 }
 
-%token	<str>	tokARGBEGIN
-%token	<str>	tokARGEND
-%token	<str>	tokAUTOLIB
-%token	<str>	tokSET
-%token	<str>	tokUSED
-
 %token	<str>	tokAuto
 %token	<str>	tokBreak
 %token	<str>	tokCase
@@ -202,9 +196,6 @@ prog:
 	{
 		$<span>$ = span($<span>1, $<span>2)
 		$$ = append($1, $2...)
-	}
-|	prog tokAUTOLIB '(' tokName ')'
-	{
 	}
 
 cexpr:
@@ -547,16 +538,6 @@ stmt:
 		$<span>$ = $<span>1
 		$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Op: Empty}
 	}
-|	tokUSED '(' cexpr ')' ';'
-	{
-		$<span>$ = $<span>1
-		$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Op: Empty}
-	}
-|	tokSET '(' cexpr ')' ';'
-	{
-		$<span>$ = $<span>1
-		$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Op: Empty}
-	}			
 |	block
 	{
 		$<span>$ = $<span>1
@@ -567,11 +548,6 @@ stmt:
 		$<span>$ = span($<span>1, $<span>2)
 		$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Op: StmtExpr, Expr: $1}
 	}	
-|	tokARGBEGIN block1 tokARGEND
-	{
-		$<span>$ = span($<span>1, $<span>3)
-		$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Op: ARGBEGIN, Block: $2}
-	}
 |	tokBreak ';'
 	{
 		$<span>$ = span($<span>1, $<span>2)

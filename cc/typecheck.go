@@ -139,8 +139,6 @@ func (lx *lexer) typecheckStmt(stmt *Stmt) {
 		for _, s := range stmt.Block {
 			lx.typecheckStmt(s)
 		}
-	case ARGBEGIN:
-		lx.Errorf("ARGBEGIN not supported")
 	case Break:
 		// check break context
 	case Continue:

@@ -27,7 +27,6 @@ const (
 	StmtExpr
 	Empty
 	Block
-	ARGBEGIN
 	Break
 	Continue
 	Do
