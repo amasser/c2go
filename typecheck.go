@@ -44,37 +44,6 @@ func rewriteTypes(cfg *Config, prog cc.Syntax) {
 		}
 	})
 
-	/*
-		t := g.canon.Def()
-		if cc.Char <= t.Kind && t.Kind <= cc.Enum {
-			// Convert to an appropriately sized number.
-			// Canon is largest rank from C; convert to Go.
-			g.goType = &cc.Type{Kind: c2goKind[t.Kind]}
-			continue
-		}
-		if t.Kind == cc.Ptr || t.Kind == cc.Array {
-			// Default is convert to pointer.
-			// If there are any arrays or any pointer arithmetic, convert to slice instead.
-			k := cc.Ptr
-			for _, d := range g.decls {
-				if d.Type != nil && d.Type.Kind == cc.Array {
-					k = Slice
-				}
-			}
-			for _, f := range g.syntax {
-				if f.ptrAdd {
-					k = Slice
-				}
-			}
-			if t.Base.Kind == cc.Char {
-				g.goType = &cc.Type{Kind: String}
-				continue
-			}
-			g.goType = &cc.Type{Kind: k, Base: toGoType(cfg, nil, nil, t.Base, cache)}
-			continue
-		}
-	*/
-
 	cc.Postorder(prog, func(x cc.Syntax) {
 		switch x := x.(type) {
 		case *cc.Decl:
@@ -336,7 +305,6 @@ func fixGoTypesStmt(prog *cc.Prog, fn *cc.Decl, x *cc.Stmt) {
 		return
 	}
 
-	fixArrayStmt(fn, x)
 	fixFormatStmt(fn, x)
 
 	switch x.Op {
@@ -445,8 +413,6 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			return targ
 		}
 	}
-
-	fixArray(fn, x)
 
 	switch x.Op {
 	default:
@@ -1034,7 +1000,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		// fprintf(x.Span, "unsupported %v (%v %v)", x, GoString(left), GoString(right))
 		return true
 
-	case "mal", "malloc", "emallocz", "xmalloc":
+	case "malloc":
 		if len(x.List) != 1 {
 			fprintf(x.Span, "unsupported %v - too many args", x)
 			return false
@@ -1075,17 +1041,6 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 			x.Left.XDecl = nil
 			x.List = []*cc.Expr{&cc.Expr{Op: ExprType, Type: typ}}
 			x.XType = &cc.Type{Kind: cc.Ptr, Base: typ}
-			if typ.String() == "Prog" {
-				isGC := strings.Contains(x.Span.Start.File, "cmd/gc")
-				isCompiler := isGC || strings.Contains(x.Span.Start.File, "cmd/6g") || strings.Contains(x.Span.Start.File, "cmd/8g") || strings.Contains(x.Span.Start.File, "cmd/5g") || strings.Contains(x.Span.Start.File, "cmd/9g")
-				if isCompiler {
-					x.List = nil
-					x.Left.Text = "Ctxt.NewProg"
-					if !isGC {
-						x.Left.Text = "gc." + x.Left.Text
-					}
-				}
-			}
 		} else {
 			x.Left.Text = "make"
 			x.Left.XDecl = nil
@@ -1097,7 +1052,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		}
 		return true
 
-	case "strdup", "estrdup":
+	case "strdup":
 		if len(x.List) != 1 {
 			fprintf(x.Span, "unsupported %v - too many args", x)
 			return false
@@ -1107,7 +1062,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.XType = stringType
 		return true
 
-	case "strcpy", "strcat", "fmtstrcpy":
+	case "strcpy", "strcat":
 		if len(x.List) != 2 {
 			fprintf(x.Span, "unsupported %v - too many args", x)
 			return false
@@ -1115,7 +1070,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		fixGoTypesExpr(fn, x.List[0], nil)
 		fixGoTypesExpr(fn, x.List[1], stringType)
 		x.Op = cc.Eq
-		if x.Left.Text == "strcat" || x.Left.Text == "fmtstrcpy" {
+		if x.Left.Text == "strcat" {
 			x.Op = cc.AddEq
 		}
 		x.Left = x.List[0]
@@ -1146,61 +1101,6 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.Left.XDecl = nil
 		x.List = []*cc.Expr{{Op: cc.Name, Text: `"abort"`}}
 		return true
-
-	case "TUP", "CASE":
-		if len(x.List) != 2 {
-			fprintf(x.Span, "unsupported %v - too many args", x)
-			return false
-		}
-		left := fixGoTypesExpr(fn, x.List[0], targ)
-		right := fixGoTypesExpr(fn, x.List[1], targ)
-		forceConvert(fn, x.List[0], left, uint32Type)
-		forceConvert(fn, x.List[1], right, uint32Type)
-		x.Op = cc.Or
-		x.Left = &cc.Expr{Op: cc.Lsh, Left: x.List[0], Right: &cc.Expr{Op: cc.Number, Text: "16"}, XType: left}
-		x.Right = x.List[1]
-		x.List = nil
-		x.XType = uint32Type
-		return true
-
-	case "R":
-		if len(x.List) != 2 {
-			fprintf(x.Span, "unsupported %v - too many args", x)
-			return false
-		}
-		left := fixGoTypesExpr(fn, x.List[0], targ)
-		right := fixGoTypesExpr(fn, x.List[1], targ)
-		forceConvert(fn, x.List[0], left, uint32Type)
-		forceConvert(fn, x.List[1], right, uint32Type)
-		x.Op = cc.Or
-		x.Left = x.List[0]
-		x.Right = &cc.Expr{Op: cc.Lsh, Left: x.List[1], Right: &cc.Expr{Op: cc.Number, Text: "24"}, XType: left}
-		x.List = nil
-		x.XType = uint32Type
-		return true
-
-	case "FCASE":
-		if len(x.List) != 3 {
-			fprintf(x.Span, "unsupported %v - too many args", x)
-			return false
-		}
-		arg0 := fixGoTypesExpr(fn, x.List[0], targ)
-		arg1 := fixGoTypesExpr(fn, x.List[1], targ)
-		arg2 := fixGoTypesExpr(fn, x.List[2], targ)
-		forceConvert(fn, x.List[0], arg0, uint32Type)
-		forceConvert(fn, x.List[1], arg1, uint32Type)
-		forceConvert(fn, x.List[2], arg2, uint32Type)
-		x.Op = cc.Or
-		x.Left = &cc.Expr{Op: cc.Lsh, Left: x.List[0], Right: &cc.Expr{Op: cc.Number, Text: "16"}, XType: uint32Type}
-		x.Right = &cc.Expr{
-			Op:    cc.Or,
-			Left:  &cc.Expr{Op: cc.Lsh, Left: x.List[1], Right: &cc.Expr{Op: cc.Number, Text: "8"}, XType: uint32Type},
-			Right: x.List[2],
-		}
-		x.List = nil
-		x.XType = uint32Type
-		return true
-
 	}
 
 	return false
@@ -1383,38 +1283,6 @@ func fixSpecialCompare(fn *cc.Decl, x *cc.Expr) bool {
 		x.XType = boolType
 		return true
 
-	case "utfrune":
-		if len(call.List) != 2 {
-			fprintf(x.Span, "unsupported %v", x)
-			return false
-		}
-		call.Left = &cc.Expr{Op: cc.Name, Text: "strings.ContainsRune"}
-		call.XType = boolType
-		if x.Op == cc.NotEq {
-			*x = *call
-		} else if x.Op == cc.EqEq {
-			x.Op = cc.Not
-			x.Right = nil
-		}
-		x.XType = boolType
-		return true
-
-	case "ucistrcmp":
-		if len(call.List) != 2 {
-			fprintf(x.Span, "unsupported %v", x)
-			return false
-		}
-		call.Left = &cc.Expr{Op: cc.Name, Text: "strings.EqualFold"}
-		call.XType = boolType
-		if x.Op == cc.EqEq {
-			*x = *call
-		} else if x.Op == cc.NotEq {
-			x.Op = cc.Not
-			x.Right = nil
-		}
-		x.XType = boolType
-		return true
-
 	case "strcmp":
 		if len(call.List) != 2 {
 			fprintf(x.Span, "unsupported %v", x)
@@ -1426,23 +1294,6 @@ func fixSpecialCompare(fn *cc.Decl, x *cc.Expr) bool {
 		x.Left = obj1
 		x.Right = obj2
 		x.List = nil
-		x.XType = boolType
-		return true
-
-	case "isspacerune":
-		if len(call.List) != 1 {
-			fprintf(x.Span, "unsupported %v", x)
-			return false
-		}
-		call.Left.Text = "unicode.IsSpace"
-		call.Left.XDecl = nil
-		forceConvert(fn, call.List[0], call.List[0].XType, runeType)
-		if x.Op == cc.NotEq {
-			*x = *call
-		} else if x.Op == cc.EqEq {
-			x.Op = cc.Not
-			x.Right = nil
-		}
 		x.XType = boolType
 		return true
 	}
@@ -1743,4 +1594,8 @@ func rewriteLen(cfg *Config, prog *cc.Prog) {
 			x.Decls = out
 		}
 	})
+}
+
+func isCall(x *cc.Expr, name string) bool {
+	return x != nil && x.Op == cc.Call && x.Left.Op == cc.Name && x.Left.Text == name
 }

@@ -46,18 +46,6 @@ func writeGoFiles(cfg *Config, prog *cc.Prog) {
 				pkg = "main"
 			}
 			p.Print("package ", pkg, "\n\n")
-			switch p.Package {
-			case "cmd/new5g", "cmd/new6g", "cmd/new8g", "cmd/new9g":
-				p.Print(`import "cmd/internal/obj"`, "\n")
-				p.Print(`import "cmd/internal/gc"`, "\n")
-
-			case "cmd/new5l", "cmd/new6l", "cmd/new8l", "cmd/new9l":
-				p.Print(`import "cmd/internal/obj"`, "\n")
-				p.Print(`import "cmd/internal/ld"`, "\n")
-
-			case "cmd/internal/gc", "cmd/internal/ld", "cmd/internal/obj/arm", "cmd/internal/obj/ppc64", "cmd/internal/obj/x86", "cmd/internal/obj/amd64":
-				p.Print(`import "cmd/internal/obj"`, "\n")
-			}
 
 			printers[gofile] = p
 		}
