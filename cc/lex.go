@@ -321,12 +321,9 @@ Restart:
 
 		// If this line is defining a constant (not a function-like macro), don't
 		// ignore it.
-		if strings.HasPrefix(str, "#define ") {
-			f := strings.Fields(str)
-			if len(f) > 2 && !strings.Contains(f[1], "(") {
-				lx.sym(len("#define"))
-				return tokDefine
-			}
+		if f := strings.Fields(str); len(f) > 2 && f[0] == "#define" && !strings.Contains(f[1], "(") {
+			lx.sym(len("#define"))
+			return tokDefine
 		}
 
 		lx.skip(i)
