@@ -339,6 +339,17 @@ Restart:
 			i++
 		}
 		str := in[:i]
+
+		// If this line is defining a constant (not a function-like macro), don't
+		// ignore it.
+		if strings.HasPrefix(str, "#define ") {
+			f := strings.Fields(str)
+			if len(f) > 2 && !strings.Contains(f[1], "(") {
+				lx.sym(len("#define"))
+				return tokDefine
+			}
+		}
+
 		lx.skip(i)
 		if strings.HasPrefix(str, "#include") {
 			lx.pushInclude(str)

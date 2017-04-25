@@ -118,9 +118,10 @@ type idecor struct {
 %token	<str>	tokVolatile
 %token	<str>	tokWhile
 %token	<str>	tokString
+%token	<str>	tokDefine
 
 %type	<abdecor>	abdecor abdec1
-%type	<decl>	fnarg fndef edecl
+%type	<decl>	fnarg fndef edecl define
 %type	<decls>	decl decl_list_opt
 %type	<decls>	fnarg_list fnarg_list_opt
 %type	<decls>	prog xdecl topdecl
@@ -1011,6 +1012,14 @@ topdecl:
 		}
 	}
 
+define:
+	tokDefine tokName expr
+	{
+		$<span>$ = span($<span>1, $<span>2)
+		$$ = &Decl{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Name: $2, Init: &Init{SyntaxInfo: SyntaxInfo{Span: $<span>3}, Expr: $3}}
+		yylex.(*lexer).pushDecl($$);
+	}
+
 xdecl:
 	topdecl
 	{
@@ -1025,6 +1034,11 @@ xdecl:
 |	tokExtern tokString '{' prog '}'
 	{
 		$$ = $4
+	}
+|	define
+	{
+		$<span>$ = $<span>1
+		$$ = []*Decl{$1}
 	}
 
 fndef:

@@ -934,6 +934,12 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
+	if t == nil {
+		// Untyped constant from #define.
+		p.Print("const ", decl.Name, " = ", decl.Init)
+		return
+	}
+
 	if t.Kind == cc.Func {
 		p.printFuncDecl(decl)
 		return

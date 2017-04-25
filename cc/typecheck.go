@@ -116,7 +116,7 @@ func (lx *lexer) typecheck(prog *Prog) {
 
 func (lx *lexer) typecheckDecl(decl *Decl) {
 	lx.typecheckType(decl.Type)
-	if decl.Init != nil {
+	if decl.Init != nil && decl.Type != nil {
 		lx.typecheckInit(decl.Type, decl.Init)
 	}
 	lx.typecheckStmt(decl.Body)
