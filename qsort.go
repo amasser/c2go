@@ -5,7 +5,7 @@
 package main
 
 import (
-	"rsc.io/c2go/cc"
+	"github.com/andybalholm/c2go/cc"
 )
 
 func fixQsort(prog *cc.Prog, x *cc.Expr) {
@@ -28,7 +28,7 @@ func fixQsort(prog *cc.Prog, x *cc.Expr) {
 	if typ == nil {
 		return
 	}
-	
+
 	x.Left.Text = "sort.Sort"
 	x.Left.XDecl = nil
 	x.List = []*cc.Expr{

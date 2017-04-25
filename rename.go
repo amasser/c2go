@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"rsc.io/c2go/cc"
+	"github.com/andybalholm/c2go/cc"
 )
 
 var goKeyword = map[string]bool{
