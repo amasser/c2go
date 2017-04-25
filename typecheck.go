@@ -629,7 +629,7 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			return boolType
 		}
 		left := fixGoTypesExpr(fn, x.Left, nil)
-		if x.Right.Op == cc.Number && x.Right.Text == "0" || x.Right.Op == cc.Name && x.Right.Text == "nil" {
+		if x.Right.Op == cc.Number && x.Right.Text == "0" || x.Right.Op == cc.Name && (x.Right.Text == "nil" || x.Right.Text == "NULL") {
 			if isSliceOrPtr(left) {
 				x.Right.Op = cc.Name
 				x.Right.Text = "nil"
@@ -799,9 +799,10 @@ func forceConvert(fn *cc.Decl, x *cc.Expr, actual, targ *cc.Type) {
 		return
 	}
 
-	if x.Op == cc.Name && x.Text == "nil" && targ != nil {
+	if x.Op == cc.Name && (x.Text == "nil" || x.Text == "NULL") && targ != nil {
 		switch targ.Kind {
 		case cc.Func, cc.Ptr, Slice:
+			x.Text = "nil"
 			return
 		case String:
 			x.Text = `""`
@@ -819,7 +820,7 @@ func forceConvert(fn *cc.Decl, x *cc.Expr, actual, targ *cc.Type) {
 		return
 	}
 
-	if x != nil && x.Op == cc.Name && x.Text == "nil" {
+	if x != nil && x.Op == cc.Name && (x.Text == "nil" || x.Text == "NULL") {
 		if targ.Kind == cc.Func || targ.Kind == cc.Ptr || targ.Kind == Slice {
 			return
 		}
@@ -1320,7 +1321,7 @@ func fixMemset(prog *cc.Prog, fn *cc.Decl, stmt *cc.Stmt) {
 }
 
 func fixSpecialCompare(fn *cc.Decl, x *cc.Expr) bool {
-	if (x.Right.Op != cc.Number || x.Right.Text != "0") && x.Right.String() != "nil" && x.Right.String() != `""` || x.Left.Op != cc.Call || x.Left.Left.Op != cc.Name {
+	if (x.Right.Op != cc.Number || x.Right.Text != "0") && x.Right.String() != "nil" && x.Right.String() != "NULL" && x.Right.String() != `""` || x.Left.Op != cc.Call || x.Left.Left.Op != cc.Name {
 		return false
 	}
 

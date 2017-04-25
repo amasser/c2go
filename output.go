@@ -20,6 +20,11 @@ import (
 
 var dst = flag.String("dst", "/tmp/c2go", "GOPATH root of destination")
 
+var alwaysDeleteDecl = map[string]bool{
+	"bool": true,
+	"nil":  true,
+}
+
 // writeGoFiles writes prog to Go source files in a tree of packages.
 func writeGoFiles(cfg *Config, prog *cc.Prog) {
 	printers := map[string]*Printer{}
@@ -62,7 +67,7 @@ func writeGoFiles(cfg *Config, prog *cc.Prog) {
 		if !ok {
 			repl, ok = cfg.replace[strings.ToLower(decl.Name)]
 		}
-		if cfg.delete[decl.Name] || cfg.delete[strings.ToLower(decl.Name)] || decl.Name == "bool" {
+		if cfg.delete[decl.Name] || cfg.delete[strings.ToLower(decl.Name)] || alwaysDeleteDecl[decl.Name] {
 			repl, ok = "", true
 		}
 		if ok {

@@ -77,6 +77,9 @@ func renameDecl(cfg *Config, d *cc.Decl) {
 	if cfg.rename[key] != "" {
 		d.Name = cfg.rename[key]
 	}
+	if key == "NULL" {
+		d.Name = "nil"
+	}
 	if d.Storage&cc.Typedef != 0 && d.Type.Kind == cc.Struct {
 		for _, dd := range d.Type.Decls {
 			renameDecl(cfg, dd)
@@ -87,7 +90,7 @@ func renameDecl(cfg *Config, d *cc.Decl) {
 			}
 		}
 	}
-	
+
 	if d.Type != nil && d.Type.Kind == cc.Func && d.Body != nil {
 		for _, s := range d.Body.Block {
 			if s.Op == cc.StmtDecl && s.Decl.Storage&cc.Static != 0 {
