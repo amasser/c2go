@@ -62,7 +62,7 @@ func writeGoFiles(cfg *Config, prog *cc.Prog) {
 		if !ok {
 			repl, ok = cfg.replace[strings.ToLower(decl.Name)]
 		}
-		if cfg.delete[decl.Name] || cfg.delete[strings.ToLower(decl.Name)] {
+		if cfg.delete[decl.Name] || cfg.delete[strings.ToLower(decl.Name)] || decl.Name == "bool" {
 			repl, ok = "", true
 		}
 		if ok {
