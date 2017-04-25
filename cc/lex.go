@@ -124,7 +124,6 @@ func (lx *lexer) pushInclude(includeLine string) {
 	i++
 
 	file := s[1:i]
-	origFile := file
 
 	file, data, err := lx.findInclude(file, s[0] == '<')
 	if err != nil {
@@ -151,18 +150,6 @@ func (lx *lexer) pushInclude(includeLine string) {
 		fmt.Printf("%s: warning nested %s\n", lx.span(), includeLine)
 	}
 
-	if extraMap[origFile] != "" {
-		str := extraMap[origFile] + "\n"
-		lx.pushed = append(lx.pushed, lx.lexInput)
-		lx.lexInput = lexInput{
-			input:      str,
-			wholeInput: str,
-			file:       "internal/" + origFile,
-			lineno:     1,
-			declSave:   hdr,
-		}
-	}
-
 	if data == nil {
 		return
 	}
@@ -185,14 +172,6 @@ func AddInclude(dir string) {
 }
 
 func (lx *lexer) findInclude(name string, std bool) (string, []byte, error) {
-	if std {
-		if redir, ok := stdMap[name]; ok {
-			if redir == "" {
-				return "", nil, nil
-			}
-			return "internal/" + name, []byte(redir), nil
-		}
-	}
 	if !filepath.IsAbs(name) {
 		name1 := filepath.Join(filepath.Dir(lx.file), name)
 		if _, err := os.Stat(name1); err != nil {
