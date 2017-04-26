@@ -931,9 +931,15 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
-	if t == nil {
+	if t == nil && decl.Init != nil {
 		// Untyped constant from #define.
 		p.Print("const ", decl.Name, " = ", decl.Init)
+		return
+	}
+
+	if t == nil {
+		// Unknown type; guess int.
+		p.Print("var ", decl.Name, " int")
 		return
 	}
 
