@@ -99,6 +99,8 @@ var c2goKind = map[cc.TypeKind]cc.TypeKind{
 	cc.Uchar:     Uint8,
 	cc.Short:     Int16,
 	cc.Ushort:    Uint16,
+	cc.Int32:     Int32,
+	cc.Uint32:    Uint32,
 	cc.Int:       Int,
 	cc.Uint:      Uint,
 	cc.Long:      Int, // long is used too indiscriminately to assign 32-bit meaning to it
@@ -137,7 +139,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 	case cc.Void:
 		return &cc.Type{Kind: cc.Struct} // struct{}
 
-	case cc.Char, cc.Uchar, cc.Short, cc.Ushort, cc.Int, cc.Uint, cc.Long, cc.Ulong, cc.Longlong, cc.Ulonglong, cc.Float, cc.Double, cc.Enum:
+	case cc.Char, cc.Uchar, cc.Short, cc.Ushort, cc.Int32, cc.Uint32, cc.Int, cc.Uint, cc.Long, cc.Ulong, cc.Longlong, cc.Ulonglong, cc.Float, cc.Double, cc.Enum:
 		t := &cc.Type{Kind: c2goKind[typ.Kind]}
 		if d, ok := x.(*cc.Decl); ok {
 			if cfg.bool[declKey(d)] {
@@ -158,7 +160,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 		// If this is a typedef like uchar, translate the type by name.
 		// Otherwise fall back to base.
 		def := typ.Base
-		if cc.Char <= def.Kind && def.Kind <= cc.Enum {
+		if def != nil && cc.Char <= def.Kind && def.Kind <= cc.Enum {
 			var t *cc.Type
 			if c2goName[typ.Name] != 0 {
 				t = &cc.Type{Kind: c2goName[typ.Name]}
@@ -391,7 +393,7 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 		if targ != nil && targ.Kind == Bool {
 			old := copyExpr(x)
 			left := fixGoTypesExpr(fn, old, nil)
-			if left != nil && left.Kind == Bool {
+			if left == nil || left.Kind == Bool {
 				return targ
 			}
 			if old.Op == cc.Number {
@@ -554,6 +556,9 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			x.Left = &cc.Expr{Op: cc.Index, Left: x.Left, Right: &cc.Expr{Op: cc.Number, Text: "0"}}
 		}
 
+		if x.XDecl == nil {
+			return nil
+		}
 		return x.XDecl.Type
 
 	case cc.Call:

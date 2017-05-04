@@ -30,6 +30,7 @@ type Config struct {
 	bool     map[string]bool
 	ptr      map[string]bool
 	rename   map[string]string
+	typedefs []string
 
 	// derived during analysis
 	topDecls []*cc.Decl
@@ -214,6 +215,9 @@ func (cfg *Config) read(file string) {
 				continue
 			}
 			cfg.rename[f[1]] = f[2]
+
+		case "typedef":
+			cfg.typedefs = append(cfg.typedefs, f[1:]...)
 
 		default:
 			log.Printf("%s:%d: unknown verb %s", file, lineno, f[0])

@@ -751,12 +751,10 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 		}
 		t = stripTypedef(ptrBase(t))
 		if t.Kind != Struct && t.Kind != Union {
-			lx.Errorf("invalid -> of pointer to non-struct/union %v (type %v)", x.Left, t)
 			break
 		}
 		d := structDot(t, x.Text)
 		if d == nil {
-			lx.Errorf("unknown field %v->%v", t, x.Text)
 			break
 		}
 		x.XDecl = d
@@ -765,7 +763,6 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 	case Call:
 		t := x.Left.XType
 		if t == nil {
-			lx.Errorf("no info for call of %v", x.Left)
 			break
 		}
 		if isPtr(t) {
@@ -848,12 +845,10 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 		}
 		t = stripTypedef(t)
 		if t.Kind != Struct && t.Kind != Union {
-			lx.Errorf("invalid . of non-struct/union %v (type %v)", x.Left, t)
 			break
 		}
 		d := structDot(t, x.Text)
 		if d == nil {
-			lx.Errorf("unknown field %v.%v", t, x.Text)
 			break
 		}
 		x.XDecl = d
@@ -902,7 +897,6 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 				}
 			}
 		}
-		lx.Errorf("invalid comparison of %v (type %v) and %v (type %v)", x.Left, l, x.Right, r)
 
 	case Index:
 		// ptr[int]
@@ -970,15 +964,9 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 		x.XType = promote1(t)
 
 	case Name:
-		if x.XDecl == nil {
-			lx.Errorf("undefined: %s", x.Text)
-			break
+		if x.XDecl != nil {
+			x.XType = x.XDecl.Type
 		}
-		//	XXX this happens for enums
-		//	if x.XDecl.Type == nil {
-		//		lx.Errorf("missing type for defined variable: %s", x.Text)
-		//	}
-		x.XType = x.XDecl.Type
 
 	case Not:
 		// !bool

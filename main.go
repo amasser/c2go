@@ -49,6 +49,14 @@ func main() {
 		flag.Usage()
 	}
 
+	cfg := new(Config)
+	if *cfgFile != "" {
+		cfg.read(*cfgFile)
+	}
+	for _, t := range cfg.typedefs {
+		cc.AddTypeName(t)
+	}
+
 	var r []io.Reader
 	files := args
 	for _, file := range files {
@@ -63,10 +71,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	cfg := new(Config)
-	if *cfgFile != "" {
-		cfg.read(*cfgFile)
-	}
+
 	rewriteTypes(cfg, prog)
 	rewriteSyntax(cfg, prog)
 	rewriteLen(cfg, prog)

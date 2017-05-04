@@ -80,6 +80,13 @@ type lexer struct {
 	expr   *Expr
 }
 
+// AddTypeName tells the lexer that name is the name of a type.
+func AddTypeName(name string) {
+	if _, ok := extraTypes[name]; !ok {
+		extraTypes[name] = &Type{Kind: TypedefType, Name: name}
+	}
+}
+
 type Header struct {
 	decls []*Decl
 	types []*Type
@@ -127,7 +134,7 @@ func (lx *lexer) pushInclude(includeLine string) {
 
 	file, data, err := lx.findInclude(file, s[0] == '<')
 	if err != nil {
-		lx.Errorf("#include %s: %v", s[:i+1], err)
+		fmt.Printf("#include %s: %v\n", s[:i+1], err)
 		return
 	}
 
@@ -449,10 +456,10 @@ Restart:
 		}
 		lx.sym(i)
 		switch lx.tok {
-		case "Adr":
-			lx.tok = "Addr"
 		case "union":
 			lx.tok = "struct"
+		case "NULL":
+			lx.tok = "nil"
 		}
 		yy.str = lx.tok
 		if t := tokId[lx.tok]; t != 0 {
@@ -470,11 +477,34 @@ Restart:
 		if lx.tok == "EXTERN" {
 			goto Restart
 		}
+		if t, ok := extraTypes[lx.tok]; ok {
+			yy.typ = t
+			return tokTypeName
+		}
 		return tokName
 	}
 
 	lx.Errorf("unexpected input byte %#02x (%c)", c, c)
 	return tokError
+}
+
+var extraTypes = map[string]*Type{
+	"bool":     BoolType,
+	"int8_t":   CharType,
+	"int16_t":  ShortType,
+	"int32_t":  Int32Type,
+	"int64_t":  LonglongType,
+	"size_t":   UintType,
+	"ssize_t":  IntType,
+	"time_t":   IntType,
+	"u_short":  UshortType,
+	"u_int":    UintType,
+	"u_long":   UlongType,
+	"uint":     UintType,
+	"uint8_t":  UcharType,
+	"uint16_t": UshortType,
+	"uint32_t": Uint32Type,
+	"uint64_t": UlonglongType,
 }
 
 func (lx *lexer) Error(s string) {

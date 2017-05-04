@@ -32,6 +32,8 @@ const (
 	Uchar
 	Short
 	Ushort
+	Int32
+	Uint32
 	Int
 	Uint
 	Long
@@ -55,6 +57,8 @@ var typeKindString = []string{
 	Uchar:       "uchar",
 	Short:       "short",
 	Ushort:      "ushort",
+	Int32:       "int32",
+	Uint32:      "uint32",
 	Int:         "int",
 	Uint:        "uint",
 	Long:        "long",
@@ -142,6 +146,8 @@ var (
 	UcharType     = newType(Uchar)
 	ShortType     = newType(Short)
 	UshortType    = newType(Ushort)
+	Int32Type     = newType(Int32)
+	Uint32Type    = newType(Uint32)
 	IntType       = newType(Int)
 	UintType      = newType(Uint)
 	LongType      = newType(Long)
@@ -182,6 +188,7 @@ var builtinTypes = map[typeOp]*Type{
 	tInt:                         IntType,
 	tInt | tSigned:               IntType,
 	tInt | tUnsigned:             UintType,
+	tUnsigned:                    UintType,
 	tLong:                        LongType,
 	tLong | tSigned:              LongType,
 	tLong | tUnsigned:            UlongType,

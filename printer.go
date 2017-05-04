@@ -424,7 +424,7 @@ func (p *Printer) printExpr(x *cc.Expr, prec int) {
 		p.Print(")")
 
 	case cc.Cast:
-		if x.Type.Kind == cc.Ptr || x.Type.Kind == cc.Func {
+		if x.Type != nil && (x.Type.Kind == cc.Ptr || x.Type.Kind == cc.Func) {
 			p.Print("(", x.Type, ")(", exprPrec{x.Left, precLow}, ")")
 		} else {
 			p.Print(x.Type, "(", exprPrec{x.Left, precLow}, ")")
@@ -454,7 +454,10 @@ func (p *Printer) printExpr(x *cc.Expr, prec int) {
 		p.Print("TERNARY(", exprPrec{x.List[0], prec - 1}, ", ", exprPrec{x.List[1], prec}, ", ", exprPrec{x.List[2], prec}, ")")
 
 	case cc.Dot:
-		name := x.XDecl.Name
+		name := x.Text
+		if x.XDecl != nil {
+			name = x.XDecl.Name
+		}
 		p.Print(exprPrec{x.Left, prec}, ".", name)
 
 	case cc.Index:
