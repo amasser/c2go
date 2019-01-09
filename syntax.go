@@ -6,8 +6,7 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"unicode/utf8"
+	"strings"
 
 	"github.com/andybalholm/c2go/cc"
 )
@@ -53,10 +52,7 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 			case cc.String:
 				// Rewrite string literal.
 				for i, s := range x.Texts {
-					ss, err := unquoteCString(s)
-					if err == nil {
-						x.Texts[i] = strconv.Quote(ss)
-					}
+					x.Texts[i] = fixEscapes(s)
 				}
 			}
 
@@ -709,185 +705,47 @@ func isfloat(t *cc.Type) bool {
 	return t != nil && (t.Kind == Float32 || t.Kind == Float64)
 }
 
-// unquoteCString is a modified form of strconv.Unquote that handles C syntax
-// instead of Go syntax.
-func unquoteCString(s string) (string, error) {
-	n := len(s)
-	if n < 2 {
-		return "", strconv.ErrSyntax
-	}
-	quote := s[0]
-	if quote != s[n-1] {
-		return "", strconv.ErrSyntax
-	}
-	s = s[1 : n-1]
-
-	if quote != '"' && quote != '\'' {
-		return "", strconv.ErrSyntax
-	}
-	if contains(s, '\n') {
-		return "", strconv.ErrSyntax
-	}
-
-	// Is it trivial? Avoid allocation.
-	if !contains(s, '\\') && !contains(s, quote) {
-		switch quote {
-		case '"':
-			if utf8.ValidString(s) {
-				return s, nil
-			}
-		case '\'':
-			r, size := utf8.DecodeRuneInString(s)
-			if size == len(s) && (r != utf8.RuneError || size != 1) {
-				return s, nil
-			}
+// fixEscapes changes the escape sequences from a C string literal to make them compatible with Go.
+func fixEscapes(s string) string {
+	pos := 0
+	for {
+		backslash := strings.Index(s[pos:], "\\")
+		if backslash == -1 {
+			return s
 		}
-	}
-
-	var runeTmp [utf8.UTFMax]byte
-	buf := make([]byte, 0, 3*len(s)/2) // Try to avoid more allocations.
-	for len(s) > 0 {
-		c, multibyte, ss, err := unquoteCChar(s, quote)
-		if err != nil {
-			return "", err
+		pos += backslash
+		if len(s) < pos+2 {
+			return s
 		}
-		s = ss
-		if c < utf8.RuneSelf || !multibyte {
-			buf = append(buf, byte(c))
-		} else {
-			n := utf8.EncodeRune(runeTmp[:], c)
-			buf = append(buf, runeTmp[:n]...)
+		if strings.HasPrefix(s[pos:], "\\'") {
+			// The single quote shouldn't be escaped in a double-quoted string.
+			// Drop the backslash
+			s = s[:pos] + s[pos+1:]
+			continue
 		}
-		if quote == '\'' && len(s) != 0 {
-			// single-quoted must be single character
-			return "", strconv.ErrSyntax
+		if strings.HasPrefix(s[pos:], "\\\\") {
+			pos += 2
+			continue
 		}
-	}
-	return string(buf), nil
-}
-
-// contains reports whether the string contains the byte c.
-func contains(s string, c byte) bool {
-	for i := 0; i < len(s); i++ {
-		if s[i] == c {
-			return true
-		}
-	}
-	return false
-}
-
-// unquoteCChar is a modified form of strconv.UnquoteChar that handles C syntax
-// instead of Go syntax.
-func unquoteCChar(s string, quote byte) (value rune, multibyte bool, tail string, err error) {
-	// easy cases
-	if len(s) == 0 {
-		err = strconv.ErrSyntax
-		return
-	}
-	switch c := s[0]; {
-	case c == quote && (quote == '\'' || quote == '"'):
-		err = strconv.ErrSyntax
-		return
-	case c >= utf8.RuneSelf:
-		r, size := utf8.DecodeRuneInString(s)
-		return r, true, s[size:], nil
-	case c != '\\':
-		return rune(s[0]), false, s[1:], nil
-	}
-
-	// hard case: c is backslash
-	if len(s) <= 1 {
-		err = strconv.ErrSyntax
-		return
-	}
-	c := s[1]
-	s = s[2:]
-
-	switch c {
-	case 'a':
-		value = '\a'
-	case 'b':
-		value = '\b'
-	case 'f':
-		value = '\f'
-	case 'n':
-		value = '\n'
-	case 'r':
-		value = '\r'
-	case 't':
-		value = '\t'
-	case 'v':
-		value = '\v'
-	case 'x', 'u', 'U':
-		n := 0
-		switch c {
-		case 'x':
-			n = 2
-		case 'u':
-			n = 4
-		case 'U':
-			n = 8
-		}
-		var v rune
-		if len(s) < n {
-			err = strconv.ErrSyntax
-			return
-		}
-		for j := 0; j < n; j++ {
-			x, ok := unhex(s[j])
-			if !ok {
-				err = strconv.ErrSyntax
-				return
-			}
-			v = v<<4 | x
-		}
-		s = s[n:]
-		if c == 'x' {
-			// single-byte string, possibly not UTF-8
-			value = v
-			break
-		}
-		if v > utf8.MaxRune {
-			err = strconv.ErrSyntax
-			return
-		}
-		value = v
-		multibyte = true
-	case '0', '1', '2', '3', '4', '5', '6', '7':
-		v := rune(c) - '0'
-		var j int
-		for j = 0; j < 2 && j < len(s); j++ {
-			x := rune(s[j]) - '0'
-			if x < 0 || x > 7 {
+		digits := 0
+		for pos+digits+1 < len(s) {
+			c := s[pos+digits+1]
+			if c < '0' || c > '7' {
 				break
 			}
-			v = (v << 3) | x
+			digits++
 		}
-		s = s[j:]
-		if v > 255 {
-			err = strconv.ErrSyntax
-			return
+		switch digits {
+		case 1:
+			s = s[:pos+1] + "00" + s[pos+1:]
+			continue
+		case 2:
+			s = s[:pos+1] + "0" + s[pos+1:]
+			continue
 		}
-		value = v
-	case '\\', '\'', '"', '?':
-		value = rune(c)
-	default:
-		err = strconv.ErrSyntax
-		return
-	}
-	tail = s
-	return
-}
 
-func unhex(b byte) (v rune, ok bool) {
-	c := rune(b)
-	switch {
-	case '0' <= c && c <= '9':
-		return c - '0', true
-	case 'a' <= c && c <= 'f':
-		return c - 'a' + 10, true
-	case 'A' <= c && c <= 'F':
-		return c - 'A' + 10, true
+		pos++
 	}
-	return
+
+	return s
 }
