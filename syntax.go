@@ -245,6 +245,21 @@ func rewriteStmt(stmt *cc.Stmt) {
 		}
 
 	case cc.If, cc.Return:
+		if stmt.Op == cc.Return && stmt.Expr != nil && stmt.Expr.Op == cc.Cond {
+			// If it's returning a conditional expression, rewrite it as an if statement
+			// with a return statement on each branch.
+			list := stmt.Expr.List
+			stmt.Op = cc.If
+			stmt.Expr = list[0]
+			stmt.Body = &cc.Stmt{
+				Op:   cc.Return,
+				Expr: list[1],
+			}
+			stmt.Else = &cc.Stmt{
+				Op:   cc.Return,
+				Expr: list[2],
+			}
+		}
 		if stmt.Op == cc.If && stmt.Else == nil {
 			fixAndAndAssign(stmt)
 		}
