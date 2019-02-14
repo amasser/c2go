@@ -664,17 +664,7 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 		return left
 
 	case cc.Name:
-		if x.Text == "nelem" {
-		}
 		switch x.Text {
-		case "T", "S", "N", "L", "P", "C":
-			x.Text = "nil"
-			x.XDecl = nil
-			return nil
-		case "nelem":
-			x.Text = "len"
-			x.XDecl = nil
-			fallthrough
 		case "len":
 			return &cc.Type{Kind: cc.Func, Base: intType}
 		}
