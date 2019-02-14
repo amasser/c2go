@@ -274,6 +274,33 @@ func rewriteStmt(stmt *cc.Stmt) {
 		}
 
 	case cc.StmtExpr:
+		if stmt.Expr.Op == cc.Eq && stmt.Expr.Right.Op == cc.Cond {
+			// If it is assigning a conditional expression, rewrite it as an if statement
+			// with two assignments.
+			left := stmt.Expr.Left
+			list := stmt.Expr.Right.List
+			stmt.Op = cc.If
+			stmt.Expr = list[0]
+			stmt.Body = &cc.Stmt{
+				Op: cc.StmtExpr,
+				Expr: &cc.Expr{
+					Op:    cc.Eq,
+					Left:  left,
+					Right: list[1],
+				},
+			}
+			stmt.Else = &cc.Stmt{
+				Op: cc.StmtExpr,
+				Expr: &cc.Expr{
+					Op:    cc.Eq,
+					Left:  left,
+					Right: list[2],
+				},
+			}
+			rewriteStmt(stmt)
+			return
+		}
+
 		before, after := extractSideEffects(stmt.Expr, sideStmt)
 		if len(before)+len(after) > 0 {
 			old := copyStmt(stmt)
