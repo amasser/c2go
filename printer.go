@@ -390,7 +390,11 @@ func (p *Printer) printExpr(x *cc.Expr, prec int) {
 		p.Print("})()")
 
 	case ExprSlice:
-		p.Print(x.List[0], "[")
+		if x.List[0].Op == cc.Indir || x.List[0].Op == cc.Paren {
+			p.Print("(", x.List[0], ")[")
+		} else {
+			p.Print(x.List[0], "[")
+		}
 		if x.List[1] != nil {
 			p.Print(x.List[1])
 		}
