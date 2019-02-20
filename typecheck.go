@@ -144,8 +144,6 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 		if d, ok := x.(*cc.Decl); ok {
 			if cfg.bool[declKey(d)] {
 				t.Kind = Bool
-			} else if strings.HasPrefix(d.Name, "no") {
-				println("not bool", d.Name, declKey(d))
 			}
 		}
 		return t
@@ -170,8 +168,6 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			if d, ok := x.(*cc.Decl); ok {
 				if cfg.bool[declKey(d)] || typ.Name == "bool" {
 					t.Kind = Bool
-				} else if strings.HasPrefix(d.Name, "no") {
-					println("not bool", d.Name, declKey(d))
 				}
 			}
 			return t
