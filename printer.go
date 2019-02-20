@@ -478,7 +478,11 @@ func (p *Printer) printExpr(x *cc.Expr, prec int) {
 		p.Print(name)
 
 	case cc.Number:
-		p.Print(strings.TrimRight(x.Text, "LlUu"))
+		num := strings.TrimRight(x.Text, "LlUu")
+		if !strings.HasPrefix(num, "0x") {
+			num = strings.TrimRight(num, "Ff")
+		}
+		p.Print(num)
 
 	case cc.SizeofExpr:
 		p.Print("sizeof(", x.Left, ")")
