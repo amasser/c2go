@@ -74,6 +74,9 @@ type lexer struct {
 	scope       *Scope
 	includeSeen map[string]*Header
 
+	// header deduplication
+	includedFiles map[string]bool
+
 	// output
 	errors []string
 	prog   *Prog
@@ -96,6 +99,7 @@ func (lx *lexer) parse() {
 	if lx.includeSeen == nil {
 		lx.includeSeen = make(map[string]*Header)
 	}
+	lx.includedFiles = make(map[string]bool)
 	if lx.wholeInput == "" {
 		lx.wholeInput = lx.input
 	}
@@ -138,6 +142,11 @@ func (lx *lexer) pushInclude(includeLine string) {
 		return
 	}
 
+	if lx.includedFiles[file] {
+		return
+	}
+	lx.includedFiles[file] = true
+
 	if hdr := lx.includeSeen[file]; hdr != nil {
 		for _, decl := range hdr.decls {
 			// fmt.Printf("%s: replay %s\n", file, decl.Name)
@@ -149,13 +158,12 @@ func (lx *lexer) pushInclude(includeLine string) {
 		return
 	}
 
-	hdr := lx.declSave
-	if hdr == nil {
-		hdr = new(Header)
-		lx.includeSeen[file] = hdr
-	} else {
+	if lx.declSave != nil {
 		fmt.Printf("%s: warning nested %s\n", lx.span(), includeLine)
 	}
+
+	hdr := new(Header)
+	lx.includeSeen[file] = hdr
 
 	if data == nil {
 		return
