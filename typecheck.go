@@ -308,6 +308,9 @@ func fixGoTypesStmt(prog *cc.Prog, fn *cc.Decl, x *cc.Stmt) {
 	switch x.Op {
 	case cc.StmtDecl:
 		fixGoTypesExpr(fn, x.Expr, nil)
+		if x.Decl.Init != nil {
+			fixGoTypesExpr(fn, x.Decl.Init.Expr, nil)
+		}
 
 	case cc.StmtExpr:
 		if x.Expr != nil && x.Expr.Op == cc.Call && x.Expr.Left.Op == cc.Name {
@@ -734,6 +737,11 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 
 	case cc.VaArg:
 		// TODO
+		return nil
+
+	case cc.Cond:
+		// Conditional expressions should have been eliminated by the time we get here,
+		// but in the initializer of a variable declaration there's not much we can do with them.
 		return nil
 	}
 }
