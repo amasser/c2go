@@ -80,8 +80,8 @@ func (lx *lexer) pushType(typ *Type) *Type {
 		return typ
 	}
 	if typ.Decls != nil {
-		if old.Decls != nil {
-			lx.Errorf("multiple definitions for %s %s", old.Kind, old.Tag)
+		if old.Decls != nil && old.Span != typ.Span {
+			lx.Errorf("multiple definitions for %s %s: %v and %v", old.Kind, old.Tag, old.Span, typ.Span)
 		}
 		old.SyntaxInfo = typ.SyntaxInfo
 		old.Decls = typ.Decls
