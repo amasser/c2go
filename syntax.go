@@ -309,6 +309,17 @@ func rewriteStmt(stmt *cc.Stmt) {
 			stmt.Block = append(append(before, old), after...)
 		}
 
+	case cc.StmtDecl:
+		if stmt.Decl.Init != nil {
+			before, after := extractSideEffects(stmt.Decl.Init.Expr, sideStmt)
+			if len(before)+len(after) > 0 {
+				old := copyStmt(stmt)
+				stmt.Expr = nil
+				stmt.Op = BlockNoBrace
+				stmt.Block = append(append(before, old), after...)
+			}
+		}
+
 	case cc.Goto:
 		// TODO: Figure out where the goto goes and maybe rewrite
 		// to labeled break/continue.
