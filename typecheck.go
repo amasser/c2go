@@ -604,6 +604,13 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 		return nil
 
 	case cc.Cast:
+		if x.Left.Op == cc.Call && x.Left.Left.Op == cc.Name && x.Left.Left.Text == "malloc" {
+			// Casting the return value of malloc does more harm than good,
+			// so remove the cast.
+			typ := fixGoTypesExpr(fn, x.Left, nil)
+			*x = *x.Left
+			return typ
+		}
 		fixGoTypesExpr(fn, x.Left, nil)
 		if isEmptyInterface(x.Left.XType) {
 			x.Op = TypeAssert
