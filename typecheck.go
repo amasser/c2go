@@ -1187,7 +1187,7 @@ func fixMemset(prog *cc.Prog, fn *cc.Decl, stmt *cc.Stmt) {
 	// Found it. Replace with zeroing for loop.
 	stmt.Op = cc.For
 	stmt.Pre = &cc.Expr{
-		Op: cc.Eq,
+		Op: ColonEq,
 		Left: &cc.Expr{
 			Op:    cc.Name,
 			Text:  "i",
