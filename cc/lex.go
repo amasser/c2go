@@ -138,7 +138,9 @@ func (lx *lexer) pushInclude(includeLine string) {
 
 	file, data, err := lx.findInclude(file, s[0] == '<')
 	if err != nil {
-		fmt.Printf("#include %s: %v\n", s[:i+1], err)
+		if s[0] != '<' {
+			fmt.Printf("#include %s: %v\n", s[:i+1], err)
+		}
 		return
 	}
 
@@ -159,7 +161,7 @@ func (lx *lexer) pushInclude(includeLine string) {
 	}
 
 	if lx.declSave != nil {
-		fmt.Printf("%s: warning nested %s\n", lx.span(), includeLine)
+		// fmt.Printf("%s: warning nested %s\n", lx.span(), includeLine)
 	}
 
 	hdr := new(Header)
