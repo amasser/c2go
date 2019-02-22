@@ -1207,7 +1207,11 @@ func fixMemset(prog *cc.Prog, fn *cc.Decl, stmt *cc.Stmt) {
 			Text:  "i",
 			XType: intType,
 		},
-		Right: count,
+		Right: &cc.Expr{
+			Op:   cc.Cast,
+			Type: intType,
+			Left: count,
+		},
 		XType: boolType,
 	}
 	stmt.Post = &cc.Expr{
