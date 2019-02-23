@@ -728,7 +728,6 @@ func (p *Printer) printStmt(x *cc.Stmt) {
 const (
 	Bool cc.TypeKind = 100000 + iota
 	Int8
-	Uint8
 	Byte
 	Int16
 	Uint16
@@ -850,7 +849,6 @@ func (p *Printer) printType(t *cc.Type) {
 var typemap = map[cc.TypeKind]string{
 	Bool:    "bool",
 	Int8:    "int8",
-	Uint8:   "uint8",
 	Int16:   "int16",
 	Uint16:  "uint16",
 	Rune:    "rune",

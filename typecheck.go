@@ -96,7 +96,7 @@ var (
 
 var c2goKind = map[cc.TypeKind]cc.TypeKind{
 	cc.Char:      Int8,
-	cc.Uchar:     Uint8,
+	cc.Uchar:     Byte,
 	cc.Short:     Int16,
 	cc.Ushort:    Uint16,
 	cc.Int32:     Int32,
@@ -113,7 +113,7 @@ var c2goKind = map[cc.TypeKind]cc.TypeKind{
 }
 
 var c2goName = map[string]cc.TypeKind{
-	"uchar":  Uint8,
+	"uchar":  Byte,
 	"int32":  Int32,
 	"uint32": Uint32,
 	"int64":  Int64,
@@ -728,7 +728,7 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 
 	case cc.SizeofExpr:
 		left := fixGoTypesExpr(fn, x.Left, nil)
-		if left != nil && (left.Kind == cc.Array || left.Kind == Slice) && left.Base.Def().Is(Uint8) {
+		if left != nil && (left.Kind == cc.Array || left.Kind == Slice) && left.Base.Def().Is(Byte) {
 			x.Op = cc.Call
 			x.List = []*cc.Expr{x.Left}
 			x.Left = &cc.Expr{Op: cc.Name, Text: "len"}
@@ -890,7 +890,7 @@ func fixShiftCount(fn *cc.Decl, x *cc.Expr) {
 		return
 	}
 	switch typ.Kind {
-	case Uint8, Uint16, Uint32, Uint64, Uint, Uintptr, Byte:
+	case Uint16, Uint32, Uint64, Uint, Uintptr, Byte:
 		return
 	}
 	if typ.Kind == Int64 {
@@ -1019,8 +1019,6 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 				fixedSize = siz.Left
 			case siz.Op == cc.Mul && siz.Right.Op == cc.SizeofExpr && sameType(left.Base, siz.Right.Left.XType):
 				fixedSize = siz.Left
-			case left.Base.Is(Uint8) && right.Base.Is(Uint8):
-				fixedSize = siz
 			case left.Base.Is(Byte) && right.Base.Is(Byte):
 				fixedSize = siz
 			}
@@ -1193,7 +1191,7 @@ func fixMemset(prog *cc.Prog, fn *cc.Decl, stmt *cc.Stmt) {
 	} else {
 		count = siz
 		objType = fixGoTypesExpr(fn, x.List[0], nil)
-		if !objType.Base.Is(Byte) && !objType.Base.Is(Uint8) {
+		if !objType.Base.Is(Byte) {
 			// fprintf(x.Span, "unsupported %v - wrong size form for non-byte type", x)
 			return
 		}
