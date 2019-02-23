@@ -1023,6 +1023,9 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 				fixedSize = siz
 			}
 			if fixedSize != nil {
+				if left.Kind == cc.Array {
+					x.List[0] = &cc.Expr{Op: ExprSlice, List: []*cc.Expr{x.List[0], nil, nil}}
+				}
 				x.Left.Text = "copy"
 				x.Left.XDecl = nil
 				if x.List[1].Op == ExprSlice && x.List[1].List[1] == nil {
@@ -1034,7 +1037,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 				return true
 			}
 		}
-		// fprintf(x.Span, "unsupported %v (%v %v)", x, GoString(left), GoString(right))
+		// fprintf(x.Span, "unsupported %v (%v %v)", GoString(x), GoString(left), GoString(right))
 		return true
 
 	case "malloc":
