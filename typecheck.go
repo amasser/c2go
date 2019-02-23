@@ -942,7 +942,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		return false
 	}
 	switch x.Left.Text {
-	case "memmove":
+	case "memmove", "memcpy":
 		if len(x.List) != 3 {
 			// fprintf(x.Span, "unsupported %v", x)
 			return false
@@ -1012,16 +1012,29 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		left := fixGoTypesExpr(fn, x.List[0], nil)
 		right := fixGoTypesExpr(fn, x.List[1], nil)
 		fixGoTypesExpr(fn, siz, nil)
-		if isSliceOrArray(left) && isSliceOrArray(right) && left.Base.Is(Uint8) && right.Base.Is(Uint8) {
-			x.Left.Text = "copy"
-			x.Left.XDecl = nil
-			if x.List[1].Op == ExprSlice && x.List[1].List[1] == nil {
-				x.List[1].List[2] = siz
-			} else {
-				x.List[1] = &cc.Expr{Op: ExprSlice, List: []*cc.Expr{x.List[1], nil, siz}}
+		if isSliceOrArray(left) && isSliceOrArray(right) {
+			var fixedSize *cc.Expr
+			switch {
+			case siz.Op == cc.Mul && siz.Right.Op == cc.SizeofType && sameType(left.Base, siz.Right.Type):
+				fixedSize = siz.Left
+			case siz.Op == cc.Mul && siz.Right.Op == cc.SizeofExpr && sameType(left.Base, siz.Right.Left.XType):
+				fixedSize = siz.Left
+			case left.Base.Is(Uint8) && right.Base.Is(Uint8):
+				fixedSize = siz
+			case left.Base.Is(Byte) && right.Base.Is(Byte):
+				fixedSize = siz
 			}
-			x.List = x.List[:2]
-			return true
+			if fixedSize != nil {
+				x.Left.Text = "copy"
+				x.Left.XDecl = nil
+				if x.List[1].Op == ExprSlice && x.List[1].List[1] == nil {
+					x.List[1].List[2] = siz
+				} else {
+					x.List[1] = &cc.Expr{Op: ExprSlice, List: []*cc.Expr{x.List[1], nil, fixedSize}}
+				}
+				x.List = x.List[:2]
+				return true
+			}
 		}
 		// fprintf(x.Span, "unsupported %v (%v %v)", x, GoString(left), GoString(right))
 		return true
