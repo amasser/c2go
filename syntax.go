@@ -310,7 +310,46 @@ func rewriteStmt(stmt *cc.Stmt) {
 		}
 
 	case cc.StmtDecl:
-		if stmt.Decl.Init != nil {
+		if stmt.Decl.Init != nil && stmt.Decl.Init.Expr != nil {
+			if stmt.Decl.Init.Expr.Op == cc.Cond {
+				// If it is initializing the variable with a conditional expression,
+				// first declare the variable, then initialize it in an if statement.
+				list := stmt.Decl.Init.Expr.List
+				decl := copyStmt(stmt)
+				decl.Decl.Init = nil
+				dest := &cc.Expr{
+					Op:   cc.Name,
+					Text: stmt.Decl.Name,
+				}
+				*stmt = cc.Stmt{
+					Op: BlockNoBrace,
+					Block: []*cc.Stmt{
+						decl,
+						{
+							Op:   cc.If,
+							Expr: list[0],
+							Body: &cc.Stmt{
+								Op: cc.StmtExpr,
+								Expr: &cc.Expr{
+									Op:    cc.Eq,
+									Left:  dest,
+									Right: list[1],
+								},
+							},
+							Else: &cc.Stmt{
+								Op: cc.StmtExpr,
+								Expr: &cc.Expr{
+									Op:    cc.Eq,
+									Left:  dest,
+									Right: list[2],
+								},
+							},
+						},
+					},
+				}
+				rewriteStmt(stmt)
+				return
+			}
 			before, after := extractSideEffects(stmt.Decl.Init.Expr, sideStmt)
 			if len(before)+len(after) > 0 {
 				old := copyStmt(stmt)
