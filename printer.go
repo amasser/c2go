@@ -674,7 +674,11 @@ func (p *Printer) printStmt(x *cc.Stmt) {
 		// ok
 
 	case cc.For:
-		p.Print("for ", x.Pre, "; ", x.Expr, "; ", x.Post, nestBlock{x.Body, false})
+		if x.Pre == nil && x.Post == nil && GoString(x.Expr) == "true" {
+			p.Print("for ", nestBlock{x.Body, false})
+		} else {
+			p.Print("for ", x.Pre, "; ", x.Expr, "; ", x.Post, nestBlock{x.Body, false})
+		}
 
 	case ForRange:
 		p.Print("for ", x.Pre, " = range ", x.Post, nestBlock{x.Body, false})
