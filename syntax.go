@@ -279,6 +279,11 @@ func rewriteStmt(stmt *cc.Stmt) {
 			// with two assignments.
 			left := stmt.Expr.Left
 			list := stmt.Expr.Right.List
+			for i := 1; i < 3; i++ {
+				for list[i].Op == cc.Paren {
+					list[i] = list[i].Left
+				}
+			}
 			stmt.Op = cc.If
 			stmt.Expr = list[0]
 			stmt.Body = &cc.Stmt{
@@ -321,6 +326,11 @@ func rewriteStmt(stmt *cc.Stmt) {
 					Op:   cc.Name,
 					Text: stmt.Decl.Name,
 				}
+				for i := 1; i < 3; i++ {
+					for list[i].Op == cc.Paren {
+						list[i] = list[i].Left
+					}
+				}
 				*stmt = cc.Stmt{
 					Op: BlockNoBrace,
 					Block: []*cc.Stmt{
@@ -347,7 +357,6 @@ func rewriteStmt(stmt *cc.Stmt) {
 						},
 					},
 				}
-				rewriteStmt(stmt)
 				return
 			}
 			before, after := extractSideEffects(stmt.Decl.Init.Expr, 0)
