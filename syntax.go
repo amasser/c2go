@@ -350,7 +350,7 @@ func rewriteStmt(stmt *cc.Stmt) {
 				rewriteStmt(stmt)
 				return
 			}
-			before, after := extractSideEffects(stmt.Decl.Init.Expr, sideStmt)
+			before, after := extractSideEffects(stmt.Decl.Init.Expr, 0)
 			if len(before)+len(after) > 0 {
 				old := copyStmt(stmt)
 				stmt.Expr = nil
