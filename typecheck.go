@@ -226,6 +226,10 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			t.Kind = Slice
 		}
 
+		if ok && typ.Base.Kind == cc.Ptr && cfg.slice["*"+declKey(d)] {
+			t.Base.Kind = Slice
+		}
+
 		return t
 
 	case cc.Func:
