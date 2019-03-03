@@ -868,37 +868,6 @@ var typemap = map[cc.TypeKind]string{
 	Float64: "float64",
 }
 
-func (p *Printer) oldprintDecl(x *cc.Decl) {
-	if x.Storage != 0 {
-		p.Print(x.Storage, " ")
-	}
-	if x.Type == nil || x.Init != nil && len(x.Init.Braced) > 0 {
-		p.Print(x.Name)
-	} else {
-		name := x.Name
-		if x.Type.Kind == cc.Func && x.Body != nil {
-			name = "\n" + name
-		}
-		p.Print(cc.TypedName{x.Type, name})
-		if x.Name == "" {
-			switch x.Type.Kind {
-			case cc.Struct, cc.Union, cc.Enum:
-				p.Print(" {", Indent)
-				for _, decl := range x.Type.Decls {
-					p.Print(Newline, decl)
-				}
-				p.Print(Unindent, Newline, "}")
-			}
-		}
-	}
-	if x.Init != nil {
-		p.Print(" = ", typedInit{x.Type, x.Init})
-	}
-	if x.Body != nil {
-		p.Print(Newline, x.Body)
-	}
-}
-
 func (p *Printer) printDecl(decl *cc.Decl) {
 	if p.dup(decl) {
 		return
@@ -908,14 +877,15 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 	defer p.Print(decl.Comments.Suffix, decl.Comments.After)
 
 	t := decl.Type
+	isEnum := t != nil && (t.Kind == cc.Enum || Bool <= t.Kind && t.Kind <= Float64 && t.Decls != nil)
 	if decl.Storage&cc.Typedef != 0 {
-		if t.Kind == cc.Struct || t.Kind == cc.Union || t.Kind == cc.Union {
+		if t.Kind == cc.Struct || t.Kind == cc.Union || isEnum {
 			if t.Tag == "" {
 				t.Tag = decl.Name
 			} else if decl.Name != t.Tag {
 				fprintf(decl.Span, "typedef %s and tag %s do not match", decl.Name, t.Tag)
 			}
-			if t.Kind == cc.Enum {
+			if isEnum {
 				p.printEnumDecl(t)
 			} else {
 				p.printStructDecl(t)
@@ -931,12 +901,8 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		case cc.Struct, cc.Union:
 			p.printStructDecl(t)
 			return
-		case cc.Enum:
-			p.printEnumDecl(t)
-			return
 		}
-		if Bool <= t.Kind && t.Kind <= Float64 && t.Decls != nil {
-			// was an enum
+		if isEnum {
 			p.printEnumDecl(t)
 			return
 		}
@@ -1000,34 +966,34 @@ func (p *Printer) printStructBody(t *cc.Type) {
 	}
 }
 
+var printedEnumValues = map[string]bool{}
+
 func (p *Printer) printEnumDecl(t *cc.Type) {
-	typeSuffix := ""
-	if t.Tag != "" {
-		typeSuffix = " " + t.Tag
-		p.Print("type ", t.Tag, " int", Newline)
-		//	fprintf(t.Span, "cannot handle enum tags")
-		//	return
-	}
-	p.Print("const (", Indent)
-	for i, decl := range t.Decls {
-		p.Print(Newline, decl.Name)
-		if decl.Init == nil && i == 0 {
-			if len(t.Decls) >= 2 && t.Decls[1].Init == nil {
-				p.Print(typeSuffix, " = iota")
-			} else {
-				p.Print(typeSuffix, " = 0")
-			}
-		} else if decl.Init != nil {
-			p.Print(typeSuffix, " = ", decl.Init.Expr)
-			if i+1 < len(t.Decls) && t.Decls[i+1].Init == nil {
-				p.Print(" + iota")
-				if i > 0 {
-					p.Print(fmt.Sprintf("-%d", i))
+	if !printedEnumValues[t.Tag] {
+		p.Print("const (", Indent)
+		for i, decl := range t.Decls {
+			p.Print(Newline, decl.Name)
+			if decl.Init == nil && i == 0 {
+				if len(t.Decls) >= 2 && t.Decls[1].Init == nil {
+					p.Print(" = iota")
+				} else {
+					p.Print(" = 0")
+				}
+			} else if decl.Init != nil {
+				p.Print(" = ", decl.Init.Expr)
+				if i+1 < len(t.Decls) && t.Decls[i+1].Init == nil {
+					p.Print(" + iota")
+					if i > 0 {
+						p.Print(fmt.Sprintf("-%d", i))
+					}
 				}
 			}
 		}
+		p.Print(Unindent, Newline, ")")
+		if t.Tag != "" {
+			printedEnumValues[t.Tag] = true
+		}
 	}
-	p.Print(Unindent, Newline, ")")
 }
 
 func (p *Printer) printFuncDecl(decl *cc.Decl) {

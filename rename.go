@@ -100,7 +100,6 @@ func renameDecls(cfg *Config, prog *cc.Prog) {
 					d.Type.TypeDecl = d
 				}
 			case cc.Enum:
-				d.Type.Tag = "" // enum tags are worthless
 				for _, dd := range d.Type.Decls {
 					decls = append(decls, dd)
 				}

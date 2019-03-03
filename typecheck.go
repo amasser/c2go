@@ -141,6 +141,8 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 
 	case cc.Char, cc.Uchar, cc.Short, cc.Ushort, cc.Int32, cc.Uint32, cc.Int, cc.Uint, cc.Long, cc.Ulong, cc.Longlong, cc.Ulonglong, cc.Float, cc.Double, cc.Enum:
 		t := &cc.Type{Kind: c2goKind[typ.Kind]}
+		t.Decls = typ.Decls
+		t.Tag = typ.Tag
 		if d, ok := x.(*cc.Decl); ok {
 			if cfg.bool[declKey(d)] {
 				t.Kind = Bool
