@@ -119,7 +119,7 @@ This indicates that the parameter or local variable `table`
 in the function `ReplicateValue` should be translated as a slice instead of as a pointer.
 (The default is to translate `char *` as `[]byte`, and other pointer types as pointers.)
 You will need a `slice` type hint for each pointer variable
-that is used to point to an array of objects rather than a single objects.
+that is used to point to an array of objects rather than a single object.
 The other type hints available for pointer variables are `ptr` and `string`.
 
 Besides the type hints for pointers, there is also `bool`
