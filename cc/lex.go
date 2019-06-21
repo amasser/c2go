@@ -8,9 +8,6 @@ package cc
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 )
@@ -60,7 +57,6 @@ type lexer struct {
 	start int
 	byte  int
 	lexInput
-	pushed      []lexInput
 	forcePos    Pos
 	c2goComment bool // inside /*c2go ... */ comment
 	comments    []Comment
@@ -71,11 +67,7 @@ type lexer struct {
 	enumSeen map[interface{}]bool
 
 	// type checking state
-	scope       *Scope
-	includeSeen map[string]*Header
-
-	// header deduplication
-	includedFiles map[string]bool
+	scope *Scope
 
 	// output
 	errors []string
@@ -90,16 +82,7 @@ func AddTypeName(name string) {
 	}
 }
 
-type Header struct {
-	decls []*Decl
-	types []*Type
-}
-
 func (lx *lexer) parse() {
-	if lx.includeSeen == nil {
-		lx.includeSeen = make(map[string]*Header)
-	}
-	lx.includedFiles = make(map[string]bool)
 	if lx.wholeInput == "" {
 		lx.wholeInput = lx.input
 	}
@@ -114,108 +97,6 @@ type lexInput struct {
 	lastsym    string
 	file       string
 	lineno     int
-	declSave   *Header
-}
-
-func (lx *lexer) pushInclude(includeLine string) {
-	s := strings.TrimSpace(strings.TrimPrefix(includeLine, "#include"))
-	if !strings.HasPrefix(s, "<") && !strings.HasPrefix(s, "\"") {
-		lx.Errorf("malformed #include")
-		return
-	}
-	sep := ">"
-	if s[0] == '"' {
-		sep = "\""
-	}
-	i := strings.Index(s[1:], sep)
-	if i < 0 {
-		lx.Errorf("malformed #include")
-		return
-	}
-	i++
-
-	file := s[1:i]
-
-	file, data, err := lx.findInclude(file, s[0] == '<')
-	if err != nil {
-		if s[0] != '<' {
-			fmt.Printf("#include %s: %v\n", s[:i+1], err)
-		}
-		return
-	}
-
-	if lx.includedFiles[file] {
-		return
-	}
-	lx.includedFiles[file] = true
-
-	if hdr := lx.includeSeen[file]; hdr != nil {
-		for _, decl := range hdr.decls {
-			// fmt.Printf("%s: replay %s\n", file, decl.Name)
-			lx.pushDecl(decl)
-		}
-		for _, typ := range hdr.types {
-			lx.pushType(typ)
-		}
-		return
-	}
-
-	if lx.declSave != nil {
-		// fmt.Printf("%s: warning nested %s\n", lx.span(), includeLine)
-	}
-
-	hdr := new(Header)
-	lx.includeSeen[file] = hdr
-
-	if data == nil {
-		return
-	}
-
-	lx.pushed = append(lx.pushed, lx.lexInput)
-	str := string(append(data, '\n'))
-	lx.lexInput = lexInput{
-		input:      str,
-		wholeInput: str,
-		file:       file,
-		lineno:     1,
-		declSave:   hdr,
-	}
-}
-
-var includes []string
-
-func AddInclude(dir string) {
-	includes = append(includes, dir)
-}
-
-func (lx *lexer) findInclude(name string, std bool) (string, []byte, error) {
-	if !filepath.IsAbs(name) {
-		name1 := filepath.Join(filepath.Dir(lx.file), name)
-		if _, err := os.Stat(name1); err != nil {
-			for _, dir := range includes {
-				name2 := filepath.Join(dir, name)
-				if _, err := os.Stat(name2); err == nil {
-					name1 = name2
-					break
-				}
-			}
-		}
-		name = name1
-	}
-	data, err := ioutil.ReadFile(name)
-	if err != nil {
-		return "", nil, err
-	}
-	return name, data, nil
-}
-
-func (lx *lexer) pop() bool {
-	if len(lx.pushed) == 0 {
-		return false
-	}
-	lx.lexInput = lx.pushed[len(lx.pushed)-1]
-	lx.pushed = lx.pushed[:len(lx.pushed)-1]
-	return true
 }
 
 func (lx *lexer) pos() Pos {
@@ -309,9 +190,6 @@ Restart:
 	yy.span.Start = lx.pos()
 	in := lx.input
 	if len(in) == 0 {
-		if lx.pop() {
-			goto Restart
-		}
 		return tokEOF
 	}
 	c := in[0]
@@ -344,9 +222,6 @@ Restart:
 		}
 
 		lx.skip(i)
-		if strings.HasPrefix(str, "#include") {
-			lx.pushInclude(str)
-		}
 		goto Restart
 
 	case 'L':

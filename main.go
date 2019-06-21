@@ -33,7 +33,6 @@ import (
 
 var (
 	cfgFile = flag.String("c", "", "config file")
-	inc     = flag.String("I", "", "include directory")
 )
 
 func main() {
@@ -43,10 +42,6 @@ func main() {
 		fmt.Fprintf(os.Stderr, "usage: c2go [options] *.c\n")
 		flag.PrintDefaults()
 		os.Exit(2)
-	}
-
-	if *inc != "" {
-		cc.AddInclude(*inc)
 	}
 
 	args := flag.Args()

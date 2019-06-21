@@ -31,9 +31,6 @@ func (lx *lexer) pushDecl(decl *Decl) {
 		sc.Decl = make(map[string]*Decl)
 	}
 	sc.Decl[decl.Name] = decl
-	if hdr := lx.declSave; hdr != nil && sc.Next == nil {
-		hdr.decls = append(hdr.decls, decl)
-	}
 }
 
 func (lx *lexer) lookupDecl(name string) *Decl {
@@ -68,9 +65,6 @@ func (lx *lexer) pushType(typ *Type) *Type {
 			sc.Tag = make(map[string]*Type)
 		}
 		sc.Tag[typ.Tag] = typ
-		if hdr := lx.declSave; hdr != nil && sc.Next == nil {
-			hdr.types = append(hdr.types, typ)
-		}
 		return typ
 	}
 
