@@ -109,7 +109,7 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 			for i < len(format) {
 				c := format[i]
 				switch c {
-				case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '#', '-', '.', ',', ' ', 'h', 'l', 'u', '*':
+				case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '#', '-', '.', ',', ' ', 'h', 'j', 'l', 'u', '*':
 					i++
 					continue
 				}
@@ -126,6 +126,7 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 			_ = allFlags
 
 			flags = strings.Replace(flags, "h", "", -1)
+			flags = strings.Replace(flags, "j", "", -1)
 			flags = strings.Replace(flags, "l", "", -1)
 			flags = strings.Replace(flags, "u", "", -1)
 
