@@ -116,6 +116,10 @@ func renameDecls(cfg *Config, prog *cc.Prog) {
 	count := make(map[string]int)
 	src := make(map[string]string)
 	for _, d := range decls {
+		if d.Type != nil && d.Type.Kind == cc.Func && d.Body == nil {
+			// Duplicate function declarations aren't an issue, just definitions.
+			continue
+		}
 		// TODO(rsc): I don't understand why this is necessary given the above.
 		if d.Body != nil && d.Body.Span.Start.File != "" {
 			d.Span = d.Body.Span
