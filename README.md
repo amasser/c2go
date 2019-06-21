@@ -40,8 +40,6 @@ others are simply things that haven’t been implemented yet.
    In C, `&p[n]` and `p + n` are equivalent, but c2go translates them differently, 
    as `&p[n]` and as `p[n:]`.
 
- - Declaring variables in the initializer of a `for` loop doesn’t work.
-
 # How to Use c2go
 
 Before you even try running c2go on your program, 
