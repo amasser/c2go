@@ -339,6 +339,9 @@ func fixGoTypesStmt(prog *cc.Prog, fn *cc.Decl, x *cc.Stmt) {
 		fixGoTypesExpr(fn, x.Pre, nil)
 		fixGoTypesExpr(fn, x.Post, nil)
 		fixGoTypesExpr(fn, x.Expr, boolType)
+		if x.Decl != nil && x.Decl.Init != nil && x.Decl.Init.Expr != nil {
+			fixGoTypesExpr(fn, x.Decl.Init.Expr, x.Decl.Type)
+		}
 
 	case cc.Switch:
 		fixGoTypesExpr(fn, x.Expr, nil)

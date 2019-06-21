@@ -574,6 +574,33 @@ stmt:
 			Body: $9,
 		}
 	}
+|	tokFor '(' decl cexpr_opt ';' cexpr_opt ')' lstmt
+	{
+		if len($3) == 1 {
+			$<span>$ = span($<span>1, $<span>8)
+			$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, 
+				Op: For,
+				Decl: $3[0],
+				Expr: $4,
+				Post: $6,
+				Body: $8,
+			}
+		} else {
+			$<span>$ = span($<span>1, $<span>8)
+			$$ = &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$}, 
+				Op: Block,
+			}
+			for _, d := range $3 {
+				$$.Block = append($$.Block, &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>3}, Op: StmtDecl, Decl: d})
+			}
+			$$.Block = append($$.Block, &Stmt{SyntaxInfo: SyntaxInfo{Span: $<span>$},
+				Op: For,
+				Expr: $4,
+				Post: $6,
+				Body: $8,
+			})
+		}
+	}
 |	tokGoto tag ';'
 	{
 		$<span>$ = span($<span>1, $<span>3)

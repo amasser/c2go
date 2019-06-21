@@ -150,6 +150,9 @@ func (lx *lexer) typecheckStmt(stmt *Stmt) {
 	case For:
 		// push break/continue context
 		lx.typecheckExpr(stmt.Pre)
+		if stmt.Decl != nil {
+			lx.typecheckDecl(stmt.Decl)
+		}
 		lx.typecheckExpr(stmt.Expr)
 		lx.typecheckExpr(stmt.Post)
 		lx.typecheckStmt(stmt.Body)

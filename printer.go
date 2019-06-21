@@ -674,8 +674,10 @@ func (p *Printer) printStmt(x *cc.Stmt) {
 		// ok
 
 	case cc.For:
-		if x.Pre == nil && x.Post == nil && GoString(x.Expr) == "true" {
+		if x.Pre == nil && x.Decl == nil && x.Post == nil && GoString(x.Expr) == "true" {
 			p.Print("for ", nestBlock{x.Body, false})
+		} else if x.Decl != nil {
+			p.Print("for ", x.Decl.Name, " := ", x.Decl.Type, "(", x.Decl.Init.Expr, ")", "; ", x.Expr, "; ", x.Post, nestBlock{x.Body, false})
 		} else {
 			p.Print("for ", x.Pre, "; ", x.Expr, "; ", x.Post, nestBlock{x.Body, false})
 		}

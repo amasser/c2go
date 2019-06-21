@@ -225,217 +225,218 @@ var yyExca = [...]int{
 	1, -1,
 	-2, 0,
 	-1, 118,
-	48, 96,
-	97, 96,
-	-2, 178,
+	48, 97,
+	97, 97,
+	-2, 179,
 	-1, 137,
-	47, 169,
-	-2, 143,
+	47, 170,
+	-2, 144,
 	-1, 139,
-	47, 169,
-	-2, 148,
+	47, 170,
+	-2, 149,
 	-1, 238,
-	97, 204,
-	-2, 168,
+	97, 205,
+	-2, 169,
 	-1, 269,
-	61, 169,
-	-2, 87,
+	61, 170,
+	-2, 88,
 }
 
-const yyNprod = 214
+const yyNprod = 215
 const yyPrivate = 57344
 
 var yyTokenNames []string
 var yyStates []string
 
-const yyLast = 1338
+const yyLast = 1332
 
 var yyAct = [...]int{
 
-	7, 309, 120, 259, 113, 336, 229, 225, 196, 31,
-	266, 279, 240, 99, 100, 101, 102, 103, 104, 105,
-	106, 107, 50, 337, 112, 237, 219, 5, 193, 214,
-	217, 223, 117, 4, 123, 134, 110, 132, 227, 130,
-	118, 137, 139, 64, 65, 66, 111, 364, 362, 352,
-	347, 97, 93, 345, 92, 331, 95, 94, 96, 35,
-	36, 330, 141, 142, 143, 144, 145, 146, 147, 148,
+	7, 309, 336, 120, 113, 229, 259, 225, 196, 31,
+	266, 279, 193, 99, 100, 101, 102, 103, 104, 105,
+	106, 107, 214, 50, 240, 337, 237, 112, 117, 5,
+	227, 219, 110, 223, 123, 217, 4, 134, 132, 368,
+	118, 130, 137, 139, 365, 360, 33, 353, 111, 348,
+	346, 331, 330, 329, 296, 289, 288, 187, 305, 35,
+	36, 292, 141, 142, 143, 144, 145, 146, 147, 148,
 	149, 150, 151, 152, 153, 154, 155, 156, 157, 158,
-	159, 329, 161, 162, 163, 164, 165, 166, 167, 168,
-	169, 170, 171, 128, 129, 136, 135, 289, 288, 175,
-	176, 33, 187, 305, 160, 292, 67, 68, 62, 63,
-	64, 65, 66, 244, 60, 367, 185, 174, 97, 93,
-	296, 92, 6, 95, 94, 96, 361, 197, 97, 93,
-	355, 92, 111, 95, 94, 96, 131, 3, 2, 354,
-	211, 353, 181, 249, 195, 177, 178, 284, 78, 77,
-	76, 75, 73, 74, 69, 70, 71, 72, 67, 68,
-	62, 63, 64, 65, 66, 283, 199, 198, 295, 200,
-	97, 93, 124, 92, 351, 95, 94, 96, 252, 206,
-	208, 189, 125, 188, 235, 124, 190, 182, 136, 135,
-	224, 226, 129, 136, 135, 125, 230, 189, 184, 188,
-	339, 232, 233, 204, 242, 195, 180, 208, 243, 179,
-	338, 212, 224, 221, 335, 173, 333, 234, 209, 213,
-	216, 31, 115, 189, 121, 188, 238, 231, 109, 131,
-	255, 282, 258, 205, 211, 122, 299, 256, 221, 232,
-	274, 269, 247, 246, 248, 209, 226, 267, 257, 342,
-	341, 254, 250, 277, 62, 63, 64, 65, 66, 291,
-	203, 238, 263, 261, 97, 93, 290, 92, 271, 95,
-	94, 96, 280, 281, 253, 294, 207, 61, 221, 195,
-	285, 192, 301, 300, 293, 286, 260, 202, 201, 186,
-	298, 363, 304, 269, 116, 233, 98, 343, 226, 267,
-	58, 303, 268, 124, 241, 306, 53, 230, 126, 308,
-	58, 34, 297, 125, 270, 315, 247, 228, 114, 287,
-	1, 332, 38, 57, 334, 11, 194, 340, 133, 49,
-	56, 302, 312, 59, 54, 316, 278, 311, 55, 344,
-	313, 138, 140, 59, 245, 127, 276, 119, 172, 272,
-	273, 264, 265, 239, 236, 358, 359, 360, 357, 346,
-	27, 26, 348, 349, 218, 366, 191, 30, 365, 368,
-	28, 183, 0, 0, 0, 356, 81, 82, 83, 84,
-	85, 86, 87, 88, 89, 90, 91, 80, 350, 79,
-	78, 77, 76, 75, 73, 74, 69, 70, 71, 72,
-	67, 68, 62, 63, 64, 65, 66, 0, 0, 0,
-	0, 0, 97, 93, 0, 92, 0, 95, 94, 96,
-	81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
-	91, 80, 0, 79, 78, 77, 76, 75, 73, 74,
-	69, 70, 71, 72, 67, 68, 62, 63, 64, 65,
-	66, 0, 0, 0, 0, 0, 97, 93, 307, 92,
-	0, 95, 94, 96, 81, 82, 83, 84, 85, 86,
-	87, 88, 89, 90, 91, 80, 0, 79, 78, 77,
-	76, 75, 73, 74, 69, 70, 71, 72, 67, 68,
-	62, 63, 64, 65, 66, 0, 0, 0, 0, 0,
-	97, 93, 0, 92, 275, 95, 94, 96, 215, 81,
+	159, 131, 161, 162, 163, 164, 165, 166, 167, 168,
+	169, 170, 171, 128, 129, 136, 135, 244, 60, 372,
+	175, 176, 295, 370, 97, 93, 160, 92, 282, 95,
+	94, 96, 6, 3, 2, 364, 185, 357, 124, 174,
+	53, 356, 190, 40, 58, 355, 284, 197, 125, 47,
+	39, 283, 29, 46, 111, 181, 211, 57, 42, 249,
+	43, 177, 178, 252, 56, 195, 41, 44, 54, 51,
+	206, 37, 55, 52, 45, 204, 48, 59, 180, 189,
+	32, 188, 62, 63, 64, 65, 66, 199, 179, 198,
+	121, 200, 97, 93, 131, 92, 182, 95, 94, 96,
+	208, 122, 189, 352, 188, 235, 339, 184, 136, 135,
+	224, 226, 129, 136, 135, 212, 230, 338, 189, 124,
+	188, 232, 233, 335, 242, 173, 195, 208, 243, 125,
+	209, 25, 224, 333, 213, 115, 221, 109, 234, 299,
+	258, 31, 205, 216, 211, 342, 341, 231, 291, 238,
+	255, 274, 203, 290, 271, 247, 253, 209, 207, 232,
+	61, 221, 269, 192, 254, 246, 226, 267, 250, 248,
+	260, 256, 202, 277, 201, 280, 281, 186, 367, 261,
+	116, 98, 257, 263, 238, 343, 124, 58, 34, 286,
+	241, 126, 297, 270, 228, 294, 125, 287, 1, 38,
+	195, 221, 301, 11, 300, 285, 194, 133, 49, 302,
+	298, 312, 304, 278, 269, 233, 293, 311, 226, 267,
+	59, 303, 127, 313, 245, 306, 276, 230, 308, 247,
+	268, 67, 68, 62, 63, 64, 65, 66, 315, 119,
+	172, 332, 272, 97, 93, 334, 92, 340, 95, 94,
+	96, 273, 64, 65, 66, 264, 344, 316, 230, 345,
+	97, 93, 265, 92, 239, 95, 94, 96, 354, 138,
+	140, 236, 27, 26, 218, 191, 359, 361, 362, 363,
+	30, 347, 28, 366, 349, 350, 183, 0, 369, 371,
+	0, 0, 373, 0, 374, 0, 0, 0, 358, 81,
 	82, 83, 84, 85, 86, 87, 88, 89, 90, 91,
-	80, 0, 79, 78, 77, 76, 75, 73, 74, 69,
+	80, 351, 79, 78, 77, 76, 75, 73, 74, 69,
 	70, 71, 72, 67, 68, 62, 63, 64, 65, 66,
 	0, 0, 0, 0, 0, 97, 93, 0, 92, 0,
 	95, 94, 96, 81, 82, 83, 84, 85, 86, 87,
 	88, 89, 90, 91, 80, 0, 79, 78, 77, 76,
 	75, 73, 74, 69, 70, 71, 72, 67, 68, 62,
 	63, 64, 65, 66, 0, 0, 0, 0, 0, 97,
-	93, 0, 92, 0, 95, 94, 96, 53, 0, 0,
-	40, 58, 0, 0, 0, 0, 47, 39, 0, 114,
-	46, 0, 0, 0, 57, 42, 10, 43, 8, 9,
-	21, 56, 0, 41, 44, 54, 51, 0, 37, 55,
-	52, 45, 23, 48, 59, 80, 24, 79, 78, 77,
-	76, 75, 73, 74, 69, 70, 71, 72, 67, 68,
-	62, 63, 64, 65, 66, 0, 0, 0, 0, 13,
-	97, 93, 0, 92, 0, 95, 94, 96, 14, 15,
-	12, 0, 0, 0, 16, 17, 20, 0, 0, 0,
-	0, 22, 0, 19, 18, 317, 326, 0, 0, 318,
-	327, 319, 0, 0, 0, 0, 0, 0, 320, 321,
-	322, 0, 0, 10, 0, 328, 9, 21, 53, 323,
-	0, 40, 58, 0, 324, 0, 0, 47, 39, 23,
-	29, 46, 325, 24, 0, 57, 42, 260, 43, 0,
-	0, 0, 56, 0, 41, 44, 54, 51, 0, 37,
-	55, 52, 45, 0, 48, 59, 13, 0, 32, 0,
-	0, 0, 0, 0, 0, 14, 15, 12, 0, 0,
-	0, 16, 17, 20, 0, 0, 0, 0, 22, 0,
-	19, 18, 0, 0, 0, 53, 0, 314, 40, 58,
-	0, 0, 0, 0, 47, 39, 0, 114, 46, 0,
-	0, 0, 57, 42, 0, 43, 0, 0, 0, 56,
-	251, 41, 44, 54, 51, 0, 37, 55, 52, 45,
-	53, 48, 59, 40, 58, 0, 0, 0, 0, 47,
-	39, 0, 114, 46, 0, 0, 0, 57, 42, 0,
-	43, 0, 0, 0, 56, 0, 41, 44, 54, 51,
-	0, 37, 55, 52, 45, 53, 48, 59, 40, 58,
-	0, 0, 0, 0, 47, 39, 0, 29, 46, 0,
-	0, 0, 57, 42, 0, 43, 0, 310, 0, 56,
-	0, 41, 44, 54, 51, 0, 37, 55, 52, 45,
-	0, 48, 59, 0, 0, 32, 77, 76, 75, 73,
-	74, 69, 70, 71, 72, 67, 68, 62, 63, 64,
-	65, 66, 262, 0, 0, 0, 0, 97, 93, 0,
-	92, 0, 95, 94, 96, 0, 0, 76, 75, 73,
-	74, 69, 70, 71, 72, 67, 68, 62, 63, 64,
-	65, 66, 0, 0, 0, 0, 25, 97, 93, 0,
-	92, 0, 95, 94, 96, 75, 73, 74, 69, 70,
-	71, 72, 67, 68, 62, 63, 64, 65, 66, 0,
-	0, 0, 0, 0, 97, 93, 0, 92, 0, 95,
-	94, 96, 73, 74, 69, 70, 71, 72, 67, 68,
-	62, 63, 64, 65, 66, 10, 0, 8, 9, 21,
-	97, 93, 0, 92, 0, 95, 94, 96, 0, 0,
-	0, 23, 0, 0, 0, 24, 0, 0, 0, 210,
-	0, 0, 74, 69, 70, 71, 72, 67, 68, 62,
+	93, 307, 92, 0, 95, 94, 96, 81, 82, 83,
+	84, 85, 86, 87, 88, 89, 90, 91, 80, 0,
+	79, 78, 77, 76, 75, 73, 74, 69, 70, 71,
+	72, 67, 68, 62, 63, 64, 65, 66, 0, 0,
+	0, 0, 0, 97, 93, 0, 92, 275, 95, 94,
+	96, 215, 81, 82, 83, 84, 85, 86, 87, 88,
+	89, 90, 91, 80, 0, 79, 78, 77, 76, 75,
+	73, 74, 69, 70, 71, 72, 67, 68, 62, 63,
+	64, 65, 66, 0, 0, 0, 0, 0, 97, 93,
+	0, 92, 0, 95, 94, 96, 53, 0, 0, 40,
+	58, 0, 0, 0, 0, 47, 39, 0, 114, 46,
+	0, 0, 0, 57, 42, 10, 43, 8, 9, 21,
+	56, 0, 41, 44, 54, 51, 0, 37, 55, 52,
+	45, 23, 48, 59, 80, 24, 79, 78, 77, 76,
+	75, 73, 74, 69, 70, 71, 72, 67, 68, 62,
 	63, 64, 65, 66, 0, 0, 0, 0, 13, 97,
 	93, 0, 92, 0, 95, 94, 96, 14, 15, 12,
-	0, 0, 0, 16, 17, 20, 0, 280, 281, 0,
-	22, 0, 19, 18, 69, 70, 71, 72, 67, 68,
-	62, 63, 64, 65, 66, 10, 0, 8, 9, 21,
-	97, 93, 0, 92, 0, 95, 94, 96, 0, 0,
-	0, 23, 0, 0, 10, 24, 8, 9, 21, 210,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	23, 0, 0, 0, 24, 0, 0, 0, 13, 0,
-	0, 0, 0, 0, 0, 0, 0, 14, 15, 12,
-	0, 0, 0, 16, 17, 20, 0, 13, 0, 0,
-	22, 0, 19, 18, 0, 0, 14, 15, 12, 0,
-	0, 0, 16, 17, 20, 0, 0, 0, 0, 22,
-	0, 19, 18, 10, 0, 8, 9, 21, 0, 0,
-	0, 0, 0, 0, 10, 0, 8, 9, 21, 23,
-	0, 0, 0, 24, 0, 0, 0, 0, 0, 0,
-	23, 0, 0, 0, 24, 0, 0, 0, 210, 0,
-	0, 0, 0, 0, 0, 0, 13, 0, 0, 0,
-	0, 0, 0, 0, 0, 14, 15, 12, 0, 0,
-	0, 16, 17, 20, 0, 0, 0, 0, 108, 0,
-	19, 18, 16, 17, 20, 0, 0, 0, 0, 22,
-	53, 19, 18, 40, 58, 0, 0, 0, 222, 47,
-	39, 0, 114, 46, 0, 0, 0, 57, 42, 0,
-	43, 220, 0, 0, 56, 0, 41, 44, 54, 51,
-	0, 37, 55, 52, 45, 53, 48, 59, 40, 58,
-	0, 0, 0, 0, 47, 39, 0, 114, 46, 0,
-	0, 0, 57, 42, 0, 43, 0, 0, 0, 56,
-	0, 41, 44, 54, 51, 0, 37, 55, 52, 45,
-	53, 48, 59, 40, 58, 0, 0, 0, 0, 47,
-	0, 0, 114, 46, 0, 0, 0, 57, 42, 0,
-	43, 0, 0, 0, 56, 0, 41, 44, 54, 0,
-	0, 0, 55, 0, 45, 0, 48, 59,
+	0, 0, 0, 16, 17, 20, 0, 0, 0, 0,
+	22, 0, 19, 18, 81, 82, 83, 84, 85, 86,
+	87, 88, 89, 90, 91, 80, 0, 79, 78, 77,
+	76, 75, 73, 74, 69, 70, 71, 72, 67, 68,
+	62, 63, 64, 65, 66, 0, 0, 0, 0, 0,
+	97, 93, 0, 92, 0, 95, 94, 96, 317, 326,
+	0, 0, 318, 327, 319, 0, 0, 0, 0, 0,
+	0, 320, 321, 322, 0, 0, 10, 0, 328, 9,
+	21, 53, 323, 0, 40, 58, 0, 324, 0, 0,
+	47, 39, 23, 29, 46, 325, 24, 0, 57, 42,
+	260, 43, 0, 0, 0, 56, 0, 41, 44, 54,
+	51, 0, 37, 55, 52, 45, 0, 48, 59, 13,
+	0, 32, 0, 0, 0, 0, 0, 0, 14, 15,
+	12, 0, 0, 0, 16, 17, 20, 0, 0, 0,
+	0, 22, 0, 19, 18, 0, 0, 0, 53, 0,
+	314, 40, 58, 0, 0, 0, 0, 47, 39, 0,
+	114, 46, 0, 0, 0, 57, 42, 0, 43, 0,
+	0, 0, 56, 251, 41, 44, 54, 51, 0, 37,
+	55, 52, 45, 53, 48, 59, 40, 58, 0, 0,
+	0, 0, 47, 39, 0, 114, 46, 0, 0, 0,
+	57, 42, 0, 43, 0, 0, 0, 56, 0, 41,
+	44, 54, 51, 0, 37, 55, 52, 45, 0, 48,
+	59, 78, 77, 76, 75, 73, 74, 69, 70, 71,
+	72, 67, 68, 62, 63, 64, 65, 66, 0, 0,
+	310, 0, 0, 97, 93, 0, 92, 0, 95, 94,
+	96, 0, 77, 76, 75, 73, 74, 69, 70, 71,
+	72, 67, 68, 62, 63, 64, 65, 66, 0, 0,
+	0, 0, 0, 97, 93, 262, 92, 0, 95, 94,
+	96, 76, 75, 73, 74, 69, 70, 71, 72, 67,
+	68, 62, 63, 64, 65, 66, 0, 0, 0, 0,
+	0, 97, 93, 0, 92, 0, 95, 94, 96, 75,
+	73, 74, 69, 70, 71, 72, 67, 68, 62, 63,
+	64, 65, 66, 0, 0, 0, 0, 0, 97, 93,
+	0, 92, 0, 95, 94, 96, 73, 74, 69, 70,
+	71, 72, 67, 68, 62, 63, 64, 65, 66, 10,
+	0, 8, 9, 21, 97, 93, 0, 92, 0, 95,
+	94, 96, 0, 0, 0, 23, 0, 0, 0, 24,
+	0, 0, 0, 210, 0, 0, 74, 69, 70, 71,
+	72, 67, 68, 62, 63, 64, 65, 66, 0, 0,
+	0, 0, 13, 97, 93, 0, 92, 0, 95, 94,
+	96, 14, 15, 12, 0, 0, 0, 16, 17, 20,
+	0, 280, 281, 0, 22, 0, 19, 18, 69, 70,
+	71, 72, 67, 68, 62, 63, 64, 65, 66, 10,
+	0, 8, 9, 21, 97, 93, 0, 92, 0, 95,
+	94, 96, 53, 0, 0, 23, 58, 0, 10, 24,
+	8, 9, 21, 210, 114, 0, 0, 0, 0, 57,
+	0, 0, 0, 0, 23, 0, 56, 0, 24, 0,
+	54, 0, 13, 0, 55, 0, 0, 0, 0, 59,
+	0, 14, 15, 12, 0, 0, 0, 16, 17, 20,
+	0, 13, 0, 0, 22, 0, 19, 18, 0, 0,
+	14, 15, 12, 0, 0, 0, 16, 17, 20, 0,
+	0, 0, 0, 22, 0, 19, 18, 10, 0, 8,
+	9, 21, 0, 0, 0, 0, 0, 0, 10, 0,
+	8, 9, 21, 23, 0, 0, 0, 24, 0, 0,
+	0, 0, 0, 0, 23, 0, 0, 0, 24, 0,
+	0, 0, 210, 0, 0, 0, 0, 0, 0, 0,
+	13, 0, 0, 0, 0, 0, 0, 0, 0, 14,
+	15, 12, 0, 0, 0, 16, 17, 20, 0, 0,
+	0, 0, 108, 0, 19, 18, 16, 17, 20, 0,
+	0, 0, 0, 22, 53, 19, 18, 40, 58, 0,
+	0, 0, 222, 47, 39, 0, 114, 46, 0, 0,
+	0, 57, 42, 0, 43, 220, 0, 0, 56, 0,
+	41, 44, 54, 51, 0, 37, 55, 52, 45, 53,
+	48, 59, 40, 58, 0, 0, 0, 0, 47, 39,
+	0, 114, 46, 0, 0, 0, 57, 42, 0, 43,
+	0, 0, 0, 56, 0, 41, 44, 54, 51, 0,
+	37, 55, 52, 45, 53, 48, 59, 40, 58, 0,
+	0, 0, 0, 47, 0, 0, 114, 46, 0, 0,
+	0, 57, 42, 0, 43, 0, 0, 0, 56, 0,
+	41, 44, 54, 0, 0, 0, 55, 0, 45, 0,
+	48, 59,
 }
 var yyPact = [...]int{
 
-	44, -1000, -1000, 1061, 841, 19, 229, 504, -1000, -1000,
-	-1000, 253, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061,
-	1130, 140, 593, 134, -1000, -1000, -1000, -1000, -1000, 251,
-	-1000, 147, 283, 1261, 302, 1296, -1000, -1000, 278, 278,
+	20, -1000, -1000, 1055, 116, 3, 192, 595, -1000, -1000,
+	-1000, 218, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055,
+	1124, 129, 552, 127, -1000, -1000, -1000, -1000, -1000, 217,
+	-1000, 93, 246, 1255, 1068, 1290, -1000, -1000, 241, 241,
 	-1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000,
 	-1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000, -1000,
-	-1000, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061,
-	1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061,
-	1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061, 1061,
-	1061, 1061, 1061, 1061, -1000, -1000, 278, 278, -1000, 43,
-	43, 43, 43, 43, 43, 43, 43, 43, 593, 1261,
-	120, 117, 110, -1000, -1000, 1061, 242, 5, 137, 233,
-	-1000, 292, 147, -1000, -1000, -1000, 1061, 302, 1296, -1000,
-	-1000, 302, -1000, 1296, -1000, -1000, -1000, -1000, 241, -1000,
-	240, 504, -34, -34, 43, 43, 43, 179, 179, 33,
-	33, 33, 33, 944, 985, 905, 879, 852, 822, 85,
-	199, 504, 504, 504, 504, 504, 504, 504, 504, 504,
-	504, 504, 114, 229, 146, -1000, -1000, 90, 228, 1042,
-	-1000, 148, 292, 131, 110, 460, -1000, -1000, 1226, 1061,
-	1042, 1261, 147, 147, 292, -1000, 95, 504, -1000, -1000,
-	-1000, 1261, 279, 1061, -1000, -1000, 1141, 1061, 43, -1000,
-	17, 1061, 110, 1226, 54, 1261, 704, 89, 226, -1000,
-	-1000, 160, -1000, 145, 504, -1000, 504, -1000, 239, -1000,
-	147, -1000, 137, 111, -1000, -1000, 806, -1000, 147, 220,
-	-1000, 191, 575, 415, -1000, 962, 144, 148, 76, -1000,
-	58, -1000, -1000, 1226, 148, 111, 292, 160, -1000, -1000,
-	-1000, 1, -1000, -1000, 0, 218, -1000, 111, 198, -1000,
-	9, 279, -1000, -1000, 1061, -1000, 72, -1000, 187, -1000,
-	278, 1061, -1000, -1000, -1000, -1000, 160, -1000, -1000, -1000,
-	147, 1061, -1000, -1000, 504, -1000, 7, 1042, -1000, -1000,
-	-1000, 371, 771, -1000, 504, -1000, -1000, -1000, -1000, -1000,
-	-1000, 680, -1000, -1000, -1000, -1000, -16, -36, -42, -1000,
-	128, 278, 126, 1061, 122, 112, 1061, 189, 188, -1000,
-	-1000, -1000, 255, 1061, -44, 1061, -47, -1000, 1061, 1061,
-	327, -1000, -1000, 86, -48, -1000, 52, -1000, 50, 41,
-	-1000, 1061, 1061, -1000, -1000, -1000, 37, -49, 245, -1000,
-	-1000, -50, 1061, -1000, -1000, 26, -1000, -1000, -1000,
+	-1000, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055,
+	1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055,
+	1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055, 1055,
+	1055, 1055, 1055, 1055, -1000, -1000, 241, 241, -1000, 19,
+	19, 19, 19, 19, 19, 19, 19, 19, 552, 1255,
+	79, 69, 99, -1000, -1000, 1055, 210, -40, 73, 195,
+	-1000, 259, 93, -1000, -1000, -1000, 1055, 1068, 1290, -1000,
+	-1000, 1068, -1000, 1290, -1000, -1000, -1000, -1000, 207, -1000,
+	205, 595, 255, 255, 19, 19, 19, 87, 87, 238,
+	238, 238, 238, 938, 979, 899, 873, 846, 818, 788,
+	171, 595, 595, 595, 595, 595, 595, 595, 595, 595,
+	595, 595, 66, 192, 135, -1000, -1000, 61, 190, 1036,
+	-1000, 138, 259, 126, 99, 463, -1000, -1000, 1220, 1055,
+	1036, 1255, 93, 93, 259, -1000, 96, 595, -1000, -1000,
+	-1000, 1255, 245, 1055, -1000, -1000, 1135, 1055, 19, -1000,
+	1, 1055, 99, 1220, 50, 1255, 707, 54, 188, -1000,
+	-1000, 174, -1000, 133, 595, -1000, 595, -1000, 203, -1000,
+	93, -1000, 73, 112, -1000, -1000, 809, -1000, 93, 186,
+	-1000, 182, 534, 418, -1000, 956, 21, 138, 42, -1000,
+	37, -1000, -1000, 1220, 138, 112, 259, 174, -1000, -1000,
+	-1000, -41, -1000, -1000, -42, 185, -1000, 112, 167, -1000,
+	-35, 245, -1000, -1000, 1055, -1000, 6, -1000, 170, -1000,
+	241, 1055, -1000, -1000, -1000, -1000, 174, -1000, -1000, -1000,
+	93, 1055, -1000, -1000, 595, -1000, -38, 1036, -1000, -1000,
+	-1000, 374, 774, -1000, 595, -1000, -1000, -1000, -1000, -1000,
+	-1000, 683, -1000, -1000, -1000, -1000, -44, -45, -46, -1000,
+	125, 241, 115, 1055, 109, 98, 1055, 165, 164, -1000,
+	-1000, -1000, 223, 552, -47, 1055, -48, -1000, 1055, 1055,
+	330, -1000, -1000, 95, -50, 1055, -1000, 36, -1000, 32,
+	28, -1000, 1055, 1055, -52, -1000, -1000, -1000, 26, -53,
+	1055, 212, -1000, -1000, -58, 1055, 14, -1000, -1000, 10,
+	-1000, -1000, -1000, -1000, -1000,
 }
 var yyPgo = [...]int{
 
-	0, 29, 371, 26, 370, 12, 367, 6, 366, 364,
-	30, 33, 361, 360, 25, 354, 353, 8, 10, 352,
-	351, 0, 31, 23, 5, 350, 349, 122, 348, 34,
-	347, 32, 7, 346, 38, 344, 340, 337, 11, 336,
-	332, 3, 1, 331, 329, 22, 59, 60, 35, 2,
-	302, 101, 39, 328, 37, 326, 28, 325, 4, 322,
-	36, 24, 311, 320, 319, 317, 314, 312,
+	0, 22, 366, 31, 362, 24, 360, 5, 355, 354,
+	35, 36, 353, 352, 26, 351, 344, 8, 10, 342,
+	335, 0, 33, 25, 2, 331, 322, 112, 320, 34,
+	319, 28, 7, 306, 30, 304, 303, 297, 11, 293,
+	291, 6, 1, 289, 288, 23, 59, 60, 37, 3,
+	310, 46, 41, 287, 38, 286, 12, 283, 4, 279,
+	32, 27, 268, 278, 277, 274, 273, 272,
 }
 var yyR1 = [...]int{
 
@@ -447,20 +448,20 @@ var yyR1 = [...]int{
 	21, 21, 21, 21, 21, 21, 21, 21, 21, 43,
 	43, 43, 64, 41, 36, 36, 36, 42, 40, 40,
 	40, 40, 40, 40, 40, 40, 40, 40, 40, 40,
-	40, 1, 1, 1, 2, 2, 2, 17, 17, 17,
-	17, 17, 3, 3, 3, 3, 29, 29, 44, 44,
-	44, 44, 44, 44, 45, 45, 46, 46, 46, 46,
-	46, 46, 46, 46, 46, 47, 47, 48, 48, 62,
-	58, 58, 58, 58, 58, 61, 60, 7, 13, 6,
-	12, 12, 12, 12, 65, 4, 49, 49, 59, 59,
-	18, 18, 14, 62, 62, 38, 21, 21, 62, 62,
-	5, 25, 32, 32, 34, 34, 34, 35, 35, 33,
-	33, 38, 67, 67, 66, 66, 39, 39, 50, 50,
-	24, 24, 22, 22, 27, 27, 28, 28, 8, 8,
-	37, 37, 9, 9, 10, 10, 30, 30, 31, 31,
-	55, 55, 56, 56, 51, 51, 52, 52, 53, 53,
-	54, 54, 19, 19, 20, 20, 15, 15, 26, 26,
-	16, 16, 57, 57,
+	40, 40, 1, 1, 1, 2, 2, 2, 17, 17,
+	17, 17, 17, 3, 3, 3, 3, 29, 29, 44,
+	44, 44, 44, 44, 44, 45, 45, 46, 46, 46,
+	46, 46, 46, 46, 46, 46, 47, 47, 48, 48,
+	62, 58, 58, 58, 58, 58, 61, 60, 7, 13,
+	6, 12, 12, 12, 12, 65, 4, 49, 49, 59,
+	59, 18, 18, 14, 62, 62, 38, 21, 21, 62,
+	62, 5, 25, 32, 32, 34, 34, 34, 35, 35,
+	33, 33, 38, 67, 67, 66, 66, 39, 39, 50,
+	50, 24, 24, 22, 22, 27, 27, 28, 28, 8,
+	8, 37, 37, 9, 9, 10, 10, 30, 30, 31,
+	31, 55, 55, 56, 56, 51, 51, 52, 52, 53,
+	53, 54, 54, 19, 19, 20, 20, 15, 15, 26,
+	26, 16, 16, 57, 57,
 }
 var yyR2 = [...]int{
 
@@ -471,21 +472,21 @@ var yyR2 = [...]int{
 	2, 2, 2, 2, 2, 2, 2, 2, 2, 4,
 	6, 4, 4, 3, 4, 4, 2, 2, 6, 0,
 	2, 2, 0, 4, 3, 2, 2, 2, 1, 1,
-	2, 2, 2, 7, 9, 3, 5, 7, 3, 5,
-	5, 0, 3, 1, 4, 4, 3, 1, 3, 3,
-	4, 4, 1, 2, 2, 1, 1, 3, 1, 1,
+	2, 2, 2, 7, 9, 8, 3, 5, 7, 3,
+	5, 5, 0, 3, 1, 4, 4, 3, 1, 3,
+	3, 4, 4, 1, 2, 2, 1, 1, 3, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-	1, 3, 3, 2, 2, 1, 2, 3, 3, 3,
-	1, 1, 5, 1, 0, 5, 1, 1, 1, 1,
-	1, 3, 3, 2, 5, 2, 3, 3, 2, 6,
-	2, 2, 1, 1, 2, 4, 5, 0, 3, 1,
-	3, 3, 0, 1, 0, 1, 1, 2, 0, 1,
-	0, 1, 0, 1, 1, 3, 0, 1, 0, 2,
-	0, 2, 1, 3, 0, 1, 1, 3, 0, 1,
-	1, 2, 0, 1, 1, 2, 0, 1, 1, 2,
-	0, 1, 1, 3, 0, 1, 1, 2, 0, 1,
-	1, 3, 1, 2,
+	1, 1, 3, 3, 2, 2, 1, 2, 3, 3,
+	3, 1, 1, 5, 1, 0, 5, 1, 1, 1,
+	1, 1, 3, 3, 2, 5, 2, 3, 3, 2,
+	6, 2, 2, 1, 1, 2, 4, 5, 0, 3,
+	1, 3, 3, 0, 1, 0, 1, 1, 2, 0,
+	1, 0, 1, 0, 1, 1, 3, 0, 1, 0,
+	2, 0, 2, 1, 3, 0, 1, 1, 3, 0,
+	1, 1, 2, 0, 1, 1, 2, 0, 1, 1,
+	2, 0, 1, 1, 3, 0, 1, 1, 2, 0,
+	1, 1, 3, 1, 2,
 }
 var yyChk = [...]int{
 
@@ -523,49 +524,51 @@ var yyChk = [...]int{
 	96, -37, -40, -36, 97, -41, -23, 5, 9, 11,
 	18, 19, 20, 29, 34, 42, 6, 10, 25, 97,
 	97, 97, -42, 88, -49, 88, -24, -23, 88, 88,
-	-21, 61, 61, 42, -24, 97, -23, 97, -23, -23,
-	61, 88, 97, 89, 89, 89, -23, -24, -42, -42,
-	-42, 89, 97, 46, 97, -24, -42, 89, -42,
+	-21, 61, 61, 42, -24, -7, 97, -23, 97, -23,
+	-23, 61, 88, 97, -24, 89, 89, 89, -23, -24,
+	97, -42, -42, -42, 89, 97, -24, 46, 97, -24,
+	89, -42, 89, -42, -42,
 }
 var yyDef = [...]int{
 
-	0, -2, 3, 0, 0, 0, 5, 174, 6, 7,
+	0, -2, 3, 0, 0, 0, 5, 175, 6, 7,
 	8, 9, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 212, 1, 4, 130, 131, 100,
-	133, 188, 0, 120, 196, 200, 194, 119, 168, 168,
-	106, 107, 108, 109, 110, 111, 112, 113, 114, 115,
-	116, 138, 139, 98, 99, 101, 102, 103, 104, 105,
+	0, 0, 0, 0, 213, 1, 4, 131, 132, 101,
+	134, 189, 0, 121, 197, 201, 195, 120, 169, 169,
+	107, 108, 109, 110, 111, 112, 113, 114, 115, 116,
+	117, 139, 140, 99, 100, 102, 103, 104, 105, 106,
 	2, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 0, 176, 0, 56, 57, 0, 0, 213, 40,
+	0, 0, 177, 0, 56, 57, 0, 0, 214, 40,
 	41, 42, 43, 44, 45, 46, 47, 48, 0, 0,
-	0, 0, 81, 125, 100, 0, 0, 0, -2, 189,
-	87, 192, 0, 186, 136, 137, 0, 196, 200, 195,
-	123, 197, 124, 201, 198, 117, 118, -2, 0, -2,
-	0, 175, 10, 11, 12, 13, 14, 15, 16, 17,
+	0, 0, 82, 126, 101, 0, 0, 0, -2, 190,
+	88, 193, 0, 187, 137, 138, 0, 197, 201, 196,
+	124, 198, 125, 202, 199, 118, 119, -2, 0, -2,
+	0, 176, 10, 11, 12, 13, 14, 15, 16, 17,
 	18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 	0, 29, 30, 31, 32, 33, 34, 35, 36, 37,
-	38, 39, 0, 177, 0, 146, 147, 0, 0, 0,
-	53, 126, 192, 83, 81, 0, 3, 128, 184, 172,
-	0, 134, 0, 0, 193, 190, 0, 129, 121, 122,
-	199, 0, 0, 0, 54, 55, 49, 0, 51, 52,
-	157, 172, 81, 184, 0, 0, 0, 0, 185, 182,
-	92, 81, 95, 0, 173, 97, 152, 153, 0, 179,
-	188, 187, 96, 88, 191, 89, 0, 206, -2, 164,
-	210, 208, 28, 0, 154, 0, 0, 82, 0, 86,
-	0, 132, 90, 0, 93, 94, 192, 81, 91, 135,
-	62, 0, 144, 207, 0, 205, 202, 140, 0, -2,
-	0, 165, 150, 209, 0, 50, 0, 159, 162, 166,
-	0, 0, 85, 84, 58, 183, 81, 59, 127, 142,
-	168, 0, 149, 211, 151, 155, 158, 0, 167, 163,
-	145, 0, 180, 203, 141, 156, 160, 161, 60, 61,
-	63, 0, 67, 181, 68, 69, 0, 0, 0, 180,
-	0, 0, 0, 170, 0, 0, 0, 0, 6, 70,
-	71, 72, 0, 170, 0, 0, 0, 171, 0, 0,
-	0, 65, 66, 0, 0, 75, 0, 78, 0, 0,
-	64, 0, 170, 180, 180, 180, 0, 0, 76, 79,
-	80, 0, 170, 180, 73, 0, 77, 180, 74,
+	38, 39, 0, 178, 0, 147, 148, 0, 0, 0,
+	53, 127, 193, 84, 82, 0, 3, 129, 185, 173,
+	0, 135, 0, 0, 194, 191, 0, 130, 122, 123,
+	200, 0, 0, 0, 54, 55, 49, 0, 51, 52,
+	158, 173, 82, 185, 0, 0, 0, 0, 186, 183,
+	93, 82, 96, 0, 174, 98, 153, 154, 0, 180,
+	189, 188, 97, 89, 192, 90, 0, 207, -2, 165,
+	211, 209, 28, 0, 155, 0, 0, 83, 0, 87,
+	0, 133, 91, 0, 94, 95, 193, 82, 92, 136,
+	62, 0, 145, 208, 0, 206, 203, 141, 0, -2,
+	0, 166, 151, 210, 0, 50, 0, 160, 163, 167,
+	0, 0, 86, 85, 58, 184, 82, 59, 128, 143,
+	169, 0, 150, 212, 152, 156, 159, 0, 168, 164,
+	146, 0, 181, 204, 142, 157, 161, 162, 60, 61,
+	63, 0, 67, 182, 68, 69, 0, 0, 0, 181,
+	0, 0, 0, 171, 0, 0, 0, 0, 6, 70,
+	71, 72, 0, 171, 0, 0, 0, 172, 0, 0,
+	0, 65, 66, 0, 0, 171, 76, 0, 79, 0,
+	0, 64, 0, 171, 0, 181, 181, 181, 0, 0,
+	171, 77, 80, 81, 0, 171, 0, 181, 73, 0,
+	181, 78, 181, 75, 74,
 }
 var yyTok1 = [...]int{
 
@@ -1468,57 +1471,86 @@ yydefault:
 			}
 		}
 	case 75:
-		yyDollar = yyS[yypt-3 : yypt+1]
+		yyDollar = yyS[yypt-8 : yypt+1]
 		//line cc.y:578
+		{
+			if len(yyDollar[3].decls) == 1 {
+				yyVAL.span = span(yyDollar[1].span, yyDollar[8].span)
+				yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span},
+					Op:   For,
+					Decl: yyDollar[3].decls[0],
+					Expr: yyDollar[4].expr,
+					Post: yyDollar[6].expr,
+					Body: yyDollar[8].stmt,
+				}
+			} else {
+				yyVAL.span = span(yyDollar[1].span, yyDollar[8].span)
+				yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span},
+					Op: Block,
+				}
+				for _, d := range yyDollar[3].decls {
+					yyVAL.stmt.Block = append(yyVAL.stmt.Block, &Stmt{SyntaxInfo: SyntaxInfo{Span: yyDollar[3].span}, Op: StmtDecl, Decl: d})
+				}
+				yyVAL.stmt.Block = append(yyVAL.stmt.Block, &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span},
+					Op:   For,
+					Expr: yyDollar[4].expr,
+					Post: yyDollar[6].expr,
+					Body: yyDollar[8].stmt,
+				})
+			}
+		}
+	case 76:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		//line cc.y:605
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: Goto, Text: yyDollar[2].str}
 		}
-	case 76:
+	case 77:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:583
+		//line cc.y:610
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: If, Expr: yyDollar[3].expr, Body: yyDollar[5].stmt}
 		}
-	case 77:
+	case 78:
 		yyDollar = yyS[yypt-7 : yypt+1]
-		//line cc.y:588
+		//line cc.y:615
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[7].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: If, Expr: yyDollar[3].expr, Body: yyDollar[5].stmt, Else: yyDollar[7].stmt}
 		}
-	case 78:
+	case 79:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:593
+		//line cc.y:620
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: Return, Expr: yyDollar[2].expr}
 		}
-	case 79:
+	case 80:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:598
+		//line cc.y:625
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: Switch, Expr: yyDollar[3].expr, Body: yyDollar[5].stmt}
 		}
-	case 80:
+	case 81:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:603
+		//line cc.y:630
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
 			yyVAL.stmt = &Stmt{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: While, Expr: yyDollar[3].expr, Body: yyDollar[5].stmt}
 		}
-	case 81:
+	case 82:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:610
+		//line cc.y:637
 		{
 			yyVAL.span = Span{}
 			yyVAL.abdecor = func(t *Type) *Type { return t }
 		}
-	case 82:
+	case 83:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:615
+		//line cc.y:642
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			_, q, _ := splitTypeWords(yyDollar[2].strs)
@@ -1527,16 +1559,16 @@ yydefault:
 				return abdecor(&Type{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Kind: Ptr, Base: t, Qual: q})
 			}
 		}
-	case 83:
+	case 84:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:624
+		//line cc.y:651
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.abdecor = yyDollar[1].abdecor
 		}
-	case 84:
+	case 85:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line cc.y:631
+		//line cc.y:658
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[4].span)
 			abdecor := yyDollar[1].abdecor
@@ -1560,9 +1592,9 @@ yydefault:
 				return abdecor(&Type{SyntaxInfo: SyntaxInfo{Span: span}, Kind: Func, Base: t, Decls: decls})
 			}
 		}
-	case 85:
+	case 86:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line cc.y:655
+		//line cc.y:682
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[4].span)
 			abdecor := yyDollar[1].abdecor
@@ -1573,24 +1605,24 @@ yydefault:
 			}
 
 		}
-	case 86:
+	case 87:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:666
+		//line cc.y:693
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.abdecor = yyDollar[2].abdecor
 		}
-	case 87:
+	case 88:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:674
+		//line cc.y:701
 		{
 			yyVAL.span = yyDollar[1].span
 			name := yyDollar[1].str
 			yyVAL.decor = func(t *Type) (*Type, string) { return t, name }
 		}
-	case 88:
+	case 89:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:680
+		//line cc.y:707
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			_, q, _ := splitTypeWords(yyDollar[2].strs)
@@ -1600,16 +1632,16 @@ yydefault:
 				return decor(&Type{SyntaxInfo: SyntaxInfo{Span: span}, Kind: Ptr, Base: t, Qual: q})
 			}
 		}
-	case 89:
+	case 90:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:690
+		//line cc.y:717
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.decor = yyDollar[2].decor
 		}
-	case 90:
+	case 91:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line cc.y:695
+		//line cc.y:722
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[4].span)
 			decor := yyDollar[1].decor
@@ -1619,9 +1651,9 @@ yydefault:
 				return decor(&Type{SyntaxInfo: SyntaxInfo{Span: span}, Kind: Func, Base: t, Decls: decls})
 			}
 		}
-	case 91:
+	case 92:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line cc.y:705
+		//line cc.y:732
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[4].span)
 			decor := yyDollar[1].decor
@@ -1631,199 +1663,199 @@ yydefault:
 				return decor(&Type{SyntaxInfo: SyntaxInfo{Span: span}, Kind: Array, Base: t, Width: expr})
 			}
 		}
-	case 92:
+	case 93:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:718
+		//line cc.y:745
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: yyDollar[1].str}
 		}
-	case 93:
+	case 94:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:723
+		//line cc.y:750
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Type: yyDollar[2].abdecor(yyDollar[1].typ)}
 		}
-	case 94:
+	case 95:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:728
+		//line cc.y:755
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			typ, name := yyDollar[2].decor(yyDollar[1].typ)
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: name, Type: typ}
 		}
-	case 95:
+	case 96:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:734
+		//line cc.y:761
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: "..."}
 		}
-	case 96:
+	case 97:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:742
+		//line cc.y:769
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.idec = idecor{yyDollar[1].decor, nil}
 		}
-	case 97:
+	case 98:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:747
+		//line cc.y:774
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.idec = idecor{yyDollar[1].decor, yyDollar[3].init}
 		}
-	case 98:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:755
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.str = yyDollar[1].str
-		}
 	case 99:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:760
+		//line cc.y:782
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 100:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:765
+		//line cc.y:787
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 101:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:770
+		//line cc.y:792
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 102:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:775
+		//line cc.y:797
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 103:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:780
+		//line cc.y:802
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 104:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:788
+		//line cc.y:807
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 105:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:793
+		//line cc.y:815
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 106:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:801
+		//line cc.y:820
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 107:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:806
+		//line cc.y:828
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 108:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:811
+		//line cc.y:833
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 109:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:816
+		//line cc.y:838
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 110:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:821
+		//line cc.y:843
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 111:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:826
+		//line cc.y:848
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 112:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:831
+		//line cc.y:853
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 113:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:836
+		//line cc.y:858
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 114:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:841
+		//line cc.y:863
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 115:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:848
+		//line cc.y:868
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 116:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:853
+		//line cc.y:875
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 117:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:860
+		//line cc.y:880
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 118:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:865
+		//line cc.y:887
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 119:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:873
+		//line cc.y:892
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.str = yyDollar[1].str
+		}
+	case 120:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:900
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.typ = yyDollar[1].typ
@@ -1831,41 +1863,41 @@ yydefault:
 				yyVAL.typ = &Type{Kind: TypedefType, Name: yyDollar[1].str}
 			}
 		}
-	case 120:
+	case 121:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:889
+		//line cc.y:916
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.tc.c, yyVAL.tc.q, yyVAL.tc.t = splitTypeWords(append(yyDollar[1].strs, "int"))
 		}
-	case 121:
+	case 122:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:894
+		//line cc.y:921
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.tc.c, yyVAL.tc.q, _ = splitTypeWords(append(yyDollar[1].strs, yyDollar[3].strs...))
 			yyVAL.tc.t = yyDollar[2].typ
 		}
-	case 122:
+	case 123:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:900
+		//line cc.y:927
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyDollar[1].strs = append(yyDollar[1].strs, yyDollar[2].str)
 			yyDollar[1].strs = append(yyDollar[1].strs, yyDollar[3].strs...)
 			yyVAL.tc.c, yyVAL.tc.q, yyVAL.tc.t = splitTypeWords(yyDollar[1].strs)
 		}
-	case 123:
+	case 124:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:907
+		//line cc.y:934
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.tc.c, yyVAL.tc.q, _ = splitTypeWords(yyDollar[2].strs)
 			yyVAL.tc.t = yyDollar[1].typ
 		}
-	case 124:
+	case 125:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:913
+		//line cc.y:940
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			var ts []string
@@ -1873,9 +1905,9 @@ yydefault:
 			ts = append(ts, yyDollar[2].strs...)
 			yyVAL.tc.c, yyVAL.tc.q, yyVAL.tc.t = splitTypeWords(ts)
 		}
-	case 125:
+	case 126:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:924
+		//line cc.y:951
 		{
 			yyVAL.span = yyDollar[1].span
 			if yyDollar[1].tc.c != 0 {
@@ -1886,16 +1918,16 @@ yydefault:
 			}
 			yyVAL.typ = yyDollar[1].tc.t
 		}
-	case 126:
+	case 127:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:937
+		//line cc.y:964
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.typ = yyDollar[2].abdecor(yyDollar[1].typ)
 		}
-	case 127:
+	case 128:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:945
+		//line cc.y:972
 		{
 			lx := yylex.(*lexer)
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
@@ -1913,9 +1945,9 @@ yydefault:
 				yyVAL.decls = append(yyVAL.decls, d)
 			}
 		}
-	case 128:
+	case 129:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:965
+		//line cc.y:992
 		{
 			lx := yylex.(*lexer)
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
@@ -1941,44 +1973,44 @@ yydefault:
 				yyVAL.decls = append(yyVAL.decls, d)
 			}
 		}
-	case 129:
+	case 130:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:993
+		//line cc.y:1020
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: yyDollar[2].str, Init: &Init{SyntaxInfo: SyntaxInfo{Span: yyDollar[3].span}, Expr: yyDollar[3].expr}}
 			yylex.(*lexer).pushDecl(yyVAL.decl)
 		}
-	case 130:
+	case 131:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1001
+		//line cc.y:1028
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = yyDollar[1].decls
 		}
-	case 131:
+	case 132:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1006
+		//line cc.y:1033
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = []*Decl{yyDollar[1].decl}
 		}
-	case 132:
+	case 133:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:1011
+		//line cc.y:1038
 		{
 			yyVAL.decls = yyDollar[4].decls
 		}
-	case 133:
+	case 134:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1015
+		//line cc.y:1042
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = []*Decl{yyDollar[1].decl}
 		}
-	case 134:
+	case 135:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1022
+		//line cc.y:1049
 		{
 			lx := yylex.(*lexer)
 			typ, name := yyDollar[2].decor(yyDollar[1].tc.t)
@@ -1999,9 +2031,9 @@ yydefault:
 				lx.pushDecl(decl)
 			}
 		}
-	case 135:
+	case 136:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:1043
+		//line cc.y:1070
 		{
 			yylex.(*lexer).popScope()
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
@@ -2012,44 +2044,44 @@ yydefault:
 			}
 			yyVAL.decl.Body = yyDollar[5].stmt
 		}
-	case 136:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1056
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.str = yyDollar[1].str
-		}
 	case 137:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1061
+		//line cc.y:1083
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.str = yyDollar[1].str
 		}
 	case 138:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1069
+		//line cc.y:1088
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.str = yyDollar[1].str
+		}
+	case 139:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1096
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.tk = Struct
 		}
-	case 139:
+	case 140:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1074
+		//line cc.y:1101
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.tk = Union
 		}
-	case 140:
+	case 141:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1081
+		//line cc.y:1108
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decor = yyDollar[1].decor
 		}
-	case 141:
+	case 142:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1086
+		//line cc.y:1113
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			name := yyDollar[1].str
@@ -2059,9 +2091,9 @@ yydefault:
 				return t, name
 			}
 		}
-	case 142:
+	case 143:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1098
+		//line cc.y:1125
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.decls = nil
@@ -2073,58 +2105,58 @@ yydefault:
 				yyVAL.decls = append(yyVAL.decls, &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Type: yyDollar[1].typ})
 			}
 		}
-	case 143:
+	case 144:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1112
+		//line cc.y:1139
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.typ = yylex.(*lexer).pushType(&Type{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Kind: yyDollar[1].tk, Tag: yyDollar[2].str})
 		}
-	case 144:
+	case 145:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:1117
+		//line cc.y:1144
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
 			yyVAL.typ = yylex.(*lexer).pushType(&Type{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Kind: yyDollar[1].tk, Tag: yyDollar[2].str, Decls: yyDollar[4].decls})
 		}
-	case 145:
+	case 146:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1124
+		//line cc.y:1151
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.prefix = &Prefix{Span: yyVAL.span, Dot: yyDollar[2].str}
 		}
-	case 146:
+	case 147:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1131
+		//line cc.y:1158
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.expr = &Expr{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: Arrow, Left: yyDollar[1].expr, Text: yyDollar[3].str}
 		}
-	case 147:
+	case 148:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1136
+		//line cc.y:1163
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.expr = &Expr{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Op: Dot, Left: yyDollar[1].expr, Text: yyDollar[3].str}
 		}
-	case 148:
+	case 149:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1144
+		//line cc.y:1171
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.typ = yylex.(*lexer).pushType(&Type{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Kind: Enum, Tag: yyDollar[2].str})
 		}
-	case 149:
+	case 150:
 		yyDollar = yyS[yypt-6 : yypt+1]
-		//line cc.y:1149
+		//line cc.y:1176
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[6].span)
 			yyVAL.typ = yylex.(*lexer).pushType(&Type{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Kind: Enum, Tag: yyDollar[2].str, Decls: yyDollar[4].decls})
 		}
-	case 150:
+	case 151:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1156
+		//line cc.y:1183
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			var x *Init
@@ -2134,441 +2166,441 @@ yydefault:
 			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: yyDollar[1].str, Init: x}
 			yylex.(*lexer).pushDecl(yyVAL.decl)
 		}
-	case 151:
+	case 152:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1168
+		//line cc.y:1195
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.expr = yyDollar[2].expr
 		}
-	case 152:
+	case 153:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1176
+		//line cc.y:1203
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.init = &Init{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Expr: yyDollar[1].expr}
 		}
-	case 153:
+	case 154:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1181
+		//line cc.y:1208
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.init = &Init{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Braced: yyDollar[1].inits}
 		}
-	case 154:
+	case 155:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1188
+		//line cc.y:1215
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.inits = []*Init{}
 		}
-	case 155:
+	case 156:
 		yyDollar = yyS[yypt-4 : yypt+1]
-		//line cc.y:1193
+		//line cc.y:1220
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[4].span)
 			yyVAL.inits = append(yyDollar[2].inits, yyDollar[3].init)
 		}
-	case 156:
+	case 157:
 		yyDollar = yyS[yypt-5 : yypt+1]
-		//line cc.y:1198
+		//line cc.y:1225
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[5].span)
 			yyVAL.inits = append(yyDollar[2].inits, yyDollar[3].init)
 		}
-	case 157:
+	case 158:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1204
+		//line cc.y:1231
 		{
 			yyVAL.span = Span{}
 			yyVAL.inits = nil
 		}
-	case 158:
+	case 159:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1209
+		//line cc.y:1236
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.inits = append(yyDollar[1].inits, yyDollar[2].init)
 		}
-	case 159:
+	case 160:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1216
+		//line cc.y:1243
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.init = yyDollar[1].init
 		}
-	case 160:
+	case 161:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1221
+		//line cc.y:1248
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.init = yyDollar[3].init
 			yyVAL.init.Prefix = yyDollar[1].prefixes
 		}
-	case 161:
+	case 162:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1229
+		//line cc.y:1256
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.prefix = &Prefix{Span: yyVAL.span, Index: yyDollar[2].expr}
 		}
-	case 162:
+	case 163:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1235
+		//line cc.y:1262
 		{
 			yyVAL.span = Span{}
-		}
-	case 163:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1239
-		{
-			yyVAL.span = yyDollar[1].span
 		}
 	case 164:
-		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1244
-		{
-			yyVAL.span = Span{}
-		}
-	case 165:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1248
+		//line cc.y:1266
 		{
 			yyVAL.span = yyDollar[1].span
+		}
+	case 165:
+		yyDollar = yyS[yypt-0 : yypt+1]
+		//line cc.y:1271
+		{
+			yyVAL.span = Span{}
 		}
 	case 166:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1257
+		//line cc.y:1275
 		{
 			yyVAL.span = yyDollar[1].span
-			yyVAL.prefixes = []*Prefix{yyDollar[1].prefix}
 		}
 	case 167:
-		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1262
-		{
-			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
-			yyVAL.prefixes = append(yyDollar[1].prefixes, yyDollar[2].prefix)
-		}
-	case 168:
-		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1268
-		{
-			yyVAL.span = Span{}
-			yyVAL.str = ""
-		}
-	case 169:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1273
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.str = yyDollar[1].str
-		}
-	case 170:
-		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1279
-		{
-			yyVAL.span = Span{}
-			yyVAL.expr = nil
-		}
-	case 171:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		//line cc.y:1284
 		{
 			yyVAL.span = yyDollar[1].span
-			yyVAL.expr = yyDollar[1].expr
+			yyVAL.prefixes = []*Prefix{yyDollar[1].prefix}
 		}
-	case 172:
+	case 168:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line cc.y:1289
+		{
+			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
+			yyVAL.prefixes = append(yyDollar[1].prefixes, yyDollar[2].prefix)
+		}
+	case 169:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1290
+		//line cc.y:1295
+		{
+			yyVAL.span = Span{}
+			yyVAL.str = ""
+		}
+	case 170:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1300
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.str = yyDollar[1].str
+		}
+	case 171:
+		yyDollar = yyS[yypt-0 : yypt+1]
+		//line cc.y:1306
 		{
 			yyVAL.span = Span{}
 			yyVAL.expr = nil
 		}
-	case 173:
+	case 172:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1295
+		//line cc.y:1311
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.expr = yyDollar[1].expr
 		}
+	case 173:
+		yyDollar = yyS[yypt-0 : yypt+1]
+		//line cc.y:1317
+		{
+			yyVAL.span = Span{}
+			yyVAL.expr = nil
+		}
 	case 174:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1302
+		//line cc.y:1322
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.expr = yyDollar[1].expr
+		}
+	case 175:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1329
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.exprs = []*Expr{yyDollar[1].expr}
 		}
-	case 175:
+	case 176:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1307
+		//line cc.y:1334
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.exprs = append(yyDollar[1].exprs, yyDollar[3].expr)
 		}
-	case 176:
+	case 177:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1313
+		//line cc.y:1340
 		{
 			yyVAL.span = Span{}
 			yyVAL.exprs = nil
 		}
-	case 177:
+	case 178:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1318
+		//line cc.y:1345
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.exprs = yyDollar[1].exprs
 		}
-	case 178:
+	case 179:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1324
+		//line cc.y:1351
 		{
 			yyVAL.span = Span{}
 			yyVAL.decls = nil
 		}
-	case 179:
+	case 180:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1329
+		//line cc.y:1356
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.decls = append(yyDollar[1].decls, yyDollar[2].decls...)
 		}
-	case 180:
+	case 181:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1335
+		//line cc.y:1362
 		{
 			yyVAL.span = Span{}
 			yyVAL.labels = nil
 		}
-	case 181:
+	case 182:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1340
+		//line cc.y:1367
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.labels = append(yyDollar[1].labels, yyDollar[2].label)
 		}
-	case 182:
+	case 183:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1347
+		//line cc.y:1374
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = []*Decl{yyDollar[1].decl}
 		}
-	case 183:
+	case 184:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1352
+		//line cc.y:1379
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.decls = append(yyDollar[1].decls, yyDollar[3].decl)
 		}
-	case 184:
+	case 185:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1358
+		//line cc.y:1385
 		{
 			yyVAL.span = Span{}
 			yyVAL.decls = nil
 		}
-	case 185:
+	case 186:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1363
+		//line cc.y:1390
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = yyDollar[1].decls
 		}
-	case 186:
+	case 187:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1370
+		//line cc.y:1397
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.idecs = []idecor{yyDollar[1].idec}
 		}
-	case 187:
+	case 188:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1375
+		//line cc.y:1402
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.idecs = append(yyDollar[1].idecs, yyDollar[3].idec)
 		}
-	case 188:
+	case 189:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1381
+		//line cc.y:1408
 		{
 			yyVAL.span = Span{}
 			yyVAL.idecs = nil
 		}
-	case 189:
+	case 190:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1386
+		//line cc.y:1413
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.idecs = yyDollar[1].idecs
 		}
-	case 190:
+	case 191:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1393
+		//line cc.y:1420
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.strs = []string{yyDollar[1].str}
 		}
-	case 191:
+	case 192:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1398
+		//line cc.y:1425
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.strs = append(yyDollar[1].strs, yyDollar[2].str)
 		}
-	case 192:
+	case 193:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1404
+		//line cc.y:1431
 		{
 			yyVAL.span = Span{}
 			yyVAL.strs = nil
-		}
-	case 193:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1409
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.strs = yyDollar[1].strs
 		}
 	case 194:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1416
+		//line cc.y:1436
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.strs = yyDollar[1].strs
+		}
+	case 195:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1443
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.strs = []string{yyDollar[1].str}
 		}
-	case 195:
+	case 196:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1421
+		//line cc.y:1448
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.strs = append(yyDollar[1].strs, yyDollar[2].str)
 		}
-	case 196:
+	case 197:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1427
+		//line cc.y:1454
 		{
 			yyVAL.span = Span{}
 			yyVAL.strs = nil
-		}
-	case 197:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1432
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.strs = yyDollar[1].strs
 		}
 	case 198:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1439
-		{
-			yyVAL.span = yyDollar[1].span
-			yyVAL.strs = []string{yyDollar[1].str}
-		}
-	case 199:
-		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1444
-		{
-			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
-			yyVAL.strs = append(yyDollar[1].strs, yyDollar[2].str)
-		}
-	case 200:
-		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1450
-		{
-			yyVAL.span = Span{}
-			yyVAL.strs = nil
-		}
-	case 201:
-		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1455
+		//line cc.y:1459
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.strs = yyDollar[1].strs
 		}
+	case 199:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1466
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.strs = []string{yyDollar[1].str}
+		}
+	case 200:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		//line cc.y:1471
+		{
+			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
+			yyVAL.strs = append(yyDollar[1].strs, yyDollar[2].str)
+		}
+	case 201:
+		yyDollar = yyS[yypt-0 : yypt+1]
+		//line cc.y:1477
+		{
+			yyVAL.span = Span{}
+			yyVAL.strs = nil
+		}
 	case 202:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1462
+		//line cc.y:1482
+		{
+			yyVAL.span = yyDollar[1].span
+			yyVAL.strs = yyDollar[1].strs
+		}
+	case 203:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		//line cc.y:1489
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decors = nil
 			yyVAL.decors = append(yyVAL.decors, yyDollar[1].decor)
 		}
-	case 203:
+	case 204:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1468
+		//line cc.y:1495
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.decors = append(yyDollar[1].decors, yyDollar[3].decor)
 		}
-	case 204:
+	case 205:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1474
+		//line cc.y:1501
 		{
 			yyVAL.span = Span{}
 			yyVAL.decors = nil
 		}
-	case 205:
+	case 206:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1479
+		//line cc.y:1506
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decors = yyDollar[1].decors
 		}
-	case 206:
+	case 207:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1486
+		//line cc.y:1513
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = yyDollar[1].decls
 		}
-	case 207:
+	case 208:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1491
+		//line cc.y:1518
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.decls = append(yyDollar[1].decls, yyDollar[2].decls...)
 		}
-	case 208:
+	case 209:
 		yyDollar = yyS[yypt-0 : yypt+1]
-		//line cc.y:1497
+		//line cc.y:1524
 		{
 			yyVAL.span = Span{}
 			yyVAL.expr = nil
 		}
-	case 209:
+	case 210:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1502
+		//line cc.y:1529
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.expr = yyDollar[1].expr
 		}
-	case 210:
+	case 211:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1509
+		//line cc.y:1536
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.decls = []*Decl{yyDollar[1].decl}
 		}
-	case 211:
+	case 212:
 		yyDollar = yyS[yypt-3 : yypt+1]
-		//line cc.y:1514
+		//line cc.y:1541
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[3].span)
 			yyVAL.decls = append(yyDollar[1].decls, yyDollar[3].decl)
 		}
-	case 212:
+	case 213:
 		yyDollar = yyS[yypt-1 : yypt+1]
-		//line cc.y:1521
+		//line cc.y:1548
 		{
 			yyVAL.span = yyDollar[1].span
 			yyVAL.strs = []string{yyDollar[1].str}
 		}
-	case 213:
+	case 214:
 		yyDollar = yyS[yypt-2 : yypt+1]
-		//line cc.y:1526
+		//line cc.y:1553
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
 			yyVAL.strs = append(yyDollar[1].strs, yyDollar[2].str)
