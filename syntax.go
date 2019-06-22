@@ -652,7 +652,7 @@ func doSideEffects(x *cc.Expr, before, after *[]*cc.Stmt, mode int) {
 		//	}
 		d := &cc.Decl{
 			Name: "tmp",
-			Type: toGoType(nil, nil, x.XType, nil),
+			Type: toGoType(nil, nil, x.XType, map[*cc.Type]*cc.Type{}),
 		}
 		*before = append(*before,
 			&cc.Stmt{Op: cc.StmtDecl, Decl: d},
