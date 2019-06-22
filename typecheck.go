@@ -1051,6 +1051,17 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 				return true
 			}
 		}
+		if left.Kind == Slice && left.Base == byteType && right.Kind == String {
+			x.Left.Text = "copy"
+			x.Left.XDecl = nil
+			if x.List[1].Op == ExprSlice && x.List[1].List[1] == nil {
+				x.List[1].List[2] = siz
+			} else {
+				x.List[1] = &cc.Expr{Op: ExprSlice, List: []*cc.Expr{x.List[1], nil, siz}}
+			}
+			x.List = x.List[:2]
+			return true
+		}
 		// fprintf(x.Span, "unsupported %v (%v %v)", GoString(x), GoString(left), GoString(right))
 		return true
 
