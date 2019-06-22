@@ -16,7 +16,9 @@ func Read(name string, r io.Reader) (*Prog, error) {
 }
 
 func ReadMany(names []string, readers []io.Reader) (*Prog, error) {
-	lx := &lexer{}
+	lx := &lexer{
+		scope: &Scope{},
+	}
 	var prog *Prog
 	for i, name := range names {
 		r := readers[i]
@@ -70,6 +72,7 @@ func ReadMany(names []string, readers []io.Reader) (*Prog, error) {
 func ParseExpr(str string) (*Expr, error) {
 	lx := &lexer{
 		start: startExpr,
+		scope: &Scope{},
 		lexInput: lexInput{
 			input:  str + "\n",
 			file:   "<string>",

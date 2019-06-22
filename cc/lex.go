@@ -86,7 +86,6 @@ func (lx *lexer) parse() {
 	if lx.wholeInput == "" {
 		lx.wholeInput = lx.input
 	}
-	lx.scope = &Scope{}
 	yyParse(lx)
 }
 
