@@ -471,8 +471,12 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 					forceConvert(fn, x.Left, left, right)
 				}
 			}
-			x.Left = &cc.Expr{Op: cc.Minus, Left: &cc.Expr{Op: cc.Call, Left: &cc.Expr{Op: cc.Name, Text: "cap"}, List: []*cc.Expr{x.Left}}}
-			x.Right = &cc.Expr{Op: cc.Call, Left: &cc.Expr{Op: cc.Name, Text: "cap"}, List: []*cc.Expr{x.Right}}
+			fnName := "cap"
+			if x.Left.XType.Kind == String && x.Right.XType.Kind == String {
+				fnName = "len"
+			}
+			x.Left = &cc.Expr{Op: cc.Minus, Left: &cc.Expr{Op: cc.Call, Left: &cc.Expr{Op: cc.Name, Text: fnName}, List: []*cc.Expr{x.Left}}}
+			x.Right = &cc.Expr{Op: cc.Call, Left: &cc.Expr{Op: cc.Name, Text: fnName}, List: []*cc.Expr{x.Right}}
 			x.Op = cc.Add
 			return intType
 		}
