@@ -1330,6 +1330,9 @@ func fixSpecialCompare(fn *cc.Decl, x *cc.Expr) bool {
 		}
 		call.Left = &cc.Expr{Op: cc.Name, Text: "strings.HasPrefix"}
 		call.List = call.List[:2]
+		for _, param := range call.List {
+			fixGoTypesExpr(fn, param, nil)
+		}
 		call.XType = boolType
 		if x.Op == cc.EqEq {
 			*x = *call
