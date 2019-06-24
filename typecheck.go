@@ -257,8 +257,8 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 
 		// Check for array passed as parameter. Doesn't translate well.
 		for _, d := range typ.Decls {
-			if d.Type.Is(cc.Array) {
-				fprintf(d.Span, "function taking array parameter!")
+			if d.Type != nil && d.Type.Kind == cc.Array {
+				d.Type.Kind = cc.Ptr
 			}
 		}
 		return typ
