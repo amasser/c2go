@@ -786,6 +786,10 @@ func (p *Printer) printType(t *cc.Type) {
 		p.Print("string")
 
 	case cc.Struct:
+		if t.Tag != "" {
+			p.Print(t.Tag)
+			break
+		}
 		if len(t.Decls) == 0 {
 			p.Print("struct{}")
 			break
