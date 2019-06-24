@@ -916,7 +916,7 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
-	if t == nil && decl.Init != nil {
+	if decl.Storage == cc.Define {
 		// Untyped constant from #define.
 		p.Print("const ", decl.Name, " = ", decl.Init)
 		return

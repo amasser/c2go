@@ -1978,7 +1978,7 @@ yydefault:
 		//line cc.y:1020
 		{
 			yyVAL.span = span(yyDollar[1].span, yyDollar[2].span)
-			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: yyDollar[2].str, Init: &Init{SyntaxInfo: SyntaxInfo{Span: yyDollar[3].span}, Expr: yyDollar[3].expr}}
+			yyVAL.decl = &Decl{SyntaxInfo: SyntaxInfo{Span: yyVAL.span}, Name: yyDollar[2].str, Storage: Define, Init: &Init{SyntaxInfo: SyntaxInfo{Span: yyDollar[3].span}, Expr: yyDollar[3].expr}}
 			yylex.(*lexer).pushDecl(yyVAL.decl)
 		}
 	case 131:

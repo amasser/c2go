@@ -113,6 +113,7 @@ const (
 	Typedef
 	Register
 	Inline
+	Define // a preprocessor constant from #define
 )
 
 func (c Storage) String() string {
@@ -176,15 +177,15 @@ const (
 )
 
 var builtinTypes = map[typeOp]*Type{
-	tChar:                     CharType,
-	tChar | tSigned:           CharType,
-	tChar | tUnsigned:         UcharType,
-	tShort:                    ShortType,
-	tShort | tSigned:          ShortType,
-	tShort | tUnsigned:        UshortType,
-	tShort | tInt:             ShortType,
-	tShort | tSigned | tInt:   ShortType,
-	tShort | tUnsigned | tInt: UshortType,
+	tChar:                        CharType,
+	tChar | tSigned:              CharType,
+	tChar | tUnsigned:            UcharType,
+	tShort:                       ShortType,
+	tShort | tSigned:             ShortType,
+	tShort | tUnsigned:           UshortType,
+	tShort | tInt:                ShortType,
+	tShort | tSigned | tInt:      ShortType,
+	tShort | tUnsigned | tInt:    UshortType,
 	tInt:                         IntType,
 	tInt | tSigned:               IntType,
 	tInt | tUnsigned:             UintType,
@@ -201,9 +202,9 @@ var builtinTypes = map[typeOp]*Type{
 	tLonglong | tInt:             LonglongType,
 	tLonglong | tSigned | tInt:   LonglongType,
 	tLonglong | tUnsigned | tInt: UlonglongType,
-	tFloat:  FloatType,
-	tDouble: DoubleType,
-	tVoid:   VoidType,
+	tFloat:                       FloatType,
+	tDouble:                      DoubleType,
+	tVoid:                        VoidType,
 }
 
 func splitTypeWords(ws []string) (c Storage, q TypeQual, ty *Type) {

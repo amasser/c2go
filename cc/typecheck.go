@@ -109,6 +109,11 @@ func (lx *lexer) typecheck(prog *Prog) {
 }
 
 func (lx *lexer) typecheckDecl(decl *Decl) {
+	if decl.Storage == Define {
+		lx.typecheckExpr(decl.Init.Expr)
+		decl.Type = decl.Init.Expr.XType
+		return
+	}
 	lx.typecheckType(decl.Type)
 	if decl.Init != nil && decl.Type != nil {
 		lx.typecheckInit(decl.Type, decl.Init)

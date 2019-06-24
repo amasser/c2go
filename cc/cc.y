@@ -1019,7 +1019,7 @@ define:
 	tokDefine tokName expr
 	{
 		$<span>$ = span($<span>1, $<span>2)
-		$$ = &Decl{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Name: $2, Init: &Init{SyntaxInfo: SyntaxInfo{Span: $<span>3}, Expr: $3}}
+		$$ = &Decl{SyntaxInfo: SyntaxInfo{Span: $<span>$}, Name: $2, Storage: Define, Init: &Init{SyntaxInfo: SyntaxInfo{Span: $<span>3}, Expr: $3}}
 		yylex.(*lexer).pushDecl($$);
 	}
 

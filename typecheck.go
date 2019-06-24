@@ -403,7 +403,7 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			return targ
 		}
 	default:
-		if targ != nil && targ.Kind == Bool {
+		if targ != nil && targ.Kind == Bool || targ == boolType {
 			old := copyExpr(x)
 			left := fixGoTypesExpr(fn, old, nil)
 			if left == nil || left.Kind == Bool {
