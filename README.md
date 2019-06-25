@@ -27,8 +27,10 @@ can handle, and give it translation hints in the configuration file.
 Some limitations are virtually inherent in the goals of producing safe, readable code;
 others are simply things that haven’t been implemented yet.
 
- - Preprocessor support: The only preprocessor directives that c2go understands
-   are `#include` and simple constant `#define`.
+ - Preprocessor support: The only preprocessor directive that c2go understands
+   is simple constant `#define`.
+   Because `#include` is ignored, any header files that you need to translate should be
+   included on the `c2go` command line before the `.c` files.
 
  - Pointer arithmetic: Pointer arithmetic is translated as slice operations when possible.
    But slices can only be moved forward, not backward.
