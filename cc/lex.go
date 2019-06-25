@@ -392,6 +392,7 @@ var extraTypes = map[string]*Type{
 	"uint32_t":  Uint32Type,
 	"uint64_t":  UlonglongType,
 	"uintptr_t": UintType,
+	"va_list":   &Type{Kind: TypedefType, Name: "va_list"},
 }
 
 func (lx *lexer) Error(s string) {
