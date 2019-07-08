@@ -90,12 +90,13 @@ func (lx *lexer) parse() {
 }
 
 type lexInput struct {
-	wholeInput string
-	input      string
-	tok        string
-	lastsym    string
-	file       string
-	lineno     int
+	wholeInput   string
+	input        string
+	tok          string
+	lastsym      string
+	file         string
+	lineno       int
+	systemHeader bool // inside a system header file
 }
 
 func (lx *lexer) pos() Pos {
@@ -192,6 +193,17 @@ Restart:
 		return tokEOF
 	}
 	c := in[0]
+	if lx.systemHeader && c != '#' {
+		// Skip the contents of system header files.
+		nl := strings.IndexByte(in, '\n')
+		if nl == -1 {
+			nl = len(in)
+		} else {
+			nl++
+		}
+		lx.skip(nl)
+		goto Restart
+	}
 	if isspace(c) {
 		i := 1
 		for i < len(in) && isspace(in[i]) {
@@ -213,14 +225,26 @@ Restart:
 		}
 		str := in[:i]
 
-		// If this line is defining a constant (not a function-like macro), don't
-		// ignore it.
-		if f := strings.Fields(str); len(f) > 2 && f[0] == "#define" && !strings.Contains(f[1], "(") {
-			lx.sym(len("#define"))
-			return tokDefine
+		lx.skip(i + 1)
+
+		// The preprocessor inserts lines that indicate what the current line number
+		// and filename are. If this is one of those, read it.
+		var line int
+		var file string
+		if n, _ := fmt.Sscanf(str, "# %d %q", &line, &file); n == 2 {
+			lx.file, lx.lineno = file, line
+			lx.systemHeader = false
+			if strings.HasSuffix(file, ".h") {
+				for _, p := range systemHeaderPaths {
+					if strings.HasPrefix(file, p) {
+						lx.systemHeader = true
+						break
+					}
+				}
+			}
+
 		}
 
-		lx.skip(i)
 		goto Restart
 
 	case 'L':
@@ -370,6 +394,11 @@ Restart:
 
 	lx.Errorf("unexpected input byte %#02x (%c)", c, c)
 	return tokError
+}
+
+var systemHeaderPaths = []string{
+	"/usr/include",
+	"/Library/Developer",
 }
 
 var extraTypes = map[string]*Type{

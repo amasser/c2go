@@ -6,23 +6,15 @@ package cc
 
 import (
 	"fmt"
-	"io"
-	"io/ioutil"
+	"os/exec"
 	"strings"
 )
 
-func Read(name string, r io.Reader) (*Prog, error) {
-	return ReadMany([]string{name}, []io.Reader{r})
-}
-
-func ReadMany(names []string, readers []io.Reader) (*Prog, error) {
-	lx := &lexer{
-		scope: &Scope{},
-	}
+func ReadMany(names []string) (*Prog, error) {
+	lx := &lexer{}
 	var prog *Prog
-	for i, name := range names {
-		r := readers[i]
-		data, err := ioutil.ReadAll(r)
+	for _, name := range names {
+		data, err := preprocess(name)
 		if err != nil {
 			return nil, err
 		}
@@ -33,6 +25,7 @@ func ReadMany(names []string, readers []io.Reader) (*Prog, error) {
 			file:   name,
 			lineno: 1,
 		}
+		lx.scope = &Scope{}
 		lx.parse()
 		if lx.errors != nil {
 			return nil, fmt.Errorf("%v", lx.errors[0])
@@ -69,21 +62,11 @@ func ReadMany(names []string, readers []io.Reader) (*Prog, error) {
 	return lx.prog, nil
 }
 
-func ParseExpr(str string) (*Expr, error) {
-	lx := &lexer{
-		start: startExpr,
-		scope: &Scope{},
-		lexInput: lexInput{
-			input:  str + "\n",
-			file:   "<string>",
-			lineno: 1,
-		},
-	}
-	lx.parse()
-	if lx.errors != nil {
-		return nil, fmt.Errorf("parsing expression %#q: %v", str, lx.errors[0])
-	}
-	return lx.expr, nil
+// preprocess runs the GCC preprocessor on the specified file, and returns the
+// output.
+func preprocess(filename string) ([]byte, error) {
+	gcc := exec.Command("gcc", "-C", "-E", "-DC2GO", filename)
+	return gcc.Output()
 }
 
 type Prog struct {

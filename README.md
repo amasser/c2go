@@ -27,11 +27,6 @@ can handle, and give it translation hints in the configuration file.
 Some limitations are virtually inherent in the goals of producing safe, readable code;
 others are simply things that haven’t been implemented yet.
 
- - Preprocessor support: The only preprocessor directive that c2go understands
-   is simple constant `#define`.
-   Because `#include` is ignored, any header files that you need to translate should be
-   included on the `c2go` command line before the `.c` files.
-
  - Pointer arithmetic: Pointer arithmetic is translated as slice operations when possible.
    But slices can only be moved forward, not backward.
    (`p + n` becomes `p[n:]`; `p - n` doesn’t work.)
@@ -42,6 +37,11 @@ others are simply things that haven’t been implemented yet.
    In C, `&p[n]` and `p + n` are equivalent, but c2go translates them differently, 
    as `&p[n]` and as `p[n:]`.
 
+ - System headers: 
+   System headers generally are difficult to parse; c2go doesn’t even try.
+   The preprocessor will expand macros that were defined in system headers,
+   but c2go itself ignores the contents of system headers.
+
 # How to Use c2go
 
 Before you even try running c2go on your program, 
@@ -49,15 +49,11 @@ you should refactor it into the kind of C that c2go is likely to be able to unde
 Throughout the refactoring process, 
 run tests regularly to make sure you haven’t introduced any bugs.
 
-## Remove Portability Macros
+## Remove CPU-Dependent Code
 
-Most C projects rely heavily on macros and `#ifdef`s for portability.
-These are hard for c2go to translate, and what’s more, they point out
-code that is likely to be problematic: unsafe, low-level, and machine-dependent.
+Many C projects contain code that depends on the CPU’s byte order or word size.
 Replace that code with something that will translate cleanly to Go.
-
 If the program has a header like "platform.h" or "port.h", start there.
-Keep going till there are no `#ifdef`s left (except header include guards).
 
 ## Simplify Memory Management
 
@@ -67,14 +63,11 @@ So if the program uses a custom allocator, replace it with `malloc` and `free`.
 
 ## Reduce Preprocessor Use
 
-Function-like macros are hard to translate to Go;
-c2go doesn’t even try at this point.
-You will either need to expand them in place,
-or convert them to regular functions.
-
-Other preprocessor tricks (like including a file multiple times as a template,
-with different macros defined each time) 
-will need to be eliminated as well.
+C2go uses GCC to preprocess the C source files.
+So all macros in the C code will already be expanded when c2go itself processes them.
+If you want to preserve the macro names in your Go code,
+you will need to define them some other way than as macros.
+(Replace `#define` constants with `enum` constants, for example.)
 
 ## Create a Config File
 

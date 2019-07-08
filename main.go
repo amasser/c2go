@@ -13,8 +13,6 @@
 //   c2go [options] *.c
 //
 // Options:
-//   -I string
-//     	include directory
 //   -c string
 //     	config file
 //   -dst string
@@ -24,7 +22,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"os"
 
@@ -57,17 +54,8 @@ func main() {
 		cc.AddTypeName(t)
 	}
 
-	var r []io.Reader
 	files := args
-	for _, file := range files {
-		f, err := os.Open(file)
-		if err != nil {
-			log.Fatal(err)
-		}
-		r = append(r, f)
-		defer f.Close()
-	}
-	prog, err := cc.ReadMany(files, r)
+	prog, err := cc.ReadMany(files)
 	if err != nil {
 		log.Fatal(err)
 	}
