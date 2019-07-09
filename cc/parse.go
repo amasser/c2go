@@ -18,7 +18,6 @@ func ReadMany(names []string) (*Prog, error) {
 		if err != nil {
 			return nil, err
 		}
-		data = append(data, '\n')
 		lx.start = startProg
 		lx.lexInput = lexInput{
 			input:  string(data),
@@ -66,7 +65,12 @@ func ReadMany(names []string) (*Prog, error) {
 // output.
 func preprocess(filename string) ([]byte, error) {
 	gcc := exec.Command("gcc", "-C", "-E", "-DC2GO", filename)
-	return gcc.Output()
+	data, err := gcc.Output()
+	if exitErr, ok := err.(*exec.ExitError); ok {
+		return nil, fmt.Errorf("%s", exitErr.Stderr)
+	}
+	data = append(data, '\n')
+	return data, err
 }
 
 type Prog struct {
