@@ -151,7 +151,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 		return t
 
 	case cc.TypedefType:
-		if cfg.typeMap[typ.Name] != "" {
+		if cfg != nil && cfg.typeMap[typ.Name] != "" {
 			t := &cc.Type{Kind: cc.TypedefType, Name: cfg.typeMap[typ.Name], TypeDecl: typ.TypeDecl}
 			cache[typ] = t
 			return t
