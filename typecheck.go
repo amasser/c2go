@@ -168,7 +168,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 				t = &cc.Type{Kind: c2goKind[typ.Base.Kind]}
 			}
 			if d, ok := x.(*cc.Decl); ok {
-				if cfg.bool[declKey(d)] || typ.Name == "bool" {
+				if cfg.bool[declKey(d)] || typ.Name == "bool" || typ.Name == "BOOL" {
 					t.Kind = Bool
 				}
 			}
