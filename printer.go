@@ -879,6 +879,11 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
+	if decl.Storage|cc.Typedef == cc.Typedef && decl.Type.TypeDecl != nil && decl.Type.TypeDecl != decl && decl.Type.TypeDecl.Name == decl.Type.Tag {
+		// Don't print multiple typedefs of the same type.
+		return
+	}
+
 	p.Print(decl.Comments.Before)
 	defer p.Print(decl.Comments.Suffix, decl.Comments.After)
 
