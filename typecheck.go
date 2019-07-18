@@ -185,6 +185,12 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			return toGoType(cfg, x, def, cache)
 		}
 
+		if def != nil && def.Tag != "" {
+			// If we have a typedef of a tagged union, use the union tag
+			// instead of the typedef name.
+			return toGoType(cfg, x, def, cache)
+		}
+
 		// Otherwise assume it is a struct or some such,
 		// and preserve the name but translate the base.
 		t := &cc.Type{Kind: cc.TypedefType, Name: typ.Name, TypeDecl: typ.TypeDecl}

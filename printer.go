@@ -879,7 +879,7 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
-	if decl.Storage|cc.Typedef == cc.Typedef && decl.Type.TypeDecl != nil && decl.Type.TypeDecl != decl && decl.Type.TypeDecl.Name == decl.Type.Tag {
+	if decl.Storage&cc.Typedef == cc.Typedef && decl.Type.TypeDecl != nil && decl.Type.TypeDecl != decl {
 		// Don't print multiple typedefs of the same type.
 		return
 	}
@@ -893,8 +893,6 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		if t.Kind == cc.Struct || t.Kind == cc.Union || isEnum {
 			if t.Tag == "" {
 				t.Tag = decl.Name
-			} else if decl.Name != t.Tag {
-				fprintf(decl.Span, "typedef %s and tag %s do not match", decl.Name, t.Tag)
 			}
 			if isEnum {
 				p.printEnumDecl(t)
