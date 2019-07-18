@@ -229,7 +229,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			t.Kind = Slice
 			t.Base = byteType
 		}
-		if ok && cfg.slice[declKey(d)] {
+		if ok && (cfg.slice[declKey(d)] || d.Indexed) {
 			t.Kind = Slice
 		}
 

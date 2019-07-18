@@ -330,6 +330,7 @@ type Decl struct {
 	CurFn     *Decl
 	OuterType *Type
 	GoPackage string
+	Indexed   bool // Was this variable indexed like an array, or used in pointer arithmetic?
 }
 
 func (d *Decl) String() string {

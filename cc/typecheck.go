@@ -910,6 +910,9 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 		switch {
 		case isPtr(l) && isInt(r):
 			x.XType = ptrBase(l)
+			if x.Left.XDecl != nil {
+				x.Left.XDecl.Indexed = true
+			}
 		case isInt(l) && isPtr(r):
 			x.XType = ptrBase(r)
 		default:
@@ -1090,6 +1093,9 @@ func (lx *lexer) typecheckExpr(x *Expr) {
 			break
 		}
 		x.XType = t
+		if isPtr(t) && x.Left.XDecl != nil {
+			x.Left.XDecl.Indexed = true
+		}
 
 	case SizeofExpr:
 		x.XType = LongType
