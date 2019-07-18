@@ -179,6 +179,12 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			return &cc.Type{Kind: cc.TypedefType, Name: "[]interface{}"}
 		}
 
+		if def != nil && def.Kind == cc.Ptr {
+			// The base is a pointer type; unwrap it.
+			// Converting pointers to slices works better that way.
+			return toGoType(cfg, x, def, cache)
+		}
+
 		// Otherwise assume it is a struct or some such,
 		// and preserve the name but translate the base.
 		t := &cc.Type{Kind: cc.TypedefType, Name: typ.Name, TypeDecl: typ.TypeDecl}
