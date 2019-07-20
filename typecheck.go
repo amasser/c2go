@@ -641,6 +641,11 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			*x = *x.Left
 			return typ
 		}
+		if (x.Type.Kind == cc.Ptr || x.Type.Name == "interface{}") && x.Left.Op == cc.Number && x.Left.Text == "0" {
+			// Casting 0 to a pointer type should be translated as nil.
+			*x = cc.Expr{Op: cc.Name, Text: "nil"}
+			return nil
+		}
 		fixGoTypesExpr(fn, x.Left, nil)
 		if isEmptyInterface(x.Left.XType) {
 			x.Op = TypeAssert
