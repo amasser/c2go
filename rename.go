@@ -120,6 +120,10 @@ func renameDecls(cfg *Config, prog *cc.Prog) {
 			// Duplicate function declarations aren't an issue, just definitions.
 			continue
 		}
+		if d.Storage&cc.Extern == cc.Extern && (d.Type == nil || d.Type.Kind != cc.Func) && d.Init == nil {
+			// Extern variable declarations don't count either.
+			continue
+		}
 		// TODO(rsc): I don't understand why this is necessary given the above.
 		if d.Body != nil && d.Body.Span.Start.File != "" {
 			d.Span = d.Body.Span
