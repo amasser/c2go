@@ -33,7 +33,7 @@ func ReadMany(names []string) (*Prog, error) {
 			prog = lx.prog
 		} else {
 			prog.Span.End = lx.prog.Span.End
-			prog.Decls = append(prog.Decls, lx.prog.Decls...)
+			prog.Decls = mergeDecls(prog.Decls, lx.prog.Decls)
 		}
 		lx.prog = nil
 		for sc := lx.scope; sc != nil; sc = sc.Next {
@@ -59,6 +59,19 @@ func ReadMany(names []string) (*Prog, error) {
 	removeDuplicates(lx.prog)
 
 	return lx.prog, nil
+}
+
+func mergeDecls(dest, toAdd []*Decl) []*Decl {
+	have := make(map[string]bool)
+	for _, d := range dest {
+		have[fmt.Sprintf("%v:%x", d.Span, d.Name)] = true
+	}
+	for _, d := range toAdd {
+		if !have[fmt.Sprintf("%v:%x", d.Span, d.Name)] {
+			dest = append(dest, d)
+		}
+	}
+	return dest
 }
 
 // preprocess runs the GCC preprocessor on the specified file, and returns the
