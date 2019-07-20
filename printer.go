@@ -884,6 +884,11 @@ func (p *Printer) printDecl(decl *cc.Decl) {
 		return
 	}
 
+	if decl.Storage&cc.Extern == cc.Extern && (decl.Type == nil || decl.Type.Kind != cc.Func) && decl.Init == nil {
+		// Don't print extern variable declarations; wait for the definition.
+		return
+	}
+
 	p.Print(decl.Comments.Before)
 	defer p.Print(decl.Comments.Suffix, decl.Comments.After)
 
