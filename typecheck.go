@@ -1527,7 +1527,7 @@ func isSliceOrPtr(typ *cc.Type) bool {
 }
 
 func isPtrSliceOrArray(typ *cc.Type) bool {
-	return typ != nil && (typ.Kind == cc.Ptr || typ.Kind == cc.Array || typ.Kind == Slice)
+	return typ != nil && (typ.Kind == cc.Ptr || typ.Kind == cc.Array || typ.Kind == Slice || typ.Kind == cc.TypedefType && isPtrSliceOrArray(typ.Base))
 }
 
 func isSliceOrArray(typ *cc.Type) bool {
