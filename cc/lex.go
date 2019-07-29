@@ -55,11 +55,10 @@ type Comments struct {
 type lexer struct {
 	// input
 	start int
-	byte  int
 	lexInput
 	forcePos    Pos
 	c2goComment bool // inside /*c2go ... */ comment
-	comments    []Comment
+	comments    map[Pos]Comment
 
 	// comment assignment
 	pre      []Syntax
@@ -86,6 +85,9 @@ func (lx *lexer) parse() {
 	if lx.wholeInput == "" {
 		lx.wholeInput = lx.input
 	}
+	if lx.comments == nil {
+		lx.comments = make(map[Pos]Comment)
+	}
 	yyParse(lx)
 }
 
@@ -96,6 +98,7 @@ type lexInput struct {
 	lastsym      string
 	file         string
 	lineno       int
+	column       int
 	systemHeader bool // inside a system header file
 }
 
@@ -103,7 +106,7 @@ func (lx *lexer) pos() Pos {
 	if lx.forcePos.Line != 0 {
 		return lx.forcePos
 	}
-	return Pos{lx.file, lx.lineno, lx.byte}
+	return Pos{lx.file, lx.lineno, lx.column}
 }
 func (lx *lexer) span() Span {
 	p := lx.pos()
@@ -126,8 +129,12 @@ func span(l1, l2 Span) Span {
 
 func (lx *lexer) skip(i int) {
 	lx.lineno += strings.Count(lx.input[:i], "\n")
+	if nl := strings.LastIndex(lx.input[:i], "\n"); nl != -1 {
+		lx.column = i - nl
+	} else {
+		lx.column += i
+	}
 	lx.input = lx.input[i:]
-	lx.byte += i
 }
 
 func (lx *lexer) token(i int) {
@@ -162,7 +169,7 @@ func (lx *lexer) comment(i int) {
 
 	lx.skip(i)
 	c.Span.End = lx.pos()
-	lx.comments = append(lx.comments, c)
+	lx.comments[c.Span.Start] = c
 }
 
 func isalpha(c byte) bool {
@@ -435,7 +442,24 @@ func (lx *lexer) Errorf(format string, args ...interface{}) {
 type Pos struct {
 	File string
 	Line int
-	Byte int
+	Col  int
+}
+
+func (a Pos) Less(b Pos) bool {
+	switch {
+	case a.File < b.File:
+		return true
+	case a.File > b.File:
+		return false
+	case a.Line < b.Line:
+		return true
+	case a.Line > b.Line:
+		return false
+	case a.Col < b.Col:
+		return true
+	default:
+		return false
+	}
 }
 
 type Span struct {
@@ -622,12 +646,16 @@ func (x byStart) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
 func (x byStart) Less(i, j int) bool {
 	pi := x[i].GetSpan()
 	pj := x[j].GetSpan()
-	// Order by start byte, leftmost first,
+	// Order by start, leftmost first,
 	// and break ties by choosing outer before inner.
-	if pi.Start.Byte != pj.Start.Byte {
-		return pi.Start.Byte < pj.Start.Byte
+	switch {
+	case pi.Start.Less(pj.Start):
+		return true
+	case pj.Start.Less(pi.Start):
+		return false
+	default:
+		return pj.End.Less(pi.End)
 	}
-	return pi.End.Byte > pj.End.Byte
 }
 
 type byEnd []Syntax
@@ -637,12 +665,24 @@ func (x byEnd) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
 func (x byEnd) Less(i, j int) bool {
 	pi := x[i].GetSpan()
 	pj := x[j].GetSpan()
-	// Order by end byte, leftmost first,
+	// Order by end, leftmost first,
 	// and break ties by choosing inner before outer.
-	if pi.End.Byte != pj.End.Byte {
-		return pi.End.Byte < pj.End.Byte
+	switch {
+	case pi.End.Less(pj.End):
+		return true
+	case pj.End.Less(pi.End):
+		return false
+	default:
+		return pi.Start.Less(pj.Start)
 	}
-	return pi.Start.Byte > pj.Start.Byte
+}
+
+type commentList []Comment
+
+func (x commentList) Len() int      { return len(x) }
+func (x commentList) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
+func (x commentList) Less(i, j int) bool {
+	return x[i].Start.Less(x[j].Start)
 }
 
 // assignComments attaches comments to nearby syntax.
@@ -651,7 +691,7 @@ func (lx *lexer) assignComments() {
 	lx.order(lx.prog)
 
 	// Split into whole-line comments and suffix comments.
-	var line, suffix []Comment
+	var line, suffix commentList
 	for _, com := range lx.comments {
 		if com.Suffix {
 			suffix = append(suffix, com)
@@ -660,14 +700,47 @@ func (lx *lexer) assignComments() {
 		}
 	}
 
+	sort.Sort(line)
+	sort.Sort(suffix)
+
+	currentFile := ""
+
 	// Assign line comments to syntax immediately following.
 	for _, x := range lx.pre {
 		start := x.GetSpan().Start
 		xcom := x.GetComments()
-		for len(line) > 0 && start.Byte >= line[0].Start.Byte {
-			xcom.Before = append(xcom.Before, line[0])
-			line = line[1:]
+
+		if start.File != currentFile {
+			// Starting a new file. Make sure we catch the comment block at the start of the file,
+			// even if they aren't close to a declaration.
+			currentFile = start.File
+			for len(line) > 0 && line[0].Start.File < currentFile {
+				line = line[1:]
+			}
+			header := 0
+			for header < len(line) && line[header].End.Less(start) && (header == 0 || line[header-1].End.Line >= line[header].Start.Line-2) {
+				header++
+			}
+			xcom.Before = append(xcom.Before, line[:header]...)
+			line = line[header:]
 		}
+
+		end := 0
+		for end < len(line) && line[end].Start.Less(start) {
+			end++
+		}
+		// Now line[0:end] are the comments that come before x.
+		first := end
+		if first > 0 && line[first-1].End.File == start.File && line[first-1].End.Line >= start.Line-2 {
+			first--
+			for first > 0 && line[first-1].End.File == line[first].Start.File && line[first-1].End.Line >= line[first].Start.Line-2 {
+				first--
+			}
+			// Now line[first:end] are the comments that come before x,
+			// separated from x and from each other by no more than one blank line.
+			xcom.Before = append(xcom.Before, line[first:end]...)
+		}
+		line = line[end:]
 	}
 
 	// Remaining line comments go at end of file.
@@ -699,7 +772,7 @@ func (lx *lexer) assignComments() {
 			continue
 		}
 		xcom := x.GetComments()
-		for len(suffix) > 0 && end.Byte <= suffix[len(suffix)-1].Start.Byte {
+		for len(suffix) > 0 && end.Less(suffix[len(suffix)-1].Start) {
 			xcom.Suffix = append(xcom.Suffix, suffix[len(suffix)-1])
 			suffix = suffix[:len(suffix)-1]
 		}
@@ -711,9 +784,6 @@ func (lx *lexer) assignComments() {
 	for _, x := range lx.post {
 		reverseComments(x.GetComments().Suffix)
 	}
-
-	// Remaining suffix comments go at beginning of file.
-	lx.prog.Comments.Before = append(lx.prog.Comments.Before, suffix...)
 }
 
 // reverseComments reverses the []Comment list.
