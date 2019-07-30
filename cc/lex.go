@@ -707,6 +707,10 @@ func (lx *lexer) assignComments() {
 
 	// Assign line comments to syntax immediately following.
 	for _, x := range lx.pre {
+		if _, ok := x.(*Init); ok {
+			// Don't assign comments to an initializer; skip it and go to the declaration.
+			continue
+		}
 		start := x.GetSpan().Start
 		xcom := x.GetComments()
 

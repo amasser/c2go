@@ -986,7 +986,9 @@ func (p *Printer) printEnumDecl(t *cc.Type) {
 	if !printedEnumValues[t.Tag] {
 		p.Print("const (", Indent)
 		for i, decl := range t.Decls {
-			p.Print(Newline, decl.Name)
+			p.Print(Newline)
+			p.Print(decl.Comments.Before)
+			p.Print(decl.Name)
 			if decl.Init == nil && i == 0 {
 				if len(t.Decls) >= 2 && t.Decls[1].Init == nil {
 					p.Print(" = iota")
