@@ -27,6 +27,19 @@ func (lx *lexer) pushDecl(decl *Decl) {
 	if decl.Name == "" {
 		return
 	}
+	if sc.Next == nil {
+		// For top-level declarations, use the canonical one from the cache,
+		// to avoid the confusion of different usages poiting to different copies
+		// of the declaration (from multiple includes of the same header).
+		if d, ok := lx.declCache[declID(decl)]; ok {
+			decl = d
+		} else {
+			if lx.declCache == nil {
+				lx.declCache = make(map[string]*Decl)
+			}
+			lx.declCache[declID(decl)] = decl
+		}
+	}
 	if sc.Decl == nil {
 		sc.Decl = make(map[string]*Decl)
 	}

@@ -61,13 +61,17 @@ func ReadMany(names []string) (*Prog, error) {
 	return lx.prog, nil
 }
 
+func declID(d *Decl) string {
+	return fmt.Sprintf("%v:%x", d.Span, d.Name)
+}
+
 func mergeDecls(dest, toAdd []*Decl) []*Decl {
 	have := make(map[string]bool)
 	for _, d := range dest {
-		have[fmt.Sprintf("%v:%x", d.Span, d.Name)] = true
+		have[declID(d)] = true
 	}
 	for _, d := range toAdd {
-		if !have[fmt.Sprintf("%v:%x", d.Span, d.Name)] {
+		if !have[declID(d)] {
 			dest = append(dest, d)
 		}
 	}

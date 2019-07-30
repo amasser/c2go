@@ -68,6 +68,8 @@ type lexer struct {
 	// type checking state
 	scope *Scope
 
+	declCache map[string]*Decl
+
 	// output
 	errors []string
 	prog   *Prog
