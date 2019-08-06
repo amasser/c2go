@@ -118,6 +118,8 @@ var c2goName = map[string]cc.TypeKind{
 	"uint32": Uint32,
 	"int64":  Int64,
 	"uint64": Uint64,
+	"bool":   Bool,
+	"BOOL":   Bool,
 }
 
 func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Type) *cc.Type {
@@ -168,7 +170,7 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 				t = &cc.Type{Kind: c2goKind[typ.Base.Kind]}
 			}
 			if d, ok := x.(*cc.Decl); ok {
-				if cfg.bool[declKey(d)] || typ.Name == "bool" || typ.Name == "BOOL" {
+				if cfg.bool[declKey(d)] {
 					t.Kind = Bool
 				}
 			}
