@@ -42,6 +42,10 @@ others are simply things that haven’t been implemented yet.
    The preprocessor will expand macros that were defined in system headers,
    but c2go itself ignores the contents of system headers.
 
+ - `goto`:
+   The `goto` statement in Go is much more limited than in C. 
+   So some uses of `goto` will need to be refactored.
+
 # How to Use c2go
 
 Before you even try running c2go on your program, 
