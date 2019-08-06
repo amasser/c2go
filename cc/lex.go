@@ -603,6 +603,7 @@ func (lx *lexer) enum(x Syntax) {
 		lx.enum(x.Post)
 		lx.enum(x.Body)
 		lx.enum(x.Else)
+		lx.enum(x.Decl)
 		for _, y := range x.Block {
 			lx.enum(y)
 		}
@@ -779,7 +780,10 @@ func (lx *lexer) assignComments() {
 		}
 		xcom := x.GetComments()
 		for len(suffix) > 0 && end.Less(suffix[len(suffix)-1].Start) {
-			xcom.Suffix = append(xcom.Suffix, suffix[len(suffix)-1])
+			c := suffix[len(suffix)-1]
+			if c.Start.Line == end.Line {
+				xcom.Suffix = append(xcom.Suffix, c)
+			}
 			suffix = suffix[:len(suffix)-1]
 		}
 	}
