@@ -979,8 +979,8 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		return false
 	}
 	switch x.Left.Text {
-	case "memmove", "memcpy":
-		if len(x.List) != 3 {
+	case "memmove", "memcpy", "__builtin___memcpy_chk":
+		if len(x.List) < 3 {
 			// fprintf(x.Span, "unsupported %v", x)
 			return false
 		}
