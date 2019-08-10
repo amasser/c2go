@@ -30,6 +30,9 @@ func writeGoFiles(cfg *Config, prog *cc.Prog) {
 	printers := map[string]*Printer{}
 	cfiles := map[string]string{}
 	for _, decl := range prog.Decls {
+		if decl.Type != nil && decl.Type.Kind == cc.Func && decl.Body == nil {
+			continue
+		}
 		if decl.GoPackage == "" {
 			decl.GoPackage = "other"
 		}
