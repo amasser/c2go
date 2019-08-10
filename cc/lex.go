@@ -738,13 +738,13 @@ func (lx *lexer) assignComments() {
 		}
 		// Now line[0:end] are the comments that come before x.
 		first := end
-		if first > 0 && line[first-1].End.File == start.File && line[first-1].End.Line >= start.Line-2 {
+		if first > 0 && line[first-1].End.File == start.File && line[first-1].End.Line >= start.Line-5 {
 			first--
 			for first > 0 && line[first-1].End.File == line[first].Start.File && line[first-1].End.Line >= line[first].Start.Line-2 {
 				first--
 			}
 			// Now line[first:end] are the comments that come before x,
-			// separated from x and from each other by no more than one blank line.
+			// separated from x by no more than 4 lines, and from each other by no more than one line.
 			xcom.Before = append(xcom.Before, line[first:end]...)
 		}
 		line = line[end:]
