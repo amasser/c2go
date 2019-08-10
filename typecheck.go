@@ -643,6 +643,13 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			*x = *x.Left
 			return typ
 		}
+		if x.Type.Kind == cc.Struct && len(x.Type.Decls) == 0 {
+			// If we're casting to struct{}, it must have been a cast to void in C.
+			// The best way to translate that is just to remove the cast.
+			typ := fixGoTypesExpr(fn, x.Left, nil)
+			*x = *x.Left
+			return typ
+		}
 		if (x.Type.Kind == cc.Ptr || x.Type.Name == "interface{}") && x.Left.Op == cc.Number && x.Left.Text == "0" {
 			// Casting 0 to a pointer type should be translated as nil.
 			*x = cc.Expr{Op: cc.Name, Text: "nil"}
