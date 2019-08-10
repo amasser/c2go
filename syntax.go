@@ -306,6 +306,18 @@ func rewriteStmt(stmt *cc.Stmt) {
 			return
 		}
 
+		if stmt.Expr.Op == cc.Comma {
+			// Replace commas with semicolons if they are on the top level.
+			list := stmt.Expr.List
+			stmt.Expr = nil
+			stmt.Op = BlockNoBrace
+			stmt.Block = make([]*cc.Stmt, len(list))
+			for i, expr := range list {
+				stmt.Block[i] = &cc.Stmt{Op: cc.StmtExpr, Expr: expr}
+			}
+			return
+		}
+
 		before, after := extractSideEffects(stmt.Expr, sideStmt)
 		if len(before)+len(after) > 0 {
 			old := copyStmt(stmt)
