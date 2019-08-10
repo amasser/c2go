@@ -634,13 +634,18 @@ func (p *Printer) printStmt(x *cc.Stmt) {
 			p.Print(":", lab.Comments.Suffix, Newline)
 		}
 	} else {
-		p.Print(x.Comments.Before)
+		if x.Op != cc.Block {
+			p.Print(x.Comments.Before)
+		}
 	}
 	defer p.Print(x.Comments.Suffix, x.Comments.After)
 
 	switch x.Op {
 	case cc.Block:
 		p.Print("{", Indent)
+		if len(x.Comments.Before) > 0 {
+			p.Print(Newline, x.Comments.Before)
+		}
 		for _, b := range x.Block {
 			if b.Op == cc.StmtDecl && p.printed[b.Decl] {
 				continue

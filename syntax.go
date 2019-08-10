@@ -263,6 +263,11 @@ func rewriteStmt(stmt *cc.Stmt) {
 		if stmt.Op == cc.If && stmt.Else == nil {
 			fixAndAndAssign(stmt)
 		}
+		if stmt.Op == cc.If && stmt.Else != nil && stmt.Else.Op == cc.If && len(stmt.Else.Comments.Before) > 0 {
+			// Move the comments into the block after the else if.
+			stmt.Else.Body.Comments.Before = append(stmt.Else.Comments.Before, stmt.Else.Body.Comments.Before...)
+			stmt.Else.Comments.Before = nil
+		}
 		before, _ := extractSideEffects(stmt.Expr, sideNoAfter)
 		if len(before) > 0 {
 			old := copyStmt(stmt)
