@@ -1186,7 +1186,25 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		}
 		fixGoTypesExpr(fn, x.List[0], stringType)
 		fixGoTypesExpr(fn, x.List[1], stringType)
-		x.Left.Text = "stringsCompare"
+		x.Left.Text = "strings.Compare"
+		x.Left.XDecl = nil
+		x.XType = intType
+		return true
+
+	case "memcmp":
+		if len(x.List) != 3 {
+			fprintf(x.Span, "unsupported %v - wrong number of args", x)
+			return false
+		}
+		fixGoTypesExpr(fn, x.List[0], nil)
+		fixGoTypesExpr(fn, x.List[1], nil)
+		fixGoTypesExpr(fn, x.List[2], nil)
+		length := x.List[2]
+		x.List = x.List[:2]
+		for i, b := range x.List {
+			x.List[i] = &cc.Expr{Op: ExprSlice, List: []*cc.Expr{b, nil, length}}
+		}
+		x.Left.Text = "bytes.Compare"
 		x.Left.XDecl = nil
 		x.XType = intType
 		return true
