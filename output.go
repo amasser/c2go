@@ -13,6 +13,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/andybalholm/c2go/cc"
@@ -25,11 +26,21 @@ var alwaysDeleteDecl = map[string]bool{
 	"nil":  true,
 }
 
+type sortedDecls []*cc.Decl
+
+func (x sortedDecls) Len() int      { return len(x) }
+func (x sortedDecls) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
+func (x sortedDecls) Less(i, j int) bool {
+	return x[i].Span.Start.Less(x[j].Span.Start)
+}
+
 // writeGoFiles writes prog to Go source files in a tree of packages.
 func writeGoFiles(cfg *Config, prog *cc.Prog) {
 	printers := map[string]*Printer{}
 	cfiles := map[string]string{}
-	for _, decl := range prog.Decls {
+	decls := sortedDecls(prog.Decls)
+	sort.Sort(decls)
+	for _, decl := range decls {
 		if decl.Type != nil && decl.Type.Kind == cc.Func && decl.Body == nil {
 			continue
 		}
