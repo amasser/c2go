@@ -408,6 +408,7 @@ Restart:
 var systemHeaderPaths = []string{
 	"/usr/include",
 	"/Library/Developer",
+	"/Applications/Xcode.app",
 }
 
 var extraTypes = map[string]*Type{
