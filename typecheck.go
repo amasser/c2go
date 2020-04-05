@@ -201,12 +201,19 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 		return t
 
 	case cc.Array:
-		if typ.Base.Def().Kind == cc.Char {
+		if typ.Base.Def().Kind == cc.Char && typ.Width == nil {
+			if d, ok := x.(*cc.Decl); ok && cfg.slice[declKey(d)] {
+				return &cc.Type{Kind: Slice, Base: byteType}
+			}
 			return &cc.Type{Kind: String}
 		}
 		t := &cc.Type{Kind: cc.Array, Width: typ.Width}
 		cache[typ] = t
-		t.Base = toGoType(cfg, nil, typ.Base, cache)
+		if typ.Base.Def().Kind == cc.Char {
+			t.Base = byteType
+		} else {
+			t.Base = toGoType(cfg, nil, typ.Base, cache)
+		}
 		return t
 
 	case cc.Ptr:
