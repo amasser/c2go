@@ -1220,6 +1220,11 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.Left.XDecl = nil
 		x.List = []*cc.Expr{{Op: cc.Name, Text: `"abort"`}}
 		return true
+
+	case "exit":
+		x.Left.Text = "os.Exit"
+		x.Left.XDecl = nil
+		return true
 	}
 
 	return false
