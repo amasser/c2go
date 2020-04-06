@@ -413,6 +413,7 @@ var systemHeaderPaths = []string{
 
 var extraTypes = map[string]*Type{
 	"bool":      BoolType,
+	"FILE":      &Type{Kind: TypedefType, Name: "os.File"},
 	"int8_t":    CharType,
 	"int16_t":   ShortType,
 	"int32_t":   Int32Type,

@@ -27,8 +27,14 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 				switch x.Text {
 				case "nil":
 					x.XDecl = nil // just nil, not main.Nil
-				case "nelem":
-					x.Text = "len"
+				case "stdin", "__stdinp":
+					x.Text = "os.Stdin"
+					x.XDecl = nil
+				case "stdout", "__stdoutp":
+					x.Text = "os.Stdout"
+					x.XDecl = nil
+				case "stderr", "__stderrp":
+					x.Text = "os.Stderr"
 					x.XDecl = nil
 				}
 			case cc.Number:
