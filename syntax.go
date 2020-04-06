@@ -80,10 +80,10 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 					}
 				}
 
-				// Replace argc and argv with os.Args.
 				cc.Preorder(x, func(x cc.Syntax) {
 					switch x := x.(type) {
 					case *cc.Expr:
+						// Replace argc and argv with os.Args.
 						if x.Op == cc.Name {
 							switch x.Text {
 							case "argc":
@@ -92,6 +92,22 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 							case "argv":
 								x.Text = "os.Args"
 								x.XDecl = nil
+							}
+						}
+
+					case *cc.Stmt:
+						// Replace return with os.Exit.
+						if x.Op == cc.Return {
+							*x = cc.Stmt{
+								Op: cc.StmtExpr,
+								Expr: &cc.Expr{
+									Op: cc.Call,
+									Left: &cc.Expr{
+										Op:   cc.Name,
+										Text: "os.Exit",
+									},
+									List: []*cc.Expr{x.Expr},
+								},
 							}
 						}
 					}
