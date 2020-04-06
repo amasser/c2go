@@ -86,17 +86,18 @@ func rewriteTypes(cfg *Config, prog cc.Syntax) {
 }
 
 var (
-	boolType   = &cc.Type{Kind: Bool}
-	byteType   = &cc.Type{Kind: Byte}
-	intType    = &cc.Type{Kind: Int}
-	uintType   = &cc.Type{Kind: Uint}
-	int32Type  = &cc.Type{Kind: Int32}
-	uint32Type = &cc.Type{Kind: Uint32}
-	int64Type  = &cc.Type{Kind: Int64}
-	uint64Type = &cc.Type{Kind: Uint64}
-	idealType  = &cc.Type{Kind: Ideal}
-	stringType = &cc.Type{Kind: String}
-	runeType   = &cc.Type{Kind: Rune}
+	boolType    = &cc.Type{Kind: Bool}
+	byteType    = &cc.Type{Kind: Byte}
+	intType     = &cc.Type{Kind: Int}
+	uintType    = &cc.Type{Kind: Uint}
+	int32Type   = &cc.Type{Kind: Int32}
+	uint32Type  = &cc.Type{Kind: Uint32}
+	int64Type   = &cc.Type{Kind: Int64}
+	uint64Type  = &cc.Type{Kind: Uint64}
+	idealType   = &cc.Type{Kind: Ideal}
+	stringType  = &cc.Type{Kind: String}
+	runeType    = &cc.Type{Kind: Rune}
+	float64Type = &cc.Type{Kind: Float64}
 )
 
 var c2goKind = map[cc.TypeKind]cc.TypeKind{
@@ -1224,6 +1225,12 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 	case "exit":
 		x.Left.Text = "os.Exit"
 		x.Left.XDecl = nil
+		return true
+
+	case "sqrt":
+		x.Left.Text = "math.Sqrt"
+		x.Left.XDecl = nil
+		x.XType = float64Type
 		return true
 	}
 

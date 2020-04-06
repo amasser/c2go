@@ -299,7 +299,7 @@ Restart:
 		fallthrough
 
 	case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-		for '0' <= in[i] && in[i] <= '9' || in[i] == '.' || 'A' <= in[i] && in[i] <= 'Z' || 'a' <= in[i] && in[i] <= 'z' {
+		for '0' <= in[i] && in[i] <= '9' || in[i] == '.' || 'A' <= in[i] && in[i] <= 'Z' || 'a' <= in[i] && in[i] <= 'z' || (in[i] == '+' || in[i] == '-') && (in[i-1] == 'e' || in[i-1] == 'E') {
 			i++
 		}
 		lx.sym(i)
