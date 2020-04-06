@@ -32,6 +32,11 @@ func rewriteTypes(cfg *Config, prog cc.Syntax) {
 			if d.Type != nil && d.Type.Kind == cc.Func {
 				for _, d1 := range d.Type.Decls {
 					d1.CurFn = d
+					// Check for array passed as parameter. Doesn't translate well.
+					if d1.Type.Kind == cc.Array {
+						d1.Type.Kind = cc.Ptr
+						d1.Indexed = true
+					}
 				}
 				if d.Body != nil {
 					for _, s := range d.Body.Block {
@@ -276,12 +281,6 @@ func toGoType(cfg *Config, x cc.Syntax, typ *cc.Type, cache map[*cc.Type]*cc.Typ
 			typ.Base = toGoType(cfg, x, typ.Base, cache)
 		}
 
-		// Check for array passed as parameter. Doesn't translate well.
-		for _, d := range typ.Decls {
-			if d.Type != nil && d.Type.Kind == cc.Array {
-				d.Type.Kind = cc.Ptr
-			}
-		}
 		return typ
 
 	case cc.Struct:
