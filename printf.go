@@ -153,8 +153,10 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 				buf.WriteString(flags)
 				buf.WriteString(string(verb))
 
-			case 'x', 'X', 'o', 'd', 'b':
-				// usual meanings, but force unsigned if u is given
+			case 'x', 'X', 'o', 'd', 'b', 'i':
+				if verb == 'i' {
+					verb = 'd'
+				}
 				buf.WriteString(flags)
 				buf.WriteString(string(verb))
 
