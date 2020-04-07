@@ -119,6 +119,22 @@ func rewriteSyntax(cfg *Config, prog *cc.Prog) {
 					}
 				})
 			}
+
+			// Handle variable-length arrays.
+			if x.Type != nil && x.Type.Kind == cc.Array && x.Type.Width != nil && !isNumericConst(x.Type.Width) && x.Init == nil {
+				x.Type.Kind = Slice
+				x.Init = &cc.Init{
+					Expr: &cc.Expr{
+						Op:   cc.Call,
+						Left: &cc.Expr{Op: cc.Name, Text: "make"},
+						List: []*cc.Expr{
+							&cc.Expr{Op: ExprType, Type: x.Type},
+							x.Type.Width,
+						},
+					},
+				}
+				x.Type.Width = nil
+			}
 		}
 	})
 
