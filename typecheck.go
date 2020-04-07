@@ -33,7 +33,7 @@ func rewriteTypes(cfg *Config, prog cc.Syntax) {
 				for _, d1 := range d.Type.Decls {
 					d1.CurFn = d
 					// Check for array passed as parameter. Doesn't translate well.
-					if d1.Type.Kind == cc.Array {
+					if d1.Type != nil && d1.Type.Kind == cc.Array {
 						d1.Type.Kind = cc.Ptr
 						d1.Indexed = true
 					}
