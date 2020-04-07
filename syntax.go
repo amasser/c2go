@@ -355,6 +355,9 @@ func rewriteStmt(stmt *cc.Stmt) {
 
 	case cc.StmtDecl:
 		if stmt.Decl.Init != nil && stmt.Decl.Init.Expr != nil {
+			for stmt.Decl.Init.Expr.Op == cc.Paren {
+				stmt.Decl.Init.Expr = stmt.Decl.Init.Expr.Left
+			}
 			if stmt.Decl.Init.Expr.Op == cc.Cond {
 				// If it is initializing the variable with a conditional expression,
 				// first declare the variable, then initialize it in an if statement.
