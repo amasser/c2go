@@ -109,7 +109,7 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 			for i < len(format) {
 				c := format[i]
 				switch c {
-				case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '#', '-', '.', ',', ' ', 'h', 'j', 'l', 'u', '*':
+				case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '#', '-', '.', ',', ' ', 'h', 'j', 'l', '*':
 					i++
 					continue
 				}
@@ -128,7 +128,6 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 			flags = strings.Replace(flags, "h", "", -1)
 			flags = strings.Replace(flags, "j", "", -1)
 			flags = strings.Replace(flags, "l", "", -1)
-			flags = strings.Replace(flags, "u", "", -1)
 
 			if j := strings.Index(flags, "#0"); j >= 0 && verb == 'x' {
 				k := j + 2
@@ -158,7 +157,11 @@ func fixPrintFormat(curfn *cc.Decl, fx *cc.Expr, args []*cc.Expr) []*cc.Expr {
 				// usual meanings, but force unsigned if u is given
 				buf.WriteString(flags)
 				buf.WriteString(string(verb))
-				if narg >= len(args) || !strings.Contains(allFlags, "u") {
+
+			case 'u':
+				buf.WriteString(flags)
+				buf.WriteString("d")
+				if narg >= len(args) {
 					break
 				}
 				arg := args[narg]
