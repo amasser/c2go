@@ -1261,14 +1261,8 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.Left.XDecl = nil
 		return true
 
-	case "sqrt":
-		x.Left.Text = "math.Sqrt"
-		x.Left.XDecl = nil
-		x.XType = float64Type
-		return true
-
-	case "pow":
-		x.Left.Text = "math.Pow"
+	case "sqrt", "pow", "log10":
+		x.Left.Text = "math." + strings.Title(x.Left.Text)
 		x.Left.XDecl = nil
 		x.XType = float64Type
 		return true
