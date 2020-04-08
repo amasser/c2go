@@ -1154,6 +1154,40 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		}
 		return true
 
+	case "calloc":
+		if len(x.List) != 2 {
+			fprintf(x.Span, "unsupported %v - wrong number of args", x)
+			return false
+		}
+		count, siz := x.List[0], x.List[1]
+		var typ *cc.Type
+		switch siz.Op {
+		case cc.SizeofExpr:
+			typ = fixGoTypesExpr(fn, siz.Left, nil)
+			if typ == nil {
+				fprintf(siz.Span, "failed to type check %v", siz.Left)
+			}
+
+		case cc.SizeofType:
+			typ = siz.Type
+			if typ == nil {
+				fprintf(siz.Span, "sizeoftype missing type")
+			}
+		}
+		if typ == nil {
+			fprintf(x.Span, "unsupported %v - cannot understand type", x)
+			return true
+		}
+
+		x.Left.Text = "make"
+		x.Left.XDecl = nil
+		x.XType = &cc.Type{Kind: Slice, Base: typ}
+		x.List = []*cc.Expr{
+			&cc.Expr{Op: ExprType, Type: x.XType},
+			count,
+		}
+		return true
+
 	case "strdup":
 		if len(x.List) != 1 {
 			fprintf(x.Span, "unsupported %v - too many args", x)
