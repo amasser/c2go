@@ -658,12 +658,15 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 		return nil
 
 	case cc.Cast:
-		if x.Left.Op == cc.Call && x.Left.Left.Op == cc.Name && x.Left.Left.Text == "malloc" {
-			// Casting the return value of malloc does more harm than good,
-			// so remove the cast.
-			typ := fixGoTypesExpr(fn, x.Left, nil)
-			*x = *x.Left
-			return typ
+		if x.Left.Op == cc.Call && x.Left.Left.Op == cc.Name {
+			switch x.Left.Left.Text {
+			case "malloc", "calloc":
+				// Casting the return value of malloc does more harm than good,
+				// so remove the cast.
+				typ := fixGoTypesExpr(fn, x.Left, nil)
+				*x = *x.Left
+				return typ
+			}
 		}
 		if x.Type.Kind == cc.Struct && len(x.Type.Decls) == 0 {
 			// If we're casting to struct{}, it must have been a cast to void in C.
@@ -1276,7 +1279,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.Left.XDecl = nil
 		return true
 
-	case "sqrt", "pow", "log10", "floor":
+	case "sqrt", "pow", "log2", "log10", "floor":
 		x.Left.Text = "math." + strings.Title(x.Left.Text)
 		x.Left.XDecl = nil
 		x.XType = float64Type

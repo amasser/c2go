@@ -35,6 +35,7 @@ var goKeyword = map[string]bool{
 	"true":  true,
 	"false": true,
 	"new":   true,
+	"len":   true,
 }
 
 // renameDecls renames file-local declarations to make them
