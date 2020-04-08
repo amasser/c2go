@@ -1280,6 +1280,9 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 		x.Left.Text = "math." + strings.Title(x.Left.Text)
 		x.Left.XDecl = nil
 		x.XType = float64Type
+		for _, y := range x.List {
+			forceGoType(fn, y, float64Type)
+		}
 		return true
 	}
 
