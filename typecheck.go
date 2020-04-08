@@ -542,6 +542,21 @@ func fixGoTypesExpr(fn *cc.Decl, x *cc.Expr, targ *cc.Type) (ret *cc.Type) {
 			}
 		}
 
+		if x.Op == cc.Div && x.Left.Op == cc.SizeofExpr && x.Right.Op == cc.SizeofType {
+			// Finding the length of an array again, but this time the argument of sizeof
+			// is the type rather than the first element.
+			lx := x.Left.Left
+			for lx.Op == cc.Paren {
+				lx = lx.Left
+			}
+			if lx.XType != nil && GoString(lx.XType.Base) == GoString(x.Right.Type) {
+				x.Op = cc.Call
+				x.List = []*cc.Expr{lx}
+				x.Left = &cc.Expr{Op: cc.Name, Text: "len"}
+				return intType
+			}
+		}
+
 		return fixBinary(fn, x, left, right, targ)
 
 	case cc.AddEq, cc.AndEq, cc.DivEq, cc.Eq, cc.ModEq, cc.MulEq, cc.OrEq, cc.SubEq, cc.XorEq:
