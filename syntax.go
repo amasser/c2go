@@ -361,6 +361,17 @@ func rewriteStmt(stmt *cc.Stmt) {
 			return
 		}
 
+		if stmt.Expr.Op == cc.Call {
+			switch stmt.Expr.Left.Text {
+			case "__builtin___strcpy_chk":
+				stmt.Expr.Left.Text = "strcpy"
+				stmt.Expr.List = stmt.Expr.List[:2]
+			case "__builtin___strcat_chk":
+				stmt.Expr.Left.Text = "strcat"
+				stmt.Expr.List = stmt.Expr.List[:2]
+			}
+		}
+
 		before, after := extractSideEffects(stmt.Expr, sideStmt)
 		if len(before)+len(after) > 0 {
 			old := copyStmt(stmt)
