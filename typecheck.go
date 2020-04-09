@@ -1294,7 +1294,7 @@ func fixSpecialCall(fn *cc.Decl, x *cc.Expr, targ *cc.Type) bool {
 
 func fixMemset(prog *cc.Prog, fn *cc.Decl, stmt *cc.Stmt) {
 	x := stmt.Expr
-	if len(x.List) < 3 || x.List[1].Op != cc.Number || x.List[1].Text != "0" {
+	if len(x.List) < 3 || x.List[1].Op != cc.Number || (x.List[1].Text != "0" && x.List[1].Text != `'\x00'`) {
 		// fprintf(x.Span, "unsupported %v - nonzero", x)
 		return
 	}
